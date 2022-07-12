@@ -18,6 +18,7 @@
             <img src="./images/logo.png" alt="лого Mesto">
         </header>
         <main class="content">
+            <!-- profile section -->
             <section class="profile content__section">
                 <!--flex-->
                 <img class="profile__avatar" src="./images/avatar.png" alt="бюст улыбающегося человека в красной шапке">
@@ -29,9 +30,23 @@
                     <p class="profile__text">Исследователь океана</p>
                 </div>
                 <button class="btn profile__add-button"></button>
-
             </section>
 
+            <!-- /// POPUP /// -->
+            <div class="popup popup_opened">
+                <!-- flex -->
+                <div class="popup__container">
+                    <h2 class="popup__title">Редактировать профиль</h2>
+                    <form class="popup__form" action="#">
+                        <input class="popup__field popup__field_name" type="text">
+                        <input class="popup__field popup__field_position" type="text">
+                        <button class="popup__btn-save" type="submit">Сохранить</button>
+                    </form>
+                    <button class="popup__close-btn"></button>
+                </div>
+            </div>
+
+            <!-- elements section -->
             <section class="elements content__section">
                 <!-- grid -->
                 <ul class="elements__cards">

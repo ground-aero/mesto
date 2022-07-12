@@ -73,6 +73,9 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .profile__edit-button {
@@ -97,11 +100,15 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .profile_elements-wrap {
   padding-top: 22px;
   padding-bottom: 25px;
+  max-width: 500px;
 }
 
 .profile__add-button {
@@ -204,4 +211,106 @@
 .element__like-btn:active {
   background-image: url(../images/like-active.png);
   opacity: 1;
+}
+
+/* /// POPUP /// */
+.popup {
+  /* width: 100vw;
+height: 100vh; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.popup_opened {
+  /* display: block; */
+}
+
+.popup__container {
+  width: 430px;
+  background: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 36px 37px;
+  box-sizing: border-box;
+  position: relative;
+  outline: 1px solid darkred;
+}
+
+.popup__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__title {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 54px;
+}
+
+.popup__field {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  min-height: 27px;
+  font-weight: 400;
+  font-size: 14px;
+  padding-bottom: 13px;
+  margin-bottom: 30px;
+}
+
+.popup__field:last-of-type {
+  margin-bottom: 48px;
+}
+
+.popup__btn-save {
+  width: 100%;
+  margin: 0;
+  padding: 14px 0 18px;
+  border: none;
+  border-radius: 2px;
+  justify-self: end;
+  background-color: #000;
+  cursor: pointer;
+  transition: opacity 0.4s linear;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+}
+
+.popup__btn-save:hover {
+  opacity: 0.8;
+}
+
+.popup__close-btn {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  background-image: url(../images/close-btn.png);
+  /* background-position: center; */
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.4s linear;
+}
+
+.popup__close-btn:hover {
+  opacity: 0.5;
 }
