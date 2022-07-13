@@ -19,17 +19,17 @@
         </header>
         <main class="content">
             <!-- profile section -->
-            <section class="profile content__section">
+            <section id="profile" class="profile content__section">
                 <!--flex-->
                 <img class="profile__avatar" src="./images/avatar.png" alt="бюст улыбающегося человека в красной шапке">
-                <div class="profile_elements-wrap">
-                    <div class="profile__header-wrap">
-                        <h1 class="profile__header">Жак-Ив Кусто</h1>
-                        <button class="btn profile__edit-button"></button>
+                <div class="profile__elements-wrap">
+                    <div class="profile__name-wrap">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <button type="button" class="btn profile__btn-edit"></button>
                     </div>
-                    <p class="profile__text">Исследователь океана</p>
+                    <p class="profile__job">Исследователь океана</p>
                 </div>
-                <button class="btn profile__add-button"></button>
+                <button type="button" class="btn profile__btn-add"></button>
             </section>
 
             <!-- /// POPUP /// -->
@@ -38,25 +38,25 @@
                 <div class="popup__container">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <form class="popup__form" action="#">
-                        <input class="popup__field popup__field_name" type="text">
-                        <input class="popup__field popup__field_position" type="text">
-                        <button class="popup__btn-save" type="submit">Сохранить</button>
+                        <input class="popup__input popup__input_name" type="text">
+                        <input class="popup__input popup__input_job" type="text">
+                        <button type="submit" class="btn popup__btn-save">Сохранить</button>
                     </form>
-                    <button class="popup__close-btn"></button>
+                    <button type="button" class="popup__btn-close"></button>
                 </div>
             </div>
 
             <!-- elements section -->
             <section class="elements content__section">
                 <!-- grid -->
-                <ul class="elements__cards">
+                <ul class="element element_cards">
                     <li class="element__card">
                         <img class="element__img" src="./images/1karachaevsk.jpg"
                             alt="древнее сооружение с купольной крышей на фоне зеленых гор">
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаевск</h2>
-                            <button class="element__like-btn"></button>
+                            <button class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element__card">
@@ -65,7 +65,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Гора Эльбрус</h2>
-                            <button class="element__like-btn"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element__card">
@@ -74,7 +74,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Домбай</h2>
-                            <button class="element__like-btn"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element__card">
@@ -83,7 +83,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Гора Эльбрус</h2>
-                            <button class="element__like-btn"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element__card">
@@ -92,7 +92,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Домбай</h2>
-                            <button class="element__like-btn"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element__card">
@@ -101,7 +101,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаево-Черкессия</h2>
-                            <button class="element__like-btn"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
                 </ul>
@@ -112,6 +112,8 @@
         <footer class="footer"></footer>
         <!-- end of page__container -->
     </div>
+
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>
