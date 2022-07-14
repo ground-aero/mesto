@@ -223,9 +223,9 @@
   display: none;
 }
 
-.popup_opened {
-  /* display: block; */
-}
+/* .popup_opened {
+  display: flex;
+} */
 
 .popup__container {
   width: 430px;
