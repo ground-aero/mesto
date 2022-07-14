@@ -1,6 +1,13 @@
-'use strict'
-
+'use strict';
 let page = document.querySelector('.page');
+
+// popup
+let popupForm = page.querySelector('.popup'); // Находим POPUP форму в DOM.
+let btnSave = page.querySelector('.popup__btn-save');
+let btnClose = page.querySelector('.popup__btn-close');
+// поля формы в DOM
+let inputName = page.querySelector('.popup__input_name'); // Воспользуйтесь инструментом .querySelector()
+let inputJob = page.querySelector('.popup__input_job'); 
 
 // profile - кнопки
 let btnEdit = page.querySelector('.profile__btn-edit'); // кнопка редактировать
@@ -10,52 +17,45 @@ let btnLike = page.querySelectorAll('.element__btn-like');
 let profileName = page.querySelector('.profile__name');
 let profileJob = page.querySelector('.profile__job');
 
-// Находим POPUP форму в DOM
-let popupForm = page.querySelector('.popup'); // Воспользуйтесь методом querySelector()
-// POPUP Кнопки
-let btnSave = page.querySelector('.popup__btn-save');
-let btnClose = page.querySelector('.popup__btn-close');
-// Находим поля формы в DOM
-let inputName = page.querySelector('.popup__input_name'); // Воспользуйтесь инструментом .querySelector()
-let inputJob = page.querySelector('.popup__input_job'); // Воспользуйтесь инструментом .querySelector()
-
 function popupFormOpen() {
-  // Чтобы попап открывался, ДОБАВЛЯЙТЕ ЕМУ МОДИФИКАТОР popup_opened с одним-единственным правилом...????
-  // Попап должен открываться !!! по нажатию кнопки!!! «Редактировать» - btnEdit
-  // а закрываться — при клике по крестику в правом верхнем углу - btnClose
-  // ИЗМЕНЯТЬ ЗНАЧЕНИЕ СВОЙСТВА НА flex
-
-//  popupForm.classList.add('popup_opened');
-  page.querySelector('.popup').style.display = 'flex';
-
-  // add display: flex;
-  //   popupForm.removeAttribute('display');
-
-  // 2.Чтобы закрыть попап, удаляйте у него модификатор popup_opened
-  // 3. Отслеживайте клик по кнопке методом addEventListener.
+  popupForm.classList.add('popup_opened'); // форме попап добавлен класс-модификатор открытия
+  inputName.value = profileName.textContent; // значению инпута присваивается текстовое содержание из разметки  (при открытии)
+  inputJob.value = profileJob.textContent;
 }
-//popupFormOpen();
-btnEdit.addEventListener('click', popupFormOpen);
+
+btnEdit.addEventListener('click', popupFormOpen); // слушатель клика повешен на кнопку "edit"
 
 function popupFormClose() {
-  page.querySelector('.popup').style.display = 'none';
+  popupForm.classList.remove('popup_opened'); // из формы попап удаляется класс-модификатор открытия
 }
-btnClose.addEventListener('click', popupFormClose);
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
+btnClose.addEventListener('click', popupFormClose); // слушатель клика повешен на кнопку "close"
+
+//  После внесения изменений и НАЖАТИЯ КНОПКИ «СОХРАНИТЬ» - btnSave
+// function formSubmitHandler() {     // информация на странице ДОЛЖНА ОБНОВИТЬСЯ, А ПОПАП АВТОМАТИЧЕСКИ ЗАКРЫТЬСЯ:
+//    profileName.innerHTML = `
+//    <div class="profile__name-wrap">
+//      <h1 class="profile__name">${inputName.value}</h1>
+//    </div>`;
+//   profileJob.innerHTML = `
+//    <div class="profile__name-wrap">
+//     <p class="profile__job">${inputJob.value}</p>
+//    </div>`;
+
+//    popupFormClose();
+// }
+
+// btnSave.addEventListener('click', formSubmitHandler);
+
 function formSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  // Так мы можем определить свою логику отправки.
-  // О том, как это делать, расскажем позже.
+  // Функция сохранения и «отправки» данных из строк формы профиля, хотя пока она никуда отправляться не будет
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
 
-  // Получите значение полей jobInput и nameInput из свойства value
-
-  // Выберите элементы, куда должны быть вставлены значения полей
-
+  profileName.textContent = inputName.value; // Получите значение полей inputName  и inputJob из свойства value
+  profileJob.textContent = inputJob.value; // Выберите элементы, куда должны быть вставлены значения полей.
   // Вставьте новые значения с помощью textContent
+
+  popupFormClose();
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-popupForm.addEventListener('submit', formSubmitHandler);
+popupForm.addEventListener('submit', formSubmitHandler); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
