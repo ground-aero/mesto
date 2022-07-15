@@ -1,0 +1,10 @@
+.page {
+  background-color: #000;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 0 19px;
+  }
+}

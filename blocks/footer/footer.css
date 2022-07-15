@@ -1,0 +1,18 @@
+.footer {
+  margin: 0 auto;
+  padding: 67px 0 60px;
+  width: 100%;
+  max-width: 880px;
+  background-color: #000;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    padding-top: 48px;
+    padding-bottom: 36px;
+  }
+}
