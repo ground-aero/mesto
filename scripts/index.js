@@ -6,8 +6,8 @@ let popupForm = page.querySelector('.popup'); // Находим POPUP форму
 let btnSave = page.querySelector('.popup__btn-save');
 let btnClose = page.querySelector('.popup__btn-close');
 // поля формы в DOM
-let inputName = page.querySelector('.popup__input_name'); // Воспользуйтесь инструментом .querySelector()
-let inputJob = page.querySelector('.popup__input_job'); 
+let inputName = page.querySelector('.popup__input_type_name'); // Воспользуйтесь инструментом .querySelector()
+let inputJob = page.querySelector('.popup__input_type_job'); 
 
 // profile - кнопки
 let btnEdit = page.querySelector('.profile__btn-edit'); // кнопка редактировать
@@ -19,7 +19,7 @@ let profileJob = page.querySelector('.profile__job');
 
 function popupFormOpen() {
   popupForm.classList.add('popup_opened'); // форме попап добавлен класс-модификатор открытия
-  inputName.value = profileName.textContent; // значению инпута присваивается текстовое содержание из разметки  (при открытии)
+  inputName.value = profileName.textContent; // При открытии попапа поля формы заполняются данными из профиля.
   inputJob.value = profileJob.textContent;
 }
 

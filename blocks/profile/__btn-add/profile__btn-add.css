@@ -4,19 +4,17 @@
   margin-left: auto;
   border: 2px solid #fff;
   border-radius: 2px;
-  background-image: url(../../../images/add-button.png);
+  background-image: url(../../../images/add-button.svg);
 }
 
 .profile__btn-add:hover {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: pointer;
 }
 
 @media (max-width: 767px) {
   .profile__btn-add {
-    background-image: url(../../../images/add-btn-big.png);
-    border: 2px solid #fff;
-    border-radius: 2px;
+    background-image: url(../../../images/add-btn-big.svg);
     width: 282px;
     justify-self: center;
     margin: 0;

@@ -1,12 +1,15 @@
 .profile__btn-edit {
+  background-image: url(../../../images/edit-button.svg);
   width: 24px;
   height: 24px;
-  background-image: url(../../../images/edit-button.svg);
+  flex-basis: 24px;
+  flex-grow: 0;
+  flex-shrink: 0;
   margin-bottom: 8px;
 }
 
 .profile__btn-edit:hover {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: pointer;
 }
 
@@ -14,6 +17,7 @@
   .profile__btn-edit {
     width: 18px;
     height: 18px;
+    flex-basis: 18px;
     margin-bottom: 6px;
   }
 }

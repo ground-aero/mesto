@@ -15,7 +15,7 @@
     <div class="page__container">
         <!-- header -->
         <header class="header">
-            <img class="header__logo" src="./images/logo.png" alt="лого Mesto">
+            <img class="header__logo" src="./images/logo.svg" alt="лого Mesto">
         </header>
         <main class="content">
             <!-- profile section -->
@@ -32,34 +32,22 @@
                 <button type="button" class="btn profile__btn-add"></button>
             </section>
 
-            <!-- /// POPUP /// -->
-            <div class="popup">
-                <!-- flex -->
-                <div class="popup__container">
-                    <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form" action="#">
-                        <input class="popup__input popup__input_name" type="text" placeholder="Жак-Ив Кусто">
-                        <input class="popup__input popup__input_job" type="text" placeholder="Исследователь океана">
-                        <button type="submit" class="btn popup__btn-save">Сохранить</button>
-                    </form>
-                    <button type="button" class="popup__btn-close"></button>
-                </div>
-            </div>
-
             <!-- elements section -->
             <section class="elements content__section">
+
                 <!-- grid -->
-                <ul class="element element_cards">
-                    <li class="element__card">
+                <ul class="elements__list">
+                    <!-- карточка -->
+                    <li class="element">
                         <img class="element__img" src="./images/1karachaevsk.jpg"
                             alt="древнее сооружение с купольной крышей на фоне зеленых гор">
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаевск</h2>
-                            <button class="element__btn-like"></button>
+                            <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
-                    <li class="element__card">
+                    <li class="element">
                         <img class="element__img" src="./images/2elbrus.jpg"
                             alt="гора на заднем плане на фоне заката, широкое поле и холмы на переднем">
                         <!-- flex -->
@@ -68,7 +56,7 @@
                             <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
-                    <li class="element__card">
+                    <li class="element">
                         <img class="element__img" src="./images/3dombai.jpg"
                             alt="заснеженная горная вершина на заднем плане, лесной косогор на переднем плане">
                         <!-- flex -->
@@ -77,7 +65,7 @@
                             <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
-                    <li class="element__card">
+                    <li class="element">
                         <img class="element__img" src="./images/4krasnodar.jpg"
                             alt="памятник Екатерине второй на центральной площади города">
                         <!-- flex -->
@@ -86,7 +74,7 @@
                             <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
-                    <li class="element__card">
+                    <li class="element">
                         <img class="element__img" src="./images/5gelendzhik.jpg"
                             alt="Набережная, город Геленджик на фоне моря">
                         <!-- flex -->
@@ -95,7 +83,7 @@
                             <button type="button" class="element__btn-like"></button>
                         </div>
                     </li>
-                    <li class="element__card">
+                    <li class="element">
                         <img class="element__img" src="./images/6k-cherkessk.jpg"
                             alt="старое каменное строение с круглой башней, расположенное в предгорье">
                         <!-- flex -->
@@ -113,6 +101,22 @@
             <p class="footer__autho">&copy; 2020 Mesto Russia</p>
         </footer>
         <!-- end of page__container -->
+
+        <!-- /// POPUP /// -->
+        <div class="popup">
+            <!-- flex -->
+            <div class="popup__container">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <form class="popup__form" name="form" action="#">
+                    <input class="popup__input popup__input_type_name" name="name" type="text"
+                        placeholder="Жак-Ив Кусто">
+                    <input class="popup__input popup__input_type_job" name="job" type="text"
+                        placeholder="Исследователь океана">
+                    <button type="submit" class="btn popup__btn-save">Сохранить</button>
+                </form>
+                <button type="button" class="popup__btn-close"></button>
+            </div>
+        </div>
     </div>
 
     <script src="./scripts/index.js"></script>
