@@ -7,3 +7,9 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@media (max-width: 767px) {
+  .element__title {
+    line-height: 28.5px;
+  }
+}

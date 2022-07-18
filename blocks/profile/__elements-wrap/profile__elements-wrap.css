@@ -6,7 +6,7 @@
 
 @media (max-width: 767px) {
   .profile__elements-wrap {
-    padding-bottom: 14px;
+    padding-bottom: 33px;
     max-width: min(700px, 74vw);
   }
 }
