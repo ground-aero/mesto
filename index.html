@@ -25,7 +25,7 @@
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button type="button" class="btn profile__btn-edit"></button>
+                        <button type="button" aria-label="edit" class="btn profile__btn-edit"></button>
                     </div>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
@@ -44,7 +44,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаевск</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element">
@@ -53,7 +53,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Гора Эльбрус</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element">
@@ -62,7 +62,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Домбай</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element">
@@ -71,7 +71,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Краснодар</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element">
@@ -80,7 +80,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Геленджик</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                     <li class="element">
@@ -89,7 +89,7 @@
                         <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаево-Черкессия</h2>
-                            <button type="button" class="element__btn-like"></button>
+                            <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
                     </li>
                 </ul>
@@ -109,12 +109,12 @@
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <form class="popup__form" name="form" action="#">
                     <input class="popup__input popup__input_type_name" name="name" type="text"
-                        placeholder="Жак-Ив Кусто">
+                        placeholder="Жак-Ив Кусто" required>
                     <input class="popup__input popup__input_type_job" name="job" type="text"
-                        placeholder="Исследователь океана">
+                        placeholder="Исследователь океана" required>
                     <button type="submit" class="btn popup__btn-save">Сохранить</button>
                 </form>
-                <button type="button" class="popup__btn-close"></button>
+                <button type="button" aria-label="close" class="popup__btn-close"></button>
             </div>
         </div>
     </div>
