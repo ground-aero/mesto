@@ -1,5 +1,7 @@
 .profile__btn-add {
-  width: 150px;
+  flex-basis: 150px;
+  flex-grow: 0;
+  flex-shrink: 0;
   height: 50px;
   margin-left: auto;
   border: 2px solid #fff;
@@ -8,7 +10,7 @@
 }
 
 .profile__btn-add:hover {
-  opacity: 0.6;
+  opacity: .6;
   cursor: pointer;
 }
 
@@ -16,6 +18,7 @@
   .profile__btn-add {
     background-image: url(../../../images/add-btn-big.svg);
     width: 282px;
+    flex-basis: 50px;
     justify-self: center;
     margin: 0;
   }
