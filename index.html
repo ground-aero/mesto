@@ -34,23 +34,22 @@
 
             <!-- elements section -->
             <section class="elements content__section">
-
                 <!-- grid -->
                 <ul class="elements__list">
                     <!-- карточка -->
-                    <li class="element">
+                    <!-- <li class="element">
+                        <button class="element__btn-del" type="button" aria-label="delete"></button>
                         <img class="element__img" src="./images/1karachaevsk.jpg"
-                            alt="древнее сооружение с купольной крышей на фоне зеленых гор">
-                        <!-- flex -->
-                        <div class="element__info-wrap">
+                            alt="древнее сооружение с купольной крышей на фоне зеленых гор"> -->
+                    <!-- flex -->
+                    <!-- <div class="element__info-wrap">
                             <h2 class="element__title">Карачаевск</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
+                            <button class="element__btn-like" type="button" aria-label="like"></button>
+                    </div> -->
                     </li>
-                    <li class="element">
+                    <!-- <li class="element">
                         <img class="element__img" src="./images/2elbrus.jpg"
                             alt="гора на заднем плане на фоне заката, широкое поле и холмы на переднем">
-                        <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Гора Эльбрус</h2>
                             <button type="button" aria-label="like" class="element__btn-like"></button>
@@ -59,7 +58,6 @@
                     <li class="element">
                         <img class="element__img" src="./images/3dombai.jpg"
                             alt="заснеженная горная вершина на заднем плане, лесной косогор на переднем плане">
-                        <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Домбай</h2>
                             <button type="button" aria-label="like" class="element__btn-like"></button>
@@ -68,7 +66,6 @@
                     <li class="element">
                         <img class="element__img" src="./images/4krasnodar.jpg"
                             alt="памятник Екатерине второй на центральной площади города">
-                        <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Краснодар</h2>
                             <button type="button" aria-label="like" class="element__btn-like"></button>
@@ -77,7 +74,6 @@
                     <li class="element">
                         <img class="element__img" src="./images/5gelendzhik.jpg"
                             alt="Набережная, город Геленджик на фоне моря">
-                        <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Геленджик</h2>
                             <button type="button" aria-label="like" class="element__btn-like"></button>
@@ -86,12 +82,11 @@
                     <li class="element">
                         <img class="element__img" src="./images/6k-cherkessk.jpg"
                             alt="старое каменное строение с круглой башней, расположенное в предгорье">
-                        <!-- flex -->
                         <div class="element__info-wrap">
                             <h2 class="element__title">Карачаево-Черкессия</h2>
                             <button type="button" aria-label="like" class="element__btn-like"></button>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </section>
 
@@ -119,7 +114,24 @@
         </div>
     </div>
 
-    <script src="./scripts/index.js"></script>
+
+
+    <!-- template -->
+    <template id="element-template">
+        <!-- карточка -->
+        <li class="element">
+            <button class="element__btn-del" type="button" aria-label="delete"></button>
+            <img class="element__img" alt="#" src="#">
+            <!-- flex -->
+            <div class="element__info-wrap">
+                <h2 class="element__title">Место</h2>
+                <button class="element__btn-like" type="button" aria-label="like"></button>
+            </div>
+        </li>
+    </template>
+
+    <script src="./scripts/index.js" defer></script>
+
 </body>
 
 </html>
