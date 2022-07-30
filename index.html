@@ -25,11 +25,11 @@
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button type="button" aria-label="edit" class="btn profile__btn-edit"></button>
+                        <button class="btn profile__btn-edit" type="button" aria-label="edit"></button>
                     </div>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
-                <button type="button" class="btn profile__btn-add"></button>
+                <button class="btn profile__btn-addplace" type="button" aria-label="add"></button>
             </section>
 
             <!-- elements section -->
@@ -98,7 +98,8 @@
         <!-- end of page__container -->
 
         <!-- /// POPUP /// -->
-        <div class="popup">
+        <!-- popup Edit Profile -->
+        <div class="popup popup_type_edit">
             <!-- flex -->
             <div class="popup__container">
                 <h2 class="popup__title">Редактировать профиль</h2>
@@ -112,9 +113,27 @@
                 <button type="button" aria-label="close" class="popup__btn-close"></button>
             </div>
         </div>
+        <!-- popup Add Place -->
+        <div class="popup popup_type_add-place">
+            <div class="popup__container">
+                <h2 class="popup__title">Новое место</h2>
+                <form class="popup__form" name="form" action="#">
+                    <input class="popup__input popup__input_type_name" name="name" type="text" placeholder="Название"
+                        required>
+                    <input class="popup__input popup__input_type_job" name="job" type="text"
+                        placeholder="Ссылка на картинку" required>
+                    <button type="submit" class="btn popup__btn-save">Сохранить</button>
+                </form>
+                <button type="button" aria-label="close" class="popup__btn-close"></button>
+            </div>
+        </div>
+        <!-- popup image !!!!!!!!!!! NEED TO CODE HERE -->
+        <div class="popup popup_type_image">
+
+        </div>
+
+
     </div>
-
-
 
     <!-- template -->
     <template id="element-template">

@@ -1,4 +1,4 @@
-.profile__btn-add {
+.profile__btn-addplace {
   flex-basis: 150px;
   flex-grow: 0;
   flex-shrink: 0;
@@ -9,13 +9,13 @@
   background-image: url(../../../images/add-button.svg);
 }
 
-.profile__btn-add:hover {
+.profile__btn-addplace:hover {
   opacity: .6;
   cursor: pointer;
 }
 
 @media (max-width: 767px) {
-  .profile__btn-add {
+  .profile__btn-addplace {
     background-image: url(../../../images/add-btn-big.svg);
     width: 282px;
     flex-basis: 50px;
