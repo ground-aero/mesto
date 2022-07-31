@@ -1,4 +1,4 @@
-.popup__btn-save {
+.btn_type_create-place {
   width: 100%;
   margin: 0;
   padding: 14px 0 18px;
@@ -14,13 +14,13 @@
   color: #fff;
 }
 
-.popup__btn-save:hover {
+.btn_type_create-place:hover {
   opacity: 0.8;
   cursor: pointer;
 }
 
 @media (max-width: 767px) {
-  .popup__btn-save {
+  .btn_type_create-place {
     font-size: 14px;
     line-height: 17px;
   }

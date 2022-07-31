@@ -95,36 +95,39 @@
             <div class="popup popup_type_edit">
                 <!-- flex -->
                 <div class="popup__container">
+                    <button class="popup__btn-close" type="button" aria-label="close"></button>
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <form class="popup__form" name="form" action="#">
                         <input class="popup__input popup__input_type_name" name="name" type="text"
                             placeholder="Жак-Ив Кусто" required>
                         <input class="popup__input popup__input_type_job" name="job" type="text"
                             placeholder="Исследователь океана" required>
-                        <button type="submit" class="btn popup__btn-save">Сохранить</button>
+                        <button class="btn btn_type_save-profile" type="submit">Сохранить</button>
                     </form>
-                    <button type="button" aria-label="close" class="popup__btn-close"></button>
                 </div>
             </div>
             <!-- popup Add Place -->
             <div class="popup popup_type_add-place">
                 <div class="popup__container">
+                    <button class="popup__btn-close" type="button" aria-label="close"></button>
                     <h2 class="popup__title">Новое место</h2>
                     <form class="popup__form" name="form" action="#">
                         <input class="popup__input popup__input_type_name" name="name" type="text"
                             placeholder="Название" required>
-                        <input class="popup__input popup__input_type_job" name="job" type="text"
+                        <input class="popup__input popup__input_type_job" name="link" type="text"
                             placeholder="Ссылка на картинку" required>
-                        <button type="submit" class="btn popup__btn-save">Сохранить</button>
+                        <button class="btn btn_type_create-place" type="submit">Создать</button>
                     </form>
-                    <button type="button" aria-label="close" class="popup__btn-close"></button>
                 </div>
             </div>
             <!-- popup image !!!!!!!!!!! NEED TO CODE HERE -->
-            <div class="popup popup_type_image">
-
-            </div>
-
+            <!-- <div class="popup popup_type_zoomer">
+                <div class="popup__img-container popup__container-img_type_zoomer">
+                    <button class="popup__close-img opacity-transition opacity-transition_type_medium" type="button"></button>
+                    <img class="popup__img" src="#" alt="">
+                    <h3 class="popup__subtitle"></h3>
+                </div>
+            </div> -->
         </main>
 
         <!-- footer -->

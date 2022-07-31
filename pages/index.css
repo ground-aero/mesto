@@ -37,6 +37,8 @@
 
 /* btn - general style */
 @import url(../blocks/btn/btn.css);
+@import url(../blocks/btn/_type/btn_type_save-profile.css);
+@import url(../blocks/btn/_type/btn_type_create-place.css);
 
 /* Popup . Popup edit. */
 @import url(../blocks/popup/popup.css);
