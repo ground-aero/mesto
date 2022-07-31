@@ -12,8 +12,6 @@
   border: none;
   cursor: pointer;
   transition: opacity 0.4s linear;
-  z-index: 9;
-  /* background-size: 18px 19px; */
 }
 
 .element__btn-del:hover {

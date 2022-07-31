@@ -37,9 +37,9 @@
 @import url(../blocks/element/__btn-like/element__btn-like.css);
 @import url(../blocks/element/__btn-del/element__btn-del.css);
 
-/* footer section */
-@import url(../blocks/footer/footer.css);
-@import url(../blocks/footer/__autho/footer__autho.css);
+/* Popup Add Place */
+@import url(../blocks/popup/_type_add-place/popup_type_add-place.css);
+@import url(../blocks/profile/__btn-addplace/profile__btn-addplace.css);
 
 /* Popup . Popup edit. */
 @import url(../blocks/popup/popup.css);
@@ -52,6 +52,6 @@
 @import url(../blocks/popup/__btn-save/popup__btn-save.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css);
 
-/* Popup Add Place */
-@import url(../blocks/popup/_type_add-place/popup_type_add-place.css);
-@import url(../blocks/profile/__btn-addplace/profile__btn-addplace.css);
+/* footer section */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__autho/footer__autho.css);

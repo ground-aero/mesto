@@ -16,7 +16,7 @@ const popupAddPlaceNode = document.querySelector('.popup_type_add-place'); // Н
 // let btnLike = page.querySelectorAll('.element__btn-like');
 
 // // Каждый попап сохраните в своей переменной и создайте функцию, которая будут принимать в качестве аргумента указание,
-// // какой именно попап надо открыть или закрыть, т.е. передавайте туда класс-модификатор из совета ранее. 
+// // какой именно попап надо открыть или закрыть, т.е. передавайте туда класс-модификатор из совета ранее.
 
 // -------------------------------------------------------
 function handlerClosePopupClick(evt) {
@@ -40,20 +40,19 @@ function closePopup(modal) {
 }
 
 function handlerButtonAddPlaceClick(evt) {
-  // кнопка "+"
+  // на кнопке "+"
   evt.preventDefault();
   openPopup(popupAddPlaceNode);
 }
-// btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
-btnAddPlace.addEventListener('click', popupAddPlaceNode); // слушатель клика повешен на кнопку "+" ("add")
 
+// btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
+btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика повешен на кнопку "+" ("add")
 
 function handlerButtonEditClick(evt) {
   evt.preventDefault();
   // setPopupInputValue(); // НЕОБХ ВЫЗВАТЬ - ЗАПОЛНЕНИЕ ПОЛЕЙ
   openPopup(popupEditNode);
 }
-
 
 // --------------------------------
 function handlerButtonSaveSubmitForm(evt) {
@@ -72,7 +71,6 @@ popupEditNode.addEventListener('submit', handlerButtonSaveSubmitForm); // При
 btnEditProfile.addEventListener('click', handlerButtonEditClick);
 btnClose.addEventListener('click', handlerClosePopupClick); // слушатель клика повешен на кнопку "close"
 btnSave.addEventListener('click', handlerButtonSaveSubmitForm);
-
 
 // ФОРМА POPUP EDIT ---------------------------------------------------------------------------------------
 // откр
