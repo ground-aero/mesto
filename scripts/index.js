@@ -195,8 +195,7 @@ const INITIAL_CARDS = [
   },
 ];
 
-INITIAL_CARDS.forEach(function (element) {
-  // перебираем массив
+INITIAL_CARDS.forEach(function (element) {  // перебираем массив
   const cardElement = cardTemplate.cloneNode(true); // клонируем содержимое тега <template> (через объявление переменной)
 
   cardElement.querySelector(selectors.title).textContent = element.name; // теперь из темплейта берем текстовое содержимое тега <>, и присваиваем соотв. значение(я) из перебираемого массива
