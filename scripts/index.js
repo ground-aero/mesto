@@ -8,8 +8,8 @@ const btnSave = document.querySelector('.popup__btn-save');
 const btnClose = document.querySelector('.popup__btn-close');
 let inputName = page.querySelector('.popup__input_type_name'); // Воспользуйтесь инструментом .querySelector()
 let inputJob = page.querySelector('.popup__input_type_job');
-let profileName = page.querySelector('.profile__name');
-let profileJob = page.querySelector('.profile__job');
+let profileNameNode = page.querySelector('.profile__name');
+let profileJobNode = page.querySelector('.profile__job');
 // add Place
 const btnAddPlace = document.querySelector('.profile__btn-addplace');
 const popupAddPlaceNode = document.querySelector('.popup_type_add-place'); // Находим POPUP-add форму в DOM.
@@ -39,46 +39,57 @@ function closePopup(modal) {
   modal.classList.remove('popup_opened');
 }
 
-function handlerButtonAddPlaceClick(evt) {
-  // на кнопке "+"
-  evt.preventDefault();
-  openPopup(popupAddPlaceNode);
-}
-
-// btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
-btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика повешен на кнопку "+" ("add")
-
 function handlerButtonEditClick(evt) {
   evt.preventDefault();
-  // setPopupInputValue(); // НЕОБХ ВЫЗВАТЬ - ЗАПОЛНЕНИЕ ПОЛЕЙ
+  setPopupEditInputValue(); // вызв заполнение полей
   openPopup(popupEditNode);
+}
+
+// --------------- input values & textContent
+function setPopupEditInputValue() {
+  inputName.value = profileNameNode.textContent.trim(); // При открытии попапа поля формы заполняются данными из профиля.
+  inputJob.value = profileJobNode.textContent.trim();
+}
+
+function setEditNodeTextValue() {
+  profileNameNode.textContent = inputName.value; // Вставьте новые значения с помощью textContent
+  profileJobNode.textContent = inputJob.value; // Получаем значение полей inputName  и inputJob из свойства value. //  // Выберите элементы, куда должны быть вставлены значения полей.
 }
 
 // --------------------------------
 function handlerButtonSaveSubmitForm(evt) {
   // Функция Сохранения popup__btn-save и «отправки» данных из строк формы профиля, хотя пока она никуда отправляться не будет
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-
-  profileName.textContent = inputName.value; // Получите значение полей inputName  и inputJob из свойства value
-  profileJob.textContent = inputJob.value; // Выберите элементы, куда должны быть вставлены значения полей.
-  // Вставьте новые значения с помощью textContent
-
+  setEditNodeTextValue();
   closePopup(popupEditNode);
   // popupEditNodeClose(); // ВОЗМОЖНО ВЕРНУТЬ  !!!!!!!!!!
 }
 popupEditNode.addEventListener('submit', handlerButtonSaveSubmitForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 
+// ---------------
+function handlerButtonAddPlaceClick(evt) {
+  // на кнопке "+"
+  evt.preventDefault();
+  openPopup(popupAddPlaceNode);
+}
+
+//-------------
+// кнопки
 btnEditProfile.addEventListener('click', handlerButtonEditClick);
 btnClose.addEventListener('click', handlerClosePopupClick); // слушатель клика повешен на кнопку "close"
 btnSave.addEventListener('click', handlerButtonSaveSubmitForm);
+
+btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика повешен на кнопку "+" ("add")
+// btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
+page.addEventListener('click', handlerClosePopupClick);
 
 // ФОРМА POPUP EDIT ---------------------------------------------------------------------------------------
 // откр
 // function popupEditNodeOpen(modal) { // принимаем в кач-ве параметра ДОМ-элемент
 //   popupEditNode.classList.add('popup_opened'); // форме попап добавлен класс-модификатор открытия
 
-//   inputName.value = profileName.textContent; // При открытии попапа поля формы заполняются данными из профиля.
-//   inputJob.value = profileJob.textContent;
+//   inputName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
+//   inputJob.value = profileJobNode.textContent;
 // }
 // btnEditProfile.addEventListener('click', popupEditNodeOpen); // слушатель клика повешен на кнопку "edit"
 
@@ -106,11 +117,11 @@ btnSave.addEventListener('click', handlerButtonSaveSubmitForm);
 
 //  После внесения изменений и НАЖАТИЯ КНОПКИ «СОХРАНИТЬ» - btnSave
 // function handlerButtonSaveSubmitForm() {     // информация на странице ДОЛЖНА ОБНОВИТЬСЯ, А ПОПАП АВТОМАТИЧЕСКИ ЗАКРЫТЬСЯ:
-//    profileName.innerHTML = `
+//    profileNameNode.innerHTML = `
 //    <div class="profile__name-wrap">
 //      <h1 class="profile__name">${inputName.value}</h1>
 //    </div>`;
-//   profileJob.innerHTML = `
+//   profileJobNode.innerHTML = `
 //    <div class="profile__name-wrap">
 //     <p class="profile__job">${inputJob.value}</p>
 //    </div>`;

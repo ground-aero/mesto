@@ -16,15 +16,13 @@
 
 /* profile section */
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__elements-wrap/profile__elements-wrap.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__name-wrap/profile__name-wrap.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__btn-edit/profile__btn-edit.css);
+@import url(../blocks/profile/__btn-addplace/profile__btn-addplace.css);
 @import url(../blocks/profile/__job/profile__job.css);
-@import url(../blocks/profile/__elements-wrap/profile__elements-wrap.css);
-
-/* buttons - general style */
-@import url(../blocks/btn/btn.css);
 
 /* elements section */
 @import url(../blocks/elements/elements.css);
@@ -37,20 +35,20 @@
 @import url(../blocks/element/__btn-like/element__btn-like.css);
 @import url(../blocks/element/__btn-del/element__btn-del.css);
 
-/* Popup Add Place */
-@import url(../blocks/popup/_type_add-place/popup_type_add-place.css);
-@import url(../blocks/profile/__btn-addplace/profile__btn-addplace.css);
+/* btn - general style */
+@import url(../blocks/btn/btn.css);
 
 /* Popup . Popup edit. */
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_type_edit/popup_type_edit.css);
-@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/_type_edit/popup_type_edit.css); /* popup edit */
+@import url(../blocks/popup/_type_add-place/popup_type_add-place.css); /* popup add place */
+@import url(../blocks/popup/_opened/popup_opened.css); /* (1) POPUP OPENED */
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__btn-save/popup__btn-save.css);
-@import url(../blocks/popup/__btn-close/popup__btn-close.css);
+@import url(../blocks/popup/__btn-close/popup__btn-close.css); /* (2) POPUP CLOSED */
 
 /* footer section */
 @import url(../blocks/footer/footer.css);
