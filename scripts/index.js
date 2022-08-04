@@ -1,8 +1,7 @@
 // 'use strict';
 const page = document.querySelector('.page');
-
 // edit Profile
-const popupEditNode = document.querySelector('.popup_type_edit'); // Находим POPUP-edit форму в DOM.
+const popupEditNode = document.querySelector('.popup_type_edit'); // страница POPUP-edit
 const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
 const btnSave = document.querySelector('.btn_type_save-profile');
 const btnClose = document.querySelector('.popup__btn-close');
@@ -10,38 +9,6 @@ let inputEditName = page.querySelector('#popup__input_type_edit-name'); // Во�
 let inputEditJob = page.querySelector('#popup__input_type_job');
 let profileNameNode = page.querySelector('.profile__name');
 let profileJobNode = page.querySelector('.profile__job');
-// // Каждый попап сохраните в своей переменной и создайте функцию, которая будут принимать в качестве аргумента указание,
-// // какой именно попап надо открыть или закрыть, т.е. передавайте туда класс-модификатор из совета ранее.
-// ///// - ЧЕРНОВИК - \\\\\\ ФОРМА POPUP EDIT /////////// ----------------------------------------------------------
-// откр
-// function popupEditNodeOpen(modal) { // принимаем в кач-ве параметра ДОМ-элемент
-//   popupEditNode.classList.add('popup_opened'); // форме попап добавлен класс-модификатор открытия
-
-//   inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
-//   inputEditJob.value = profileJobNode.textContent;
-// }
-// btnEditProfile.addEventListener('click', popupEditNodeOpen); // слушатель клика повешен на кнопку "edit"
-
-// закр
-// function popupEditNodeClose() {
-//   popupEditNode.classList.remove('popup_opened'); // из формы попап удаляется класс-модификатор открытия
-// }
-// btnClose.addEventListener('click', popupEditNodeClose); // слушатель клика повешен на кнопку "close"
-// -------------------------------------------------------------------------------------------------------------
-
-//  После внесения изменений и НАЖАТИЯ КНОПКИ «СОХРАНИТЬ» - btnSave
-// function handlerButtonSaveSubmitEditForm() {     // информация на странице ДОЛЖНА ОБНОВИТЬСЯ, А ПОПАП АВТОМАТИЧЕСКИ ЗАКРЫТЬСЯ:
-//    profileNameNode.innerHTML = `
-//    <div class="profile__name-wrap">
-//      <h1 class="profile__name">${inputEditName.value}</h1>
-//    </div>`;
-//   profileJobNode.innerHTML = `
-//    <div class="profile__name-wrap">
-//     <p class="profile__job">${inputEditJob.value}</p>
-//    </div>`;
-
-//    popupEditNodeClose();
-// }
 
 // ---- обработчик закрытия попапов, по кнопке "Х" и клику на страницу ------
 function handlerClosePopupClick(evt) {
@@ -55,7 +22,8 @@ function handlerClosePopupClick(evt) {
   }
 }
 
-function openPopup(modal) { // modal - параметр в который подставляютлся любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
+function openPopup(modal) {
+  // modal - параметр в который подставляютлся любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
   modal.classList.add('popup_opened');
 }
 
@@ -69,33 +37,32 @@ function handlerButtonEditClick(evt) {
   setPopupEditInputValue(); // вызв заполнение полей
   openPopup(popupEditNode);
 }
-// --------------- input values & textContent
+// --- input values & textContent
 function setPopupEditInputValue() {
   inputEditName.value = profileNameNode.textContent.trim(); // При открытии попапа поля формы заполняются данными из профиля.
   inputEditJob.value = profileJobNode.textContent.trim();
 }
-function setEditNodeTextValue() {
+function setEditNodeTextContent() {
   profileNameNode.textContent = inputEditName.value; // Вставьте новые значения с помощью textContent
   profileJobNode.textContent = inputEditJob.value; // Получаем значение полей inputEditName  и inputEditJob из свойства value. //  // Выберите элементы, куда должны быть вставлены значения полей.
 }
-// --------- обрботчик "сохранить" в ноде Edit
-function handlerButtonSaveSubmitEditForm(evt) {
-  // Функция Сохранения btn_type_save-profile и «отправки» данных из строк формы профиля, хотя пока она никуда отправляться не будет
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  setEditNodeTextValue();
+// --- Ф-ция обработчик по форме Edit / "сохранить" и "отправить" данные из строу формы профиля
+function handlerSaveSubmitEditForm(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  setEditNodeTextContent();
   closePopup(popupEditNode);
 }
-popupEditNode.addEventListener('submit', handlerButtonSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
+popupEditNode.addEventListener('submit', handlerSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
 
 //-------- к н о п к и
 btnEditProfile.addEventListener('click', handlerButtonEditClick);
-btnSave.addEventListener('click', handlerButtonSaveSubmitEditForm);
+btnSave.addEventListener('click', handlerSaveSubmitEditForm);
 btnClose.addEventListener('click', handlerClosePopupClick); // addEL на кнопку "close"
 
 //
 //
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХ
-const INITIAL_CARDS = [
+const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
@@ -124,109 +91,159 @@ const INITIAL_CARDS = [
 
 const selectors = {
   list: '.elements__list', // список карточек
-  template: '#element-template',
+  cardTemplate: '#element-template',
   card: '.element',
   image: '.element__img',
   titleWrapper: '.element__info-wrap',
-  title: '.element__title',
-  btnLike: '.element__btn-like', // была объявлена выше
-  btnDel: '.element__btn-del',
+  title: '.element__title', // title of template card
+  btnLike: '.element__btn-like', // like of template card
+  btnDel: '.element__btn-del', // del of template card
+  like: '.element__btn-like_active', // like
 };
-const cardsList = document.querySelector(selectors.list); // выбрали список
-const cardTemplate = document.querySelector(selectors.template).content.querySelector(selectors.card); // темплейт .content, и children
+const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / раздела profile
+const popupAddPlaceNode = document.querySelector('.popup_type_add-place'); // страница add place
+const formElementCard = document.querySelector('#popup__container_add-place'); // окно 430px add place
 
-// перебором массива, загрузка карточек из массива 
-INITIAL_CARDS.forEach(function (element) {
-  const cardElement = cardTemplate.cloneNode(true); // клонируем содержимое тега <template> (через объявление переменной)
-  cardElement.querySelector(selectors.title).textContent = element.name; // теперь из темплейта берем текстовое содержимое тега <>, и присваиваем соотв. значение(я) из перебираемого массива
-  cardElement.querySelector(selectors.image).src = element.link; // из темплейта берем текстовое содержимое тега <>, и присваиваем соотв. значение(я) из перебираемого массива
+const formAddPlace = document.querySelector('.popup__form'); // input-form
+const inputAddPlaceName = page.querySelector(
+  '#popup__input_type_add-place-name'
+); // поле инпут name / add place
+const inputAddPlaceLink = page.querySelector(
+  '#popup__input_type_add-place-link'
+); // поле инпут link / add place
+const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать"
 
-  cardsList.append(cardElement); // в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше
-});
+const cardsList = document.querySelector(selectors.list); // список <ul>
+const cardTemplate = document.querySelector(selectors.cardTemplate).content; //.querySelector(selectors.card); // темплейт .content, и children
 
-const btnAddPlace = document.querySelector('.profile__btn-addplace');
-const btnCreatePlace = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать"
-const popupAddPlaceNode = document.querySelector('.popup_type_add-place'); // Находим POPUP-add форму в DOM.
-// let btnLike = page.querySelectorAll('.element__btn-like');
+const card = cardTemplate.querySelector(selectors.card);
 
-// --- обработчик кнопки "+" / Place / открыть 
+const popupOfImage = document.querySelector('.popup_type_zoomer'); // страница img popup
+const popupImage = document.querySelector('.popup__img'); // img popup
+const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
+
+// ф-ция создания узла/карточки,
+function createCard(link, name) {
+  // const cardElement = cardTemplate.querySelector(selectors.card).cloneNode(true); // клонир содерж 1 карточки
+  const cardElement = cardTemplate
+    .querySelector(selectors.card)
+    .cloneNode(true); // клонир содерж 1 карточки
+
+  const cardImage = cardElement.querySelector(selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
+  const cardTitle = cardElement.querySelector(selectors.title);
+  const cardBtnDel = cardElement.querySelector(selectors.btnDel);
+  const cardBtnLike = cardElement.querySelector(selectors.btnLike);
+
+  console.log(cardBtnDel);
+  // (для клонированной карточки) присваиваем атрибуты с данными со входа
+  cardImage.src = link;
+  cardTitle.textContent = name;
+  cardImage.alt = name;
+
+  // удаление карточки
+  cardBtnDel.addEventListener('click', () => cardElement.remove());
+  //  cardBtnDel.addEventListener('click', function (evt) {
+  //   cardElement.remove();
+  //   });
+
+  // лайк
+  cardBtnLike.addEventListener('click', () =>
+    cardBtnLike.classList.toggle(selectors.like)
+  );
+
+  // зум-попап картинки
+  cardImage.addEventListener('click', () => {
+    popupImage.src = link;
+    popupText.textContent = name;
+    popupImage.alt = name;
+    popupOpen(popupOfImage);
+  });
+
+  return cardElement; // карточка с заполненным содержимым
+}
+createCard();
+
+// cardBtnDel.addEventListener('click', () => cardElement.remove());
+
+// ф-ция: добавление на страницу. container - лист
+function renderCard(container, data, position = 'before') {
+  // const card = createCard(data); //node
+  switch (position) {
+    case 'before':
+      container.prepend(createCard(data.link, data.name));
+      break;
+    case 'after':
+      container.append(createCard(data.link, data.name));
+      break;
+    default:
+      break;
+  }
+  // container.append(card)
+}
+
+// слушатель окна 430px / add place
+function addEventListener() {
+  formElementCard.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    renderCard(
+      cardsList,
+      { link: inputAddPlaceLink.value, name: inputAddPlaceName.value },
+      'before'
+    );
+    closePopup(popupAddPlaceNode);
+  });
+}
+addEventListener();
+
+// createInitialCards();
+// ---моя версия -------------------------------------------------
+function createInitialCards() {
+  // initialCards.forEach((item) => card.append(createCard(item.link, item.name)));
+  initialCards.forEach(function (item) {
+    const cardElements = cardTemplate.cloneNode(true); // клонируем содержимое тега <template> (через объявление переменной)
+    cardElements.querySelector(selectors.title).textContent = item.name; // каждому item-у из темплейта присваиваем соотв. значение(я) из перебираемого массива (берем текстовое содержимое тега <>
+    cardElements.querySelector(selectors.image).src = item.link;
+
+    cardsList.append(cardElements); // в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше
+  });
+}
+createInitialCards();
+
+// ----------------------------------------------
+// открыть (диалоговое окно) add place попап
+
+// --- обработчик кнопки "+" / Place / открыть
 function handlerButtonAddPlaceClick(evt) {
   evt.preventDefault();
   openPopup(popupAddPlaceNode);
 }
-btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика повешен на кнопку "+" ("add")
+btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика на кнопке "+"
 // btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
-
-// ######## НАПИСАТЬ ДОБАВЛЕНИЕ КАРТОЧЕК
-
-// Сделайте так, чтобы при клике на «сохранить» 'btnSave'(.btn_type_save-profile) новая карточка попадала в начало контейнера с ними.
-// А диалоговое окно после добавления автоматически закрывалось.
-// Чтобы создавать новые карточки, добавьте обработчик событий submit.
-//Сделайте это аналогично прошлому спринту, в котором вы настраивали редактирование информации о пользователе.
-
-// --- обрботчик "сохранить(submit)" / Place / 
-
-function handlerCreateSubmitPlaceForm(evt) {
-  // --- обрботчик (submit) создать / Place /
-  // Функция Сохранения btn_type_save-profile и «отправки» данных из строк формы профиля, хотя пока она никуда отправляться не будет
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-
-  const inputAddPlaceName = page.querySelector('#popup__input_type_add-place-name'); // input fields / add place
-  const inputAddPlaceLink = page.querySelector('#popup__input_type_add-place-link');
-  // popup_type_add-place.#popup__input_type_edit-name.value = selectors.title.text;
-  inputAddPlaceName.value = selectors.title.textContent; // присваиваем набранный текст в поле инпут
-
-  setEditNodeTextValue();
-  closePopup(popupAddPlaceNode);
-}
-
-btnCreatePlace.addEventListener('submit', handlerCreateSubmitPlaceForm); // Прикрепляем обработчик к кнопке: будет следить за событием “submit” - «отправка»
-//-------------------------------------------------------------------
-
 
 //-------- к н о п к и
 page.addEventListener('click', handlerClosePopupClick);
+// const btnLike = page.querySelectorAll('.element__btn-like');
 
-// ФОРМА POPUP ADD -----------------
-// откр
-// function popupAddPlaceNodeOpen() {
-//   popupAddPlaceNode.classList.add('popup_opened'); // форме попап добавлен класс-модификатор открытия
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// xxxx - openPopup(popupImageContainer) - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// function openPopup(modal) {
+//   // p.s - одна общая кнопка закрытия и один addEventListener ......
+//   modal.classList.add('popup_visible');
 // }
-// btnAddPlace.addEventListener('click', popupAddPlaceNodeOpen); // слушатель клика повешен на кнопку "+" ("add")
 
-// // закр
-// function popupAddPlaceNodeClose() {
-//   popupAddPlaceNode.classList.remove('popup_opened'); // из формы попап удаляется класс-модификатор открытия
+// function closePopup(evt) {
+//   const closeBtn = evt.target;
 
-//   btnClose.addEventListener('click', popupAddPlaceNodeClose); // слушатель клика повешен на кнопку "close"
-// }
-// ---------------------------------------------------------------------------------------------------------
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-
-
-
-
-
-
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// function renderCard(data, container, position = 'append') {
-//   const card = createCard(data); //node
-//   switch (position) {
-//     case 'append':
-//       return container.append(card);
-//     case 'prepend':
-//       return container.prepend(card);
-//     case 'before':
-//       return container.before(card);
-//     case 'after':
-//       return container.after(card);
-//     default:
-//       return;
+//   if (closeBtn.classList.contains('popup__close-buttonm')) {
+//     closeBtn.closest('popup').classList.remove('popup_visible');
 //   }
-//   // container.append(todo)
 // }
+
+// дополнительно !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// page.addEventListener('click', closePopup);
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// xxxxxxxxxxxxxxxxx reserved xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 // ##################################################################################################################
 // function createCard(data) {
@@ -260,56 +277,15 @@ page.addEventListener('click', handlerClosePopupClick);
 // createCard();
 
 // function renderCard(data, container) {
-//   // Задача ф-ции: добавимть на страницу. container - это наш лист
+//   // Задача ф-ции: добавить на страницу. container - лист
 //   const card = createCard(data); // получаем node // передаем эти данные в createCard, которые будут в нее переданы в момент
 //   container.append(card); // добавляем ноду на страницу
 
 //   // list.append(cardElement); // момент добавления карточки (ф-ция создания была выше)
 // }
 
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// function renderCard(data, container, position = 'append') {
-//   const card = createCard(data); //node
-//   switch (position) {
-//     case 'append':
-//       return container.append(card);
-//     case 'prepend':
-//       return container.prepend(card);
-//     case 'before':
-//       return container.before(card);
-//     case 'after':
-//       return container.after(card);
-//     default:
-//       return;
-//   }
-//   // container.append(todo)
-// }
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxчччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччч
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// xxxx - openPopup(popupImageContainer) - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// function openPopup(modal) {
-//   // p.s - одна общая кнопка закрытия и один addEventListener ......
-//   modal.classList.add('popup_visible');
-// }
-
-// function closePopup(evt) {
-//   const closeBtn = evt.target;
-
-//   if (closeBtn.classList.contains('popup__close-buttonm')) {
-//     closeBtn.closest('popup').classList.remove('popup_visible');
-//   }
-// }
-
-// дополнительно !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// page.addEventListener('click', closePopup);
-
-//
-//
-//
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// xxxxxxxxxxxxxxxxx reserved xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//-------------------------------------------------------------------
 
 // const templateCard = page.querySelector('#template-card').content; // получаем Темплейт
 // const elementsCardsList = page.querySelector('.elements__list'); // получаем тег списка всех карточек - секции elements
@@ -331,4 +307,4 @@ page.addEventListener('click', handlerClosePopupClick);
 
 // // const sectionElementsCards = page.querySelectorAll('.elements__list.element'); // карточки из секции elements ul>li
 
-// // sectionElementsCards.innerHTML = INITIAL_CARDS;
+// // sectionElementsCards.innerHTML = initialCards;

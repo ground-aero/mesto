@@ -33,71 +33,34 @@
             </section>
 
             <!-- elements section -->
+            <!-- <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button> -->
             <section class="elements content__section">
                 <!-- grid -->
                 <ul class="elements__list">
-                    <!-- карточка -->
-                    <!-- <li class="element">
-                        <button class="element__btn-del" type="button" aria-label="delete"></button>
-                        <img class="element__img" src="./images/1karachaevsk.jpg"
-                            alt="древнее сооружение с купольной крышей на фоне зеленых гор"> -->
-                    <!-- flex -->
-                    <!-- <div class="element__info-wrap">
-                            <h2 class="element__title">Карачаевск</h2>
-                            <button class="element__btn-like" type="button" aria-label="like"></button>
-                    </div> -->
-                    </li>
-                    <!-- <li class="element">
-                        <img class="element__img" src="./images/2elbrus.jpg"
-                            alt="гора на заднем плане на фоне заката, широкое поле и холмы на переднем">
-                        <div class="element__info-wrap">
-                            <h2 class="element__title">Гора Эльбрус</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__img" src="./images/3dombai.jpg"
-                            alt="заснеженная горная вершина на заднем плане, лесной косогор на переднем плане">
-                        <div class="element__info-wrap">
-                            <h2 class="element__title">Домбай</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__img" src="./images/4krasnodar.jpg"
-                            alt="памятник Екатерине второй на центральной площади города">
-                        <div class="element__info-wrap">
-                            <h2 class="element__title">Краснодар</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__img" src="./images/5gelendzhik.jpg"
-                            alt="Набережная, город Геленджик на фоне моря">
-                        <div class="element__info-wrap">
-                            <h2 class="element__title">Геленджик</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__img" src="./images/6k-cherkessk.jpg"
-                            alt="старое каменное строение с круглой башней, расположенное в предгорье">
-                        <div class="element__info-wrap">
-                            <h2 class="element__title">Карачаево-Черкессия</h2>
-                            <button type="button" aria-label="like" class="element__btn-like"></button>
-                        </div>
-                    </li> -->
-                </ul>
+                    <!-- TEMPLATE карточка -->
+                    <template id="element-template">
+                        <!-- карточка -->
+                        <li class="element">
+                            <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button>
+                            <img class="element__img" alt="#" src="#">
+                            <!-- flex -->
+                            <div class="element__info-wrap">
+                                <h2 class="element__title">Место</h2>
+                                <button class="element__btn-like element__btn-like_active" type="button" aria-label="like"></button>
+                            </div>
+                        </li>
+                    </template>
+                 </ul>
             </section>
 
             <!-- //////////////// POPUPS /////////////// -->
             <!-- popup Edit Profile -->
             <div class="popup popup_type_edit">
                 <!-- flex -->
-                <div class="popup__container">
+                <div class="popup__container" id="popup__container_edit">
                     <button class="popup__btn-close" type="button" aria-label="close"></button>
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form" name="form" action="#">
+                    <form class="popup__form" name="form" action="#" novalidate>
                         <input class="popup__input" id="popup__input_type_edit-name" name="name" type="text"
                             placeholder="Жак-Ив Кусто" required>
                         <input class="popup__input" id="popup__input_type_job" name="job" type="text"
@@ -108,10 +71,10 @@
             </div>
             <!-- popup Add Place -->
             <div class="popup popup_type_add-place">
-                <div class="popup__container">
+                <div class="popup__container" id="popup__container_add-place">
                     <button class="popup__btn-close" type="button" aria-label="close"></button>
                     <h2 class="popup__title">Новое место</h2>
-                    <form class="popup__form" name="form" action="#">
+                    <form class="popup__form" name="form" action="#" novalidate>
                         <input class="popup__input" id="popup__input_type_add-place-name" name="name" type="text"
                             placeholder="Название" required>
                         <input class="popup__input" id="popup__input_type_add-place-link" name="link" type="text"
@@ -121,13 +84,14 @@
                 </div>
             </div>
             <!-- popup image !!!!!!!!!!! NEED TO CODE HERE -->
-            <!-- <div class="popup popup_type_zoomer">
-                <div class="popup__img-container popup__container-img_type_zoomer">
-                    <button class="popup__close-img opacity-transition opacity-transition_type_medium" type="button"></button>
+            <div class="popup popup_type_zoomer">
+                <div class="popup__container popup__container_img_type_zoomer">
+                    <button class="popup__close-img opacity-transition opacity-transition_type_medium"
+                        type="button"></button>
                     <img class="popup__img" src="#" alt="">
                     <h3 class="popup__subtitle"></h3>
                 </div>
-            </div> -->
+            </div>
         </main>
 
         <!-- footer -->
@@ -138,20 +102,9 @@
 
     </div>
 
-    <!-- template -->
-    <template id="element-template">
-        <!-- карточка -->
-        <li class="element">
-            <button class="element__btn-del" type="button" aria-label="delete"></button>
-            <img class="element__img" alt="#" src="#">
-            <!-- flex -->
-            <div class="element__info-wrap">
-                <h2 class="element__title">Место</h2>
-                <button class="element__btn-like" type="button" aria-label="like"></button>
-            </div>
-        </li>
-    </template>
 
+
+    <script src="./scripts/test.js" defer></script>
     <script src="./scripts/index.js" defer></script>
 
 </body>

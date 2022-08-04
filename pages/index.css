@@ -34,6 +34,7 @@
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__btn-like/element__btn-like.css);
 @import url(../blocks/element/__btn-del/element__btn-del.css);
+@import url(../blocks/element/__btn-like/_active/element__btn-like_active.css);
 
 /* btn - general style */
 @import url(../blocks/btn/btn.css);
@@ -42,14 +43,17 @@
 
 /* Popup . Popup edit. */
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_type_edit/popup_type_edit.css); /* popup edit */
-@import url(../blocks/popup/_type_add-place/popup_type_add-place.css); /* popup add place */
+@import url(../blocks/popup/_type/popup_type_edit.css);  /* popup edit */
+@import url(../blocks/popup/_type/popup_type_add-place.css); /* popup add place */
+@import url(../blocks/popup/_type/popup_type_zoomer.css); /* popup img zoomer */
+@import url(../blocks/popup/__img/popup__img.css);
+@import url(../blocks/popup/__subtitle/popup__subtitle.css);
 @import url(../blocks/popup/_opened/popup_opened.css); /* (1) POPUP OPENED */
 @import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__container/_img/popup__container_img_type_zoomer\ .css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__btn-save/popup__btn-save.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css); /* (2) POPUP CLOSED */
 
 /* footer section */
