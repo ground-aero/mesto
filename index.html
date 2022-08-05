@@ -35,22 +35,10 @@
             <!-- elements section -->
             <!-- <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button> -->
             <section class="elements content__section">
-                <!-- grid -->
+                <!-- grid list - for loading & adding cards -->
                 <ul class="elements__list">
-                    <!-- TEMPLATE карточка -->
-                    <template id="element-template">
-                        <!-- карточка -->
-                        <li class="element">
-                            <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button>
-                            <img class="element__img" alt="#" src="#">
-                            <!-- flex -->
-                            <div class="element__info-wrap">
-                                <h2 class="element__title">Место</h2>
-                                <button class="element__btn-like element__btn-like_active" type="button" aria-label="like"></button>
-                            </div>
-                        </li>
-                    </template>
-                 </ul>
+
+                </ul>
             </section>
 
             <!-- //////////////// POPUPS /////////////// -->
@@ -86,7 +74,7 @@
             <!-- popup image !!!!!!!!!!! NEED TO CODE HERE -->
             <div class="popup popup_type_zoomer">
                 <div class="popup__container popup__container_img_type_zoomer">
-                    <button class="popup__close-img opacity-transition opacity-transition_type_medium"
+                    <button class="popup__close-img popup__btn-close opacity-transition opacity-transition_type_medium"
                         type="button"></button>
                     <img class="popup__img" src="#" alt="">
                     <h3 class="popup__subtitle"></h3>
@@ -94,6 +82,20 @@
             </div>
         </main>
 
+        <!-- TEMPLATE карточка -->
+        <template id="element-template">
+            <!-- карточка -->
+            <li class="element">
+                <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button>
+                <img class="element__img" alt="#" src="#">
+                <!-- flex -->
+                <div class="element__info-wrap">
+                    <h2 class="element__title">Место</h2>
+                    <button class="element__btn-like" type="button" aria-label="like"></button>
+                </div>
+            </li>
+        </template>
+        
         <!-- footer -->
         <footer class="footer">
             <p class="footer__autho">&copy; 2022 Mesto Russia</p>

@@ -1,4 +1,25 @@
 
+// function a() {
+//     let a = 700;
+    
+//     console.log(a);
+//     console.log('hey hi!! - - ')
+// }
+//     a();
+
+
+
+// const objectA = {
+//     a: 10,
+//     b: true,
+// }
+
+// const copyOfA = objectA
+
+// copyOfA.c = 'my name is Eugen'
+
+//   console.log(objectA);
+
 // const person = {
 //     name: 'Bob',
 //     age: 25,

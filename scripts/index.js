@@ -4,7 +4,7 @@ const page = document.querySelector('.page');
 const popupEditNode = document.querySelector('.popup_type_edit'); // страница POPUP-edit
 const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
 const btnSave = document.querySelector('.btn_type_save-profile');
-const btnClose = document.querySelector('.popup__btn-close');
+const btnsClose = document.querySelectorAll('.popup__btn-close');
 let inputEditName = page.querySelector('#popup__input_type_edit-name'); // Воспользуйтесь инструментом .querySelector()
 let inputEditJob = page.querySelector('#popup__input_type_job');
 let profileNameNode = page.querySelector('.profile__name');
@@ -57,8 +57,7 @@ popupEditNode.addEventListener('submit', handlerSaveSubmitEditForm); // Прик
 //-------- к н о п к и
 btnEditProfile.addEventListener('click', handlerButtonEditClick);
 btnSave.addEventListener('click', handlerSaveSubmitEditForm);
-btnClose.addEventListener('click', handlerClosePopupClick); // addEL на кнопку "close"
-
+// btnClose.addEventListener('click', handlerClosePopupClick); // addEL на кнопку "close"
 //
 //
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХХ
@@ -115,8 +114,9 @@ const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // 
 
 const cardsList = document.querySelector(selectors.list); // список <ul>
 const cardTemplate = document.querySelector(selectors.cardTemplate).content; //.querySelector(selectors.card); // темплейт .content, и children
+// const cardElement = cardTemplate.querySelector(selectors.card); // картточка внутри темпейта
 
-const card = cardTemplate.querySelector(selectors.card);
+const btnDel = cardTemplate.querySelectorAll(selectors.btnDel);
 
 const popupOfImage = document.querySelector('.popup_type_zoomer'); // страница img popup
 const popupImage = document.querySelector('.popup__img'); // img popup
@@ -134,22 +134,25 @@ function createCard(link, name) {
   const cardBtnDel = cardElement.querySelector(selectors.btnDel);
   const cardBtnLike = cardElement.querySelector(selectors.btnLike);
 
-  console.log(cardBtnDel);
   // (для клонированной карточки) присваиваем атрибуты с данными со входа
   cardImage.src = link;
   cardTitle.textContent = name;
   cardImage.alt = name;
 
   // удаление карточки
-  cardBtnDel.addEventListener('click', () => cardElement.remove());
-  //  cardBtnDel.addEventListener('click', function (evt) {
-  //   cardElement.remove();
-  //   });
+  cardBtnDel.addEventListener('click', function () {
+    const cardElement = cardBtnDel.closest('.element');
+    cardElement.remove();
+  });
+  // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
+  console.log(cardBtnLike);
   // лайк
-  cardBtnLike.addEventListener('click', () =>
-    cardBtnLike.classList.toggle(selectors.like)
-  );
+  cardBtnLike.addEventListener('click', function like(e) {
+    e.target.classList.toggle('element__btn-like_active');
+    return e;
+  });
+  // cardBtnLike.addEventListener('click', like);
 
   // зум-попап картинки
   cardImage.addEventListener('click', () => {
@@ -161,13 +164,23 @@ function createCard(link, name) {
 
   return cardElement; // карточка с заполненным содержимым
 }
-createCard();
+
+// ф-ция кнопки лайк
+// function like(e) {
+//   e.target.classList.toggle('element__btn-like_active');
+// }
+
+// ф-ция удаления карточки
+// function del(e) {
+//   e.target. cardElement.remove();
+// }
 
 // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
 // ф-ция: добавление на страницу. container - лист
 function renderCard(container, data, position = 'before') {
-  // const card = createCard(data); //node
+  // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!!!!!!!
+  // const cardElement = createCard(data); //node
   switch (position) {
     case 'before':
       container.prepend(createCard(data.link, data.name));
@@ -189,7 +202,7 @@ function addEventListener() {
       cardsList,
       { link: inputAddPlaceLink.value, name: inputAddPlaceName.value },
       'before'
-    );
+    ); // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!!!!!!!
     closePopup(popupAddPlaceNode);
   });
 }
@@ -199,12 +212,9 @@ addEventListener();
 // ---моя версия -------------------------------------------------
 function createInitialCards() {
   // initialCards.forEach((item) => card.append(createCard(item.link, item.name)));
-  initialCards.forEach(function (item) {
-    const cardElements = cardTemplate.cloneNode(true); // клонируем содержимое тега <template> (через объявление переменной)
-    cardElements.querySelector(selectors.title).textContent = item.name; // каждому item-у из темплейта присваиваем соотв. значение(я) из перебираемого массива (берем текстовое содержимое тега <>
-    cardElements.querySelector(selectors.image).src = item.link;
-
-    cardsList.append(cardElements); // в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше
+  initialCards.forEach(function (item) { // перебираемый объект 
+    renderCard(cardsList, item, 'before'); // // передаем весь объект 
+    // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
   });
 }
 createInitialCards();
@@ -221,7 +231,10 @@ btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слуша
 // btnAddPlace.addEventListener('click', () => openPopup(popupAddPlaceNode)); // слушатель клика повешен на кнопку "+" ("add")
 
 //-------- к н о п к и
-page.addEventListener('click', handlerClosePopupClick);
+btnsClose.forEach((buttonClose) =>
+  buttonClose.addEventListener('click', handlerClosePopupClick)
+);
+// page.addEventListener('click', handlerClosePopupClick);
 // const btnLike = page.querySelectorAll('.element__btn-like');
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
