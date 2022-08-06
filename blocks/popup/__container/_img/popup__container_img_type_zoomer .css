@@ -1,6 +1,11 @@
 .popup__container_img_type_zoomer {
-  padding: 0;
-  width: inherit;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 75vw;
+  max-height: 75vh;
+  /* width: inherit; */
   background-color: transparent;
-  border-radius: 0;
+  box-sizing: border-box;
+  /* border-radius: 0; */
 }

@@ -1,4 +1,7 @@
 /* additional modificator generated with JS func  */
 .popup_opened {
-  display: flex;
+  /* display: flex; */
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
 }

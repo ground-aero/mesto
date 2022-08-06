@@ -41,11 +41,13 @@
 @import url(../blocks/btn/_type/btn_type_save-profile.css);
 @import url(../blocks/btn/_type/btn_type_create-place.css);
 
+@import url(../blocks/opacity-transition/opacity-transition.css);
+
 /* Popup . Popup edit. */
-@import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_type/popup_type_edit.css);  /* popup edit */
-@import url(../blocks/popup/_type/popup_type_add-place.css); /* popup add place */
-@import url(../blocks/popup/_type/popup_type_zoomer.css); /* popup img zoomer */
+@import url(../blocks/popup/popup.css); /* overlay for all 2 popups */
+/* @import url(../blocks/popup/_type/popup_type_edit.css);  popup edit */
+/* @import url(../blocks/popup/_type/popup_type_add-place.css); popup add place */
+/* @import url(../blocks/popup/_type/popup_type_zoomer.css); popup img zoomer */
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__subtitle/popup__subtitle.css);
 @import url(../blocks/popup/_opened/popup_opened.css); /* (1) POPUP OPENED */
