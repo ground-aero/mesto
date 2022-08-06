@@ -99,7 +99,7 @@ const formAddPlace = document.querySelector('.popup__form'); // input/form
 const inputAddPlaceName = page.querySelector('#input-name'); // input/field/name/ add place
 const inputAddPlaceLink = page.querySelector('#input-link'); // input/field/link/ add place
 const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать"
-// <template>,  list <ul>, btn-del 
+// <template>,  list <ul>, btn-del
 const cardsList = document.querySelector('.elements__list'); // список карточек <ul>
 const cardTemplate = document.querySelector('#element-template').content; //.querySelector(selectors.card); // темплейт .content, и children
 const btnDel = cardTemplate.querySelectorAll('.element__btn-del');
@@ -260,4 +260,3 @@ btnsClose.forEach((buttonClose) =>
 // elementsCardsList.append(cloneOfElementCard);
 
 // // const sectionElementsCards = page.querySelectorAll('.elements__list.element'); // карточки из секции elements ul>li
-
