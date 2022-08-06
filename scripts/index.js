@@ -133,13 +133,13 @@ function createCard(link, name) {
 
   console.log(cardBtnLike);
   // лайк
-  cardBtnLike.addEventListener('click', function like(e) {
-    e.target.classList.toggle('element__btn-like_active');
-    return e;
+  cardBtnLike.addEventListener('click', function like(el) {
+    el.target.classList.toggle('element__btn-like_active');
+    return el;
   });
   // cardBtnLike.addEventListener('click', like);
 
-  // зум-попап картинки
+  // img open-popup/ zoom
   cardImage.addEventListener('click', () => {
     popupImage.src = link;
     popupText.textContent = name;
@@ -151,20 +151,19 @@ function createCard(link, name) {
 }
 
 // обработчик открытия попапа img
-// function popupOfImage(e)
-
+// function popupOfImage(el)
 function handlerImagePopupClick(evt) {
   evt.preventDefault();
   openPopup(popupOfImage);
 }
 
 // ф-ция кнопки лайк
-// function like(e) {
+// function like(el) {
 //   e.target.classList.toggle('element__btn-like_active');
 // }
 
 // ф-ция удаления карточки
-// function del(e) {
+// function del(el) {
 //   e.target. cardElement.remove();
 // }
 
@@ -231,37 +230,6 @@ btnsClose.forEach((buttonClose) =>
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // xxxxxxxxxxxxxxxxx reserved xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-// ##################################################################################################################
-// function createCard(data) {
-//   // создание карточки (но еще не её добавление)
-//   // p.s - data (или name) - это элемент массива
-//   const cardElement = template.cloneNode(true); // из шаблона создаем разметку с содержимым, примен метод (cloneNode(true) - глубокое копирование со всеми дочерними элементами
-//   // теперь на этой склонированной ноде мы можем повесить обработчики события, и производить любые разные действия
-
-//   const cardImage = cardElement.querySelector(selectors.image);
-//   const cardTitle = cardElement.querySelector(selectors.title);
-//   const cardButtonLike = cardElement.querySelector(selectors.btnLike);
-//   const cardButtonDel = cardElement.querySelector(selectors.btnDel);
-
-//   cardButtonLike.addEventListener('click', function(evt) {
-//   // здесь создать эффект проставления лайка
-//   })
-
-//   // cardButtonDel.addEventListener('click', function (evt) {
-//   //   ... .remove // здесь создать удаление карточки
-//   // });
-
-//   cardTitle.textContent = data; // ?????????????????????????
-//   // data = { ?????????????????????????????
-//   //   name: name,
-//   //   link: link,
-//   // };
-//   // list.append(cardElement); // !!! выносим отдельно!!! Иначе карточка добавляется в момент ее создания (а это отдельная функция). Методом вставки узла (append) передаем готовую дом-ноду card
-
-//   return cardElement;
-// }
-// createCard();
-
 // function renderCard(data, container) {
 //   // Задача ф-ции: добавить на страницу. container - лист
 //   const card = createCard(data); // получаем node // передаем эти данные в createCard, которые будут в нее переданы в момент
@@ -293,4 +261,3 @@ btnsClose.forEach((buttonClose) =>
 
 // // const sectionElementsCards = page.querySelectorAll('.elements__list.element'); // карточки из секции elements ul>li
 
-// // sectionElementsCards.innerHTML = initialCards;
