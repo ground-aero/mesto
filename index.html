@@ -25,7 +25,8 @@
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button class="btn profile__btn-edit opacity-transition" type="button" aria-label="edit"></button>
+                        <button class="btn profile__btn-edit opacity-transition" type="button"
+                            aria-label="edit"></button>
                     </div>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
@@ -65,18 +66,19 @@
                     <form action="/" class="popup__form" name="place" tabindex="0" novalidate>
                         <input type="text" class="popup__input" id="input-name" name="name" placeholder="Название"
                             tabindex="1" required>
-                            <!-- <span class="popup__form_item-error popup__form_item-field_name"></span> -->
-                            <!--NEED class="popup__form-item_input-invalid"-->
+                        <!-- <span class="popup__form_item-error popup__form_item-field_name"></span> -->
+                        <!--NEED class="popup__form-item_input-invalid"-->
                         <input type="url" class="popup__input" id="input-link" name="link"
                             placeholder="Ссылка на картинку" tabindex="2" required>
-                            <!-- <span class="popup__form_item-error popup__form_item-field_link"></span> -->
+                        <!-- <span class="popup__form_item-error popup__form_item-field_link"></span> -->
                         <button type="submit" class="btn btn_type_create-place opacity-transition">Создать</button>
                     </form>
                 </div>
             </div>
-            <!-- popup image !!!!!!!!!!! NEED TO CODE HERE -->
+            <!-- popup image -->
             <div class="popup" id="overlay_img-zoom">
-                <div class="popup__container_img_type_zoomer"> <!-- window 430px ????-->
+                <div class="popup__container-img popup__container-img_type_zoomer">
+                    <!-- window 430px ????-->
                     <button class="popup__close-img popup__btn-close opacity-transition opacity-transition_type_middle"
                         type="button"></button>
                     <img class="popup__img" src="#" alt="">
@@ -89,7 +91,8 @@
         <template id="element-template">
             <!-- карточка -->
             <li class="element">
-                <button class="element__btn-del opacity-transition" id="element__btn-del" type="button" aria-label="delete"></button>
+                <button class="element__btn-del opacity-transition" id="element__btn-del" type="button"
+                    aria-label="delete"></button>
                 <img class="element__img" alt="#" src="#">
                 <!-- flex -->
                 <div class="element__info-wrap">
