@@ -48,30 +48,37 @@
                 <!-- flex -->
                 <div class="popup__container" id="popup__container_edit">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
+                    
+                    <form action="#" class="popup__form" name="profile" tabindex="0" novalidate> <!--novalidate отменяет стандартные браузерные сообщ об ошибке -->
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form action="/" class="popup__form" name="profile" tabindex="0" novalidate>
-                        <input type="text" class="popup__input" id="popup__input_type_edit-name" name="name"
-                            placeholder="Жак-Ив Кусто" tabindex="1" required>
-                        <input type="text" class="popup__input" id="popup__input_type_job" name="job"
-                            placeholder="Исследователь океана" tabindex="2" required>
-                        <button class="btn btn_type_save-profile opacity-transition" type="submit">Сохранить</button>
+                           <input type="text" class="popup__input" id="name-input" name="nameEdit"
+                            placeholder="Жак-Ив Кусто" tabindex="1" minlength="2" maxlength="40" required>
+                            <span class="popup__input-span_error_disabled name-input-error" id="input-error-edit"></span> <!-- display: none -->
+                            <input type="text" class="popup__input" id="job-input" name="job"
+                            placeholder="Исследователь океана" tabindex="2" minlength="2" maxlength="200" required>
+                        <span class="popup__input-span_error_disabled job-input-error" id="input-error-edit_minimum"></span>
+                            <button type="submit" class="btn btn_submit btn_type_save-profile opacity-transition">Сохранить</button>
                     </form>
+
                 </div>
             </div>
             <!-- popup Add Place -->
             <div class="popup" id="overlay_add-place">
                 <div class="popup__container" id="window_add-place">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
+                    
+                    <form action="#" class="popup__form" name="place" tabindex="0" novalidate>
                     <h2 class="popup__title">Новое место</h2>
-                    <form action="/" class="popup__form" name="place" tabindex="0" novalidate>
-                        <input type="text" class="popup__input" id="input-name" name="name" placeholder="Название"
-                            tabindex="1" required>
+                        <input type="text" class="popup__input" id="place-input" name="name" placeholder="Название"
+                            tabindex="1" minlength="1" maxlength="30" required>
+                            <span class="popup__input-span_error_disabled place-input-error" id="input-error-addplace"></span>
                         <!-- <span class="popup__form_item-error popup__form_item-field_name"></span> -->
                         <!--NEED class="popup__form-item_input-invalid"-->
-                        <input type="url" class="popup__input" id="input-link" name="link"
+                        <input type="url" class="popup__input" id="link-input" name="link"
                             placeholder="Ссылка на картинку" tabindex="2" required>
+                            <span class="popup__input-span_error_disabled link-input-error" id="input-error-addplace_url"></span>
                         <!-- <span class="popup__form_item-error popup__form_item-field_link"></span> -->
-                        <button type="submit" class="btn btn_type_create-place opacity-transition">Создать</button>
+                        <button type="submit" class="btn btn_submit btn_type_create-place opacity-transition">Создать</button>
                     </form>
                 </div>
             </div>
@@ -112,8 +119,9 @@
 
 
 
-    <script src="./scripts/test.js" defer></script>
+    <script src="./scripts/cards.js" defer></script>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
 
 </body>
 

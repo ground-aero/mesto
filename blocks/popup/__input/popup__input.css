@@ -11,8 +11,16 @@
   box-sizing: border-box;
 }
 
+/* .popup__input:invalid { */
+  /* border: 1px solid red; красная рамка для некорректных данных (для браузерного стиля по умолчанию */
+/* }  */
+
+/* .popup__input:valid { */
+  /* border: 1px solid green; зелёная - для корректных */
+/* }  */
+
 .popup__input::placeholder {
-  color: #000;
+  color: rgb(75, 75, 75);
 }
 
 .popup__input:last-of-type {

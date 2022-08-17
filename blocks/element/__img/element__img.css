@@ -4,3 +4,7 @@
   height: 282px;
   /* display: block; */
 }
+
+.element__img:hover {
+  cursor: pointer;
+}

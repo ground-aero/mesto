@@ -3,10 +3,11 @@ const page = document.querySelector('.page');
 // edit Profile
 const popupEditNode = document.querySelector('#overlay_edit'); // оверлей popup Edit
 const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
+const formProfile = document.forms.profile; // получаем форму profile по св-ву name
+let inputEditName = formProfile.elements.nameEdit; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
+let inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
 const btnSaveProfile = document.querySelector('.btn_type_save-profile');
 const btnsClose = document.querySelectorAll('.popup__btn-close');
-let inputEditName = page.querySelector('#popup__input_type_edit-name');
-let inputEditJob = page.querySelector('#popup__input_type_job');
 let profileNameNode = page.querySelector('.profile__name');
 let profileJobNode = page.querySelector('.profile__job');
 
@@ -39,8 +40,8 @@ function handlerButtonEditClick(evt) {
 }
 // --- input values & textContent
 function setPopupEditInputValue() {
-  inputEditName.value = profileNameNode.textContent.trim(); // При открытии попапа поля формы заполняются данными из профиля.
-  inputEditJob.value = profileJobNode.textContent.trim();
+  inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
+  inputEditJob.value = profileJobNode.textContent; // .trim();
 }
 function setEditNodeTextContent() {
   profileNameNode.textContent = inputEditName.value; // Вставьте новые значения с помощью textContent
@@ -55,32 +56,6 @@ function handlerSaveSubmitEditForm(evt) {
 popupEditNode.addEventListener('submit', handlerSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
 
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
 
 const selectors = {
   card: '.element', // карточка
@@ -94,10 +69,11 @@ const selectors = {
 const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 const popupAddPlaceNode = document.querySelector('#overlay_add-place'); // оверлей add place
 const formElementCard = document.querySelector('#window_add-place'); // окно 430px add place
-// input form / add place:
-const formAddPlace = document.querySelector('.popup__form'); // input/form
-const inputAddPlaceName = page.querySelector('#input-name'); // input/field/name/ add place
-const inputAddPlaceLink = page.querySelector('#input-link'); // input/field/link/ add place
+// input & form / add place:
+// const formAddPlace = document.querySelector('.popup__form'); // input/form
+const formAddPlace = document.forms.place; // получаем форму place по св-ву name
+const inputAddPlaceName = formAddPlace.elements.name; // ('#input-name'); // input/field/name/ add place
+const inputAddPlaceLink = formAddPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
 const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать"
 // <template>,  list <ul>, btn-del
 const cardsList = document.querySelector('.elements__list'); // список карточек <ul>
@@ -131,7 +107,6 @@ function createCard(link, name) {
   });
   // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
-  console.log(cardBtnLike);
   // лайк
   cardBtnLike.addEventListener('click', function like(el) {
     el.target.classList.toggle('element__btn-like_active');
@@ -225,38 +200,132 @@ btnsClose.forEach((buttonClose) =>
   buttonClose.addEventListener('click', handlerClosePopupClick)
 );
 
-// page.addEventListener('click', handlerClosePopupClick);
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// xxxxxxxxxxxxxxxxx validate xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-// xxxxxxxxxxxxxxxxx reserved xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// const inputsAll = Array.from(document.querySelectorAll('.popup__input')); // получ nodeList - поля инпута каждого из полей каждой из форм
 
-// function renderCard(data, container) {
-//   // Задача ф-ции: добавить на страницу. container - лист
-//   const card = createCard(data); // получаем node // передаем эти данные в createCard, которые будут в нее переданы в момент
-//   container.append(card); // добавляем ноду на страницу
+// const formError = document.querySelector('#input-error-edit'); // span error
+// console.log(inputsAll);
+// console.log(formError);
 
-//   // list.append(cardElement); // момент добавления карточки (ф-ция создания была выше)
+// // Функция, добавляет класс с ошибкой
+// const showInputError = (element, errorMessage) => {
+//   // передадим текст ошибки вторым параметром
+//   element.classList.add('popup__input_line_error'); // стили - нижняя красная линия
+//   // Заменим содержимое span с ошибкой на переданный параметр
+//   formError.textContent = errorMessage;
+//   formError.classList.add('popup__input-span_error_active'); // form__input-error_active // стили - span с красной ошибкой
+// };
+
+// // Функция, удаляет классы с ошибкой
+// const hideInputError = (element) => {
+//   element.classList.remove('form__input_line_error');
+//   formError.classList.remove('popup__input-span_error_active');
+//   // Очистим ошибку
+//   formError.textContent = '';
+// };
+
+// // Функция, проверяет валидность поля, внутри вызывает showInputError или hideInputError.
+// const isValid = () => {
+//   if (!inputEditName.validity.valid) {
+//     // Если поле не проходит валидацию, покажем ошибку
+//     // Передадим сообщение об ошибке вторым аргументом
+//     showInputError(inputEditName, inputEditName.validationMessage);
+//   } else {
+//     // Если проходит, скроем
+//     hideInputError(inputEditName);
+//   }
+// };
+// // const isValid = () => {
+// //  inputsAll.forEach(input => {
+// //   if (!input.validity.valid) {
+// //     // Если поле не проходит валидацию, покажем ошибку
+// //     // Передадим сообщение об ошибке вторым аргументом
+// //     showInputError(input, input.validationMessage);
+// //   } else {
+// //     // Если проходит, скроем
+// //     hideInputError(input);
+// //   }
+// // });
+// // }
+
+// formProfile.addEventListener('submit', function (evt) {
+//   // Отменим стандартное поведение по сабмиту // !! Выбрана только 1 форма из 2-х
+//   evt.preventDefault();
+// });
+
+// // Вызовем функцию isValid на каждый ввод символа
+// inputEditName.addEventListener('input', isValid);
+// // inputsAll.forEach(input => {
+// //   input.addEventListener('input', isValid)
+// // } )
+
+// #################### =============================================
+
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+
+// console.log(document.forms.profile) // получаем форму profile с содержимым
+// // document.forms.place // получаем форму place
+
+// // ...('#input-error-addplace_url') // <span>"Введите адрес сайта"
+// // ...('#input-error-edit_minimum') // <span>"Минимальное количество символов 2. Длина текста сейчас: 1 символ"
+// const inputErrorClass = document.querySelector('.popup__input-span_type_error'); // display: none; // <span>"Вы пропустили это поле"
+
+
+// // const input = document.querySelector('#input2');
+// // const error = document.querySelector('#error'); // Блок с ошибкой изначально скрыт
+
+// inputEditName.addEventListener('keydown', function (evt) {
+//   // Проверяем, была ли введена цифра
+//   if (!(evt.keyCode <= 57 && evt.keyCode >= 48)) {
+//     // Если пользователь ввёл не цифру, показываем блок с ошибкой
+//     inputErrorClass.style.display = 'block';
+//   }
+//   console.log(evt);
+// });
+// //   console.log(evt); // срабатывает при нажатии клавиши
+// // });
+
+// // -------------------------------------------
+// // управление состоянием кнопки submit/type
+// function setSubmitButtonState(isFormValid) {
+//   // отвечать за состояние кнопки сабмита.
+//   if (isFormValid) {
+//     // Если с формой всё в порядке, условие разблокирует:
+//     btnSaveProfile.removeAttribute('disabled');
+//     btnSaveProfile.classList.remove('btn_status_disabled');
+//   } else {
+//     // Если хотя бы одно из полей пустое, условие её заблокирует:
+//     btnSaveProfile.setAttribute('disabled', true);
+//     btnSaveProfile.classList.add('btn_status_disabled');
+//   }
 // }
 
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxчччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччччч
-//-------------------------------------------------------------------
+//   // обработчик сабмит на форму
+// formProfile.addEventListener('submit', function (evt) {
+//   evt.preventDefault();
+//   createCard(inputEditName.value, inputEditJob.value); // достать по имени инпуты
 
-// const templateCard = page.querySelector('#template-card').content; // получаем Темплейт
-// const elementsCardsList = page.querySelector('.elements__list'); // получаем тег списка всех карточек - секции elements
+//   formProfile.reset(); // сбрасываем все поля (вместо: inputEditName.value = ''; inputEditJob.value = ''; //////
+//   setSubmitButtonState(false); // передаем в кач-ве аргумента false, т.к. точно знаем, что форма невалидна: сами только что очистили её поля.
+// });
 
-// const elementCard = page.querySelector('.element'); // получаем одну карточку из секции elements
+// // слушатель события input- заполнены поля или нет ---
+// formProfile.addEventListener('input', function (evt) {
+//   // input - зд. срабатывает при вводе или удалении каждого символа,
+//   const isValid =
+//     inputEditName.value.length > 0 && inputEditJob.value.length > 0; // artist, title - это поля инпутов
 
-// const cloneOfElementCard = templateCard
-//   .querySelector('.element')
-//   .cloneNode(true); // клонируем содержимое карточки
+// // Выведем в консоль значение свойства validity.valid поля ввода,
+// // на котором слушаем событие input (по нажатии на клавишу)
+//    console.log(evt.target.validity);
+//    console.log(evt.target.validity.valid);
+// // выдача: true
 
-// // наполняем содержимым
-// // cloneOfElementCard.querySelector('.element');
-// cloneOfElementCard.querySelector('.element__img').src =
-//   'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg';
-// cloneOfElementCard.querySelector('.element__title').textContent = 'Архыз';
+//   setSubmitButtonState(isValid);
+// });
 
-// // отображаем на странице
-// elementsCardsList.append(cloneOfElementCard);
-
-// // const sectionElementsCards = page.querySelectorAll('.elements__list.element'); // карточки из секции elements ul>li
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// page.addEventListener('click', handlerClosePopupClick);
