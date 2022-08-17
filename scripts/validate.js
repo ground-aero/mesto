@@ -1,11 +1,14 @@
-// // enableValidation({
-// //   formSelector: '.popup__form',
-// //   inputSelector: '.popup__input',
-// //   submitButtonSelector: '.popup__button',
-// //   inactiveButtonClass: 'btn_status_disabled', // 'popup__button_disabled',
-// //   inputErrorClass: 'popup__input-span_type_error', // display: none; // <span>"Вы пропустили это поле"
-// //   errorClass: 'popup__error_visible'
-// // });
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__button',
+//   inactiveButtonClass: 'btn_status_disabled', // 'popup__button_disabled',
+//   inputErrorClass: 'popup__input-span_type_error', // display: none; // <span>"Вы пропустили это поле"
+//   errorClass: 'popup__error_visible'
+// });
 
 // Функция isValid теперь принимает formElement и inputElement,
 // а не берёт их из внешней области видимости
@@ -47,13 +50,10 @@ const hideInputError = (formElement, inputElement) => {
   errorElement.textContent = '';
 };
 
-// NEXT. Добавление обработчиков всем полям формы
 // вместо точечного addEL, на одно поле ввода, теперь добавляем его ВСЕМ полям.
 // Для этого создадим функцию setEventListeners, которая примет параметром элемент формы и добавит её полям нужные обработчики:
 
-// Ф-ция добавления обработчиков сразу всем полям формы
-// !!!!!! ЭТА Ф-ЦИЯ БЫЛА ДОПОЛНЕНА ЗДЕСЬ И В СОСЕДНЕМ ФАЙЛЕ valid_error_btn-inactiveinputs.js !!!!!!!!!!!
-// НО РАСПОЛОЖЕНИЕ ПРАВИЛЬНОЕ ЗДЕСЬ!
+// Ф-ция добавления обработчиков всем полям формы
 const setEventListeners = (formElement) => {
   // Находим все поля внутри формы,
   // сделаем из них массив методом Array.from
@@ -72,14 +72,11 @@ const setEventListeners = (formElement) => {
     });
   });
 };
-// Функция setEventListeners готова. Она добавит обработчики сразу всем полям формы.
+// Функция setEventListeners добавит обработчики сразу всем полям формы.
 // Осталось функцию вызвать. Для этого нужно разобраться, как добавить обработчики всем формам.
 
 // NEXT. Добавление обработчиков всем формам.
 // Теперь нужно найти все формы в DOM и вызвать для них функцию setEventListeners.
-
-// Для единообразия поступим с формами аналогично полям внутри них.
-// Объявим функцию enableValidation, которая найдёт и переберёт все формы на странице:
 
 // Ф-ция добавление обработчиков всем формам
 const enableValidation = () => {
@@ -108,20 +105,7 @@ enableValidation();
 
 // Каждое поле формы проверяется отдельно.
 
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-// как сделать Кнопку неактивной, если хотя бы одно из полей не прошло проверку.
-
-// Пишем недостающие функции
-
-// Пока функция isValid валидирует только один input. Но нужно проверить все поля, чтобы настроить статус кнопки.
-
-// Если все поля валидны — активировать кнопку, если хотя бы одно нет — заблокировать.
-
-// Для этого создадим функцию "hasInvalidInput".
-// Она принимает массив полей формы и возвращает "true", если в нём хотя бы одно поле не валидно, и false, если все валидны.
-
-// Для такой проверки подходит метод some. Используем его внутри hasInvalidInput и пройдём по массиву, чтобы найти невалидный input:
+// - - - 
 
 // Функция принимает массив полей
 // и проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита
@@ -141,9 +125,6 @@ const hasInvalidInput = (inputList) => {
 // p.s - Функция hasInvalidInput только проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита.
 // Но она ничего не делает с самой кнопкой «Отправить». !!!
 
-// NEXT function. Для стилизации нужна функция toggleButtonState. Именно она отключает и включает кнопку (на основании ф-ции  "hasInvalidInput которая проверяет валидность полей и возвращает true или false.
-// На их основе toggleButtonState меняет состояние кнопки:
-
 // Функция принимает массив полей ввода и элемент кнопки, состояние которой нужно менять
 const toggleButtonState = (inputList, buttonElement) => {
   // Если есть хотя бы один невалидный инпут
@@ -155,3 +136,5 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.classList.remove('btn_status_disabled');
   }
 };
+
+page.addEventListener('click', handlerClosePopupClick);
