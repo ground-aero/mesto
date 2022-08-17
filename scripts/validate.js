@@ -1,17 +1,13 @@
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
-
-// enableValidation({
+// const validationClasses = {
 //   formSelector: '.popup__form',
 //   inputSelector: '.popup__input',
 //   submitButtonSelector: '.popup__button',
 //   inactiveButtonClass: 'btn_status_disabled', // 'popup__button_disabled',
 //   inputErrorClass: 'popup__input-span_type_error', // display: none; // <span>"Вы пропустили это поле"
-//   errorClass: 'popup__error_visible'
-// });
+//   errorClass: 'popup__error_visible',
+// };
 
-// Функция isValid теперь принимает formElement и inputElement,
-// а не берёт их из внешней области видимости
+// Функция теперь принимает formElement и inputElement, а не берёт их из внешней области видимости
 const isValid = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     // showInputError теперь получает параметром форму, в которой
@@ -105,7 +101,7 @@ enableValidation();
 
 // Каждое поле формы проверяется отдельно.
 
-// - - - 
+// - - -
 
 // Функция принимает массив полей
 // и проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита
@@ -136,5 +132,12 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.classList.remove('btn_status_disabled');
   }
 };
+
+// включение валидации форм. все настройки передаются при вызове
+// Сделайте функцию enableValidation ответственной за включение валидации всех форм.
+// function enableValidation(validationClasses) {
+
+// }
+// enableValidation(validationClasses);
 
 page.addEventListener('click', handlerClosePopupClick);

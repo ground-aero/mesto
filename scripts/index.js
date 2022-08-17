@@ -24,12 +24,25 @@ function handlerClosePopupClick(evt) {
 }
 
 function openPopup(modal) {
+  document.addEventListener('keyup', handleEscUp);
+  // т.е. открыли попап, и тут же вешаем событие keydown на document. ***
   // modal - параметр в который подставляютлся любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
   modal.classList.add('popup_opened');
 }
 
 function closePopup(modal) {
+  document.removeEventListener('keyup', handleEscUp); // удаляем событие keydown // Закрыли попап -- листенер можно удалить ****
   modal.classList.remove('popup_opened');
+}
+
+// И дальше внутри коллбэка у нас есть объект event и мы можем узнать в каком месте произошел клик:
+function handleEscUp(evt) {
+  evt.preventDefault();
+  const ESC_KEYCODE = 27;
+  if (evt.which === ESC_KEYCODE) {
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
+  }
 }
 
 // -- обработчик кнопки edit
@@ -262,6 +275,3 @@ btnsClose.forEach((buttonClose) =>
 // // } )
 
 // #################### =============================================
-
-
-
