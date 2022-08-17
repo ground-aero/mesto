@@ -157,7 +157,7 @@ function handlerImagePopupClick(evt) {
 
 // ф-ция: добавление на страницу. container - лист
 function renderCard(container, data, position = 'before') {
-  // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!!!
+  // Ф-ция renderCard ЖДЕТ ОБЪЕКТ
   // const cardElement = createCard(data); //node
   switch (position) {
     case 'before':
@@ -186,7 +186,6 @@ function addEventListener() {
 }
 addEventListener();
 
-// createInitialCards(); ------------------------------
 function createInitialCards() {
   initialCards.forEach(function (item) {
     // перебираемый объект
@@ -196,9 +195,7 @@ function createInitialCards() {
 }
 createInitialCards();
 
-// ----------------------------------------------
-// - открыть (диалоговое окно) add place попап
-// обработчик кнопки "+" / Place / открыть
+// обработчик кнопки "+" / Place / открыть add place попап
 function handlerButtonAddPlaceClick(evt) {
   evt.preventDefault();
   openPopup(popupAddPlaceNode);
@@ -212,66 +209,3 @@ btnSaveProfile.addEventListener('click', handlerSaveSubmitEditForm);
 btnsClose.forEach((buttonClose) =>
   buttonClose.addEventListener('click', handlerClosePopupClick)
 );
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-// xxxxxxxxxxxxxxxxx validate xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-// const inputsAll = Array.from(document.querySelectorAll('.popup__input')); // получ nodeList - поля инпута каждого из полей каждой из форм
-
-// const formError = document.querySelector('#input-error-edit'); // span error
-// console.log(inputsAll);
-// console.log(formError);
-
-// // Функция, добавляет класс с ошибкой
-// const showInputError = (element, errorMessage) => {
-//   // передадим текст ошибки вторым параметром
-//   element.classList.add('popup__input_line_error'); // стили - нижняя красная линия
-//   // Заменим содержимое span с ошибкой на переданный параметр
-//   formError.textContent = errorMessage;
-//   formError.classList.add('popup__input-span_error_active'); // form__input-error_active // стили - span с красной ошибкой
-// };
-
-// // Функция, удаляет классы с ошибкой
-// const hideInputError = (element) => {
-//   element.classList.remove('form__input_line_error');
-//   formError.classList.remove('popup__input-span_error_active');
-//   // Очистим ошибку
-//   formError.textContent = '';
-// };
-
-// // Функция, проверяет валидность поля, внутри вызывает showInputError или hideInputError.
-// const isValid = () => {
-//   if (!inputEditName.validity.valid) {
-//     // Если поле не проходит валидацию, покажем ошибку
-//     // Передадим сообщение об ошибке вторым аргументом
-//     showInputError(inputEditName, inputEditName.validationMessage);
-//   } else {
-//     // Если проходит, скроем
-//     hideInputError(inputEditName);
-//   }
-// };
-// // const isValid = () => {
-// //  inputsAll.forEach(input => {
-// //   if (!input.validity.valid) {
-// //     // Если поле не проходит валидацию, покажем ошибку
-// //     // Передадим сообщение об ошибке вторым аргументом
-// //     showInputError(input, input.validationMessage);
-// //   } else {
-// //     // Если проходит, скроем
-// //     hideInputError(input);
-// //   }
-// // });
-// // }
-
-// formProfile.addEventListener('submit', function (evt) {
-//   // Отменим стандартное поведение по сабмиту // !! Выбрана только 1 форма из 2-х
-//   evt.preventDefault();
-// });
-
-// // Вызовем функцию isValid на каждый ввод символа
-// inputEditName.addEventListener('input', isValid);
-// // inputsAll.forEach(input => {
-// //   input.addEventListener('input', isValid)
-// // } )
-
-// #################### =============================================
