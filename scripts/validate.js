@@ -103,4 +103,4 @@ const toggleButtonState = (inputList, buttonElement) => {
   }
 };
 
-page.addEventListener('click', handlerClosePopupClick);
+

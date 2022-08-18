@@ -7,21 +7,8 @@ const formProfile = document.forms.profile; // получаем форму profi
 const inputEditName = formProfile.elements.nameEdit; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
 const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
 const btnSaveProfile = document.querySelector('.btn_type_save-profile');
-const btnsClose = document.querySelectorAll('.popup__btn-close');
 const profileNameNode = page.querySelector('.profile__name');
 const profileJobNode = page.querySelector('.profile__job');
-
-//  обработчик закрытия попапов, по кнопке "Х" // и клику на страницу
-function handlerClosePopupClick(evt) {
-  const target = evt.target;
-  const activePopup = document.querySelector('.popup_opened');
-  if (
-    target.classList.contains('popup__btn-close') ||
-    target.classList.contains('popup')
-  ) {
-    closePopup(activePopup);
-  }
-}
 
 function openPopup(modal) {
   document.addEventListener('keyup', handleEscUp);
@@ -45,12 +32,6 @@ function handleEscUp(evt) {
   }
 }
 
-// -- обработчик кнопки edit
-function handlerButtonEditClick(evt) {
-  evt.preventDefault();
-  setPopupEditInputValue(); // вызв заполнение полей
-  openPopup(popupEditNode);
-}
 // --- input values & textContent
 function setPopupEditInputValue() {
   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
@@ -61,12 +42,12 @@ function setEditNodeTextContent() {
   profileJobNode.textContent = inputEditJob.value; // Получаем значение полей inputEditName  и inputEditJob из свойства value. //  // Выберите элементы, куда должны быть вставлены значения полей.
 }
 // ф-ция обработчик по форме Edit / "сохранить" и "отправить" данные из строки формы профиля
-function handlerSaveSubmitEditForm(evt) {
+function handleSaveSubmitEditForm(evt) {
   evt.preventDefault(); // Эта строка отменяет стандартную отправку формы.
   setEditNodeTextContent();
   closePopup(popupEditNode);
 }
-formProfile.addEventListener('submit', handlerSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
+formProfile.addEventListener('submit', handleSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
 
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
 
@@ -93,7 +74,7 @@ const cardsList = document.querySelector('.elements__list'); // список к�
 const cardTemplate = document.querySelector('#element-template').content; //.querySelector(selectors.card); // темплейт .content, и children
 const btnDel = cardTemplate.querySelectorAll('.element__btn-del');
 // image popup
-const popupOfImage = document.querySelector('#overlay_img-zoom'); // оверлей img popup
+const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей img popup
 const popupImage = document.querySelector('.popup__img'); // img popup
 const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
 
@@ -138,13 +119,6 @@ function createCard(link, name) {
   return cardElement; // карточка с заполненным содержимым
 }
 
-// обработчик открытия попапа img
-// function popupOfImage(el)
-function handlerImagePopupClick(evt) {
-  evt.preventDefault();
-  openPopup(popupOfImage);
-}
-
 // ф-ция кнопки лайк
 // function like(el) {
 //   e.target.classList.toggle('element__btn-like_active');
@@ -154,6 +128,15 @@ function handlerImagePopupClick(evt) {
 // function del(el) {
 //   e.target. cardElement.remove();
 // }
+
+function createInitialCards() {
+  initialCards.forEach(function (item) {
+    // перебираемый объект
+    renderCard(cardsList, item, 'before'); // // передаем весь объект
+    // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
+  });
+}
+createInitialCards();
 
 // ф-ция: добавление на страницу. container - лист
 function renderCard(container, data, position = 'before') {
@@ -172,7 +155,7 @@ function renderCard(container, data, position = 'before') {
   // container.append(card)
 }
 
-// слушатель формы / add place
+// слушатель submit - формы / add place
 function addEventListener() {
   formAddPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -187,26 +170,82 @@ function addEventListener() {
 }
 addEventListener();
 
-function createInitialCards() {
-  initialCards.forEach(function (item) {
-    // перебираемый объект
-    renderCard(cardsList, item, 'before'); // // передаем весь объект
-    // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
-  });
+// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
+// кнопка "edit"
+function handleButtonEditClick(evt) {
+  evt.preventDefault();
+  setPopupEditInputValue(); // вызв заполнение полей
+  openPopup(popupEditNode);
 }
-createInitialCards();
 
-// обработчик кнопки "+" / Place / открыть add place попап
-function handlerButtonAddPlaceClick(evt) {
+// кнопка "+" / add place
+function handleButtonAddPlaceClick(evt) {
   evt.preventDefault();
   openPopup(popupAddPlaceNode);
 }
-btnAddPlace.addEventListener('click', handlerButtonAddPlaceClick); // слушатель клика на кнопке "+" ("add")
 
-//-------- к н о п к и
-btnEditProfile.addEventListener('click', handlerButtonEditClick);
-btnSaveProfile.addEventListener('click', handlerSaveSubmitEditForm);
-// btnClose.addEventListener('click', handlerClosePopupClick); // addEL на кнопку "close"
-btnsClose.forEach((buttonClose) =>
-  buttonClose.addEventListener('click', handlerClosePopupClick)
-);
+// попап img / открыть 
+function handleImagePopupClick(evt) {
+  evt.preventDefault();
+  openPopup(popupOfImage);
+}
+
+//-------- слушатели кнопок 
+btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
+btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
+btnSaveProfile.addEventListener('click', handleSaveSubmitEditForm); // save profile
+// btnClose.addEventListener('click', handleClosePopupClick); // addEL на кнопку "close"
+
+// ------- слушатели клика на попапы и кнопки "Х"
+
+// слушатель на попап edit / overlay
+popupEditNode.addEventListener('click', (evt) => {
+  if (
+    evt.target.classList.contains('popup__btn-close') ||
+    evt.target.classList.contains('popup')
+  ) {
+    closePopup(popupEditNode);
+  }
+});
+// слушатель на попап add place / overlay
+popupAddPlaceNode.addEventListener('click', (evt) => {
+  if (
+    evt.target.classList.contains('popup__btn-close') ||
+    evt.target.classList.contains('popup')
+  ) {
+    closePopup(popupAddPlaceNode);
+  }
+});
+// слушатель на попап img / overlay
+popupOfImage.addEventListener('click', (evt) => {
+  if (
+    evt.target.classList.contains('popup__btn-close') ||
+    evt.target.classList.contains('popup')
+  ) {
+    closePopup(popupOfImage);
+  }
+});
+
+// page.addEventListener('click', handleClosePopupClick);
+
+//  обработчик закрытия попапов, по кнопке "Х" // и клику на страницу
+// function handleClosePopupClick(evt) {
+//   const target = evt.target;
+//   // //ЗАМЕЧАНИЕ !!! При оверлее не нужно искать открытый попап, он у вас в evt.currentTarget
+// // //При попадании в крестик закрытия так-же не нужно искать попап, его так-же можно взять из evt.currentTarget
+//   const activePopup = document.querySelector('.popup_opened'); // css visible// ЗАМЕЧАНИЕ !!!!
+//   if (
+//     target.classList.contains('popup__btn-close') ||
+//     target.classList.contains('popup')
+//   ) {
+//     closePopup(activePopup); // // deleted: activePopup !!!
+//   }
+// }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!! deleted 
+// btnsClose.forEach((buttonClose) =>
+//   buttonClose.addEventListener('click', handleClosePopupClick)
+// );
+
+// page.addEventListener('click', handleClosePopupClick); // ЗАМЕЧАНИЕ !!!! 
+// !!! Установить слушатель нужно на каждый попап, так как сейчас система отрабатывает любые клики, даже если открытых попапов нет вовсе. 
