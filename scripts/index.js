@@ -25,8 +25,7 @@ function closePopup(modal) {
 // И дальше внутри коллбэка у нас есть объект event и мы можем узнать в каком месте произошел клик:
 function handleEscUp(evt) {
   evt.preventDefault();
-  const ESC_KEYCODE = 27;
-  if (evt.which === ESC_KEYCODE) {
+  if (evt.key === 'Escape') {
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   }
@@ -104,7 +103,6 @@ function createCard(link, name) {
   // лайк
   cardBtnLike.addEventListener('click', function like(el) {
     el.target.classList.toggle('element__btn-like_active');
-    return el;
   });
   // cardBtnLike.addEventListener('click', like);
 
