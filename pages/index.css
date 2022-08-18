@@ -53,12 +53,14 @@
 @import url(../blocks/popup/__subtitle/popup__subtitle.css);
 @import url(../blocks/popup/_opened/popup_opened.css); /* (1) POPUP OPENED */
 @import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/_img-bg/popup_img-bg.css);
 @import url(../blocks/popup/__container-img/_type/popup__container-img_type_zoomer.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__input-span/_error/popup__input-span_error_active.css);
 @import url(../blocks/popup/__input-span/_error/popup__input-span_error_disabled.css);
+@import url(../blocks/popup/__input-field/_wrap/popup__input-field_wrap.css);
 @import url(../blocks/popup/__input/_line/popup__input_line_error.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css); /* (2) POPUP CLOSED */
 

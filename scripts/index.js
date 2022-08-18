@@ -4,12 +4,12 @@ const page = document.querySelector('.page');
 const popupEditNode = document.querySelector('#overlay_edit'); // оверлей popup Edit
 const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
 const formProfile = document.forms.profile; // получаем форму profile по св-ву name
-let inputEditName = formProfile.elements.nameEdit; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
-let inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
+const inputEditName = formProfile.elements.nameEdit; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
+const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
 const btnSaveProfile = document.querySelector('.btn_type_save-profile');
 const btnsClose = document.querySelectorAll('.popup__btn-close');
-let profileNameNode = page.querySelector('.profile__name');
-let profileJobNode = page.querySelector('.profile__job');
+const profileNameNode = page.querySelector('.profile__name');
+const profileJobNode = page.querySelector('.profile__job');
 
 //  обработчик закрытия попапов, по кнопке "Х" // и клику на страницу
 function handlerClosePopupClick(evt) {
@@ -66,7 +66,7 @@ function handlerSaveSubmitEditForm(evt) {
   setEditNodeTextContent();
   closePopup(popupEditNode);
 }
-popupEditNode.addEventListener('submit', handlerSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
+formProfile.addEventListener('submit', handlerSaveSubmitEditForm); // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка» даже при нажатии на Enter
 
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
 
@@ -172,9 +172,9 @@ function renderCard(container, data, position = 'before') {
   // container.append(card)
 }
 
-// слушатель окна 430px / add place
+// слушатель формы / add place
 function addEventListener() {
-  formElementCard.addEventListener('submit', (evt) => {
+  formAddPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     renderCard(
       cardsList,
@@ -182,6 +182,7 @@ function addEventListener() {
       'before'
     ); // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!
     closePopup(popupAddPlaceNode);
+    formAddPlace.reset();
   });
 }
 addEventListener();
