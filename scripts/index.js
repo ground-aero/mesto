@@ -117,16 +117,6 @@ function createCard(link, name) {
   return cardElement; // карточка с заполненным содержимым
 }
 
-// ф-ция кнопки лайк
-// function like(el) {
-//   e.target.classList.toggle('element__btn-like_active');
-// }
-
-// ф-ция удаления карточки
-// function del(el) {
-//   e.target. cardElement.remove();
-// }
-
 function createInitialCards() {
   initialCards.forEach(function (item) {
     // перебираемый объект
@@ -182,13 +172,13 @@ function handleButtonAddPlaceClick(evt) {
   openPopup(popupAddPlaceNode);
 }
 
-// попап img / открыть 
+// попап img / открыть
 function handleImagePopupClick(evt) {
   evt.preventDefault();
   openPopup(popupOfImage);
 }
 
-//-------- слушатели кнопок 
+//-------- слушатели кнопок
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnSaveProfile.addEventListener('click', handleSaveSubmitEditForm); // save profile
@@ -223,27 +213,3 @@ popupOfImage.addEventListener('click', (evt) => {
     closePopup(popupOfImage);
   }
 });
-
-// page.addEventListener('click', handleClosePopupClick);
-
-//  обработчик закрытия попапов, по кнопке "Х" // и клику на страницу
-// function handleClosePopupClick(evt) {
-//   const target = evt.target;
-//   // //ЗАМЕЧАНИЕ !!! При оверлее не нужно искать открытый попап, он у вас в evt.currentTarget
-// // //При попадании в крестик закрытия так-же не нужно искать попап, его так-же можно взять из evt.currentTarget
-//   const activePopup = document.querySelector('.popup_opened'); // css visible// ЗАМЕЧАНИЕ !!!!
-//   if (
-//     target.classList.contains('popup__btn-close') ||
-//     target.classList.contains('popup')
-//   ) {
-//     closePopup(activePopup); // // deleted: activePopup !!!
-//   }
-// }
-
-// !!!!!!!!!!!!!!!!!!!!!!!!! deleted 
-// btnsClose.forEach((buttonClose) =>
-//   buttonClose.addEventListener('click', handleClosePopupClick)
-// );
-
-// page.addEventListener('click', handleClosePopupClick); // ЗАМЕЧАНИЕ !!!! 
-// !!! Установить слушатель нужно на каждый попап, так как сейчас система отрабатывает любые клики, даже если открытых попапов нет вовсе. 

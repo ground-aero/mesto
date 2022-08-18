@@ -7,16 +7,13 @@ const settings = {
   errorLineClass: 'popup__input_line_error',
 };
 
-// вместо точечного addEL, на одно поле ввода, теперь добавляем его ВСЕМ полям.
-// Для этого ф-ция setEventListeners, примет параметром элемент формы и добавит её полям нужные обработчики:
-
-// Ф-ция добавления обработчиков всем полям формы
+// добавляем addEL ВСЕМ полям
 function setEventListeners(formElement, settings) {
-  // Находим все поля внутри формы,
+  // поля внутри формы,
   const inputList = Array.from(
     formElement.querySelectorAll(settings.inputClass)
   ); // +
-  // Найдём в текущей форме кнопку отправки
+  // в текущей форме кнопка отправки
   const buttonElement = formElement.querySelector(settings.submitButtonClass); // ??
 
   inputList.forEach((inputElement) => {
@@ -30,7 +27,7 @@ function setEventListeners(formElement, settings) {
     });
   });
 }
-// Осталось функцию вызвать. Для этого нужно разобраться, как добавить обработчики всем формам.
+// Осталось функцию вызвать. Для этого нужно добавить обработчики всем формам.
 
 // Ф-ция добавление обработчиков всем формам
 function enableValidation(settings) {
@@ -41,10 +38,10 @@ function enableValidation(settings) {
 }
 enableValidation(settings);
 
-// Функция теперь принимает formElement и inputElement, а не берёт их из внешней области видимости
+// Функция принимает formElement и inputElement, а не берёт их из внешней области видимости
 function isValid(formElement, inputElement, settings) {
   if (!inputElement.validity.valid) {
-    // showInputError теперь получает параметром форму, в которой
+    // showInputError получает параметром форму, в которой
     // находится проверяемое поле, и само это поле
     showInputError(
       formElement,
@@ -53,7 +50,7 @@ function isValid(formElement, inputElement, settings) {
       settings
     );
   } else {
-    // hideInputError теперь получает параметром форму, в которой
+    // hideInputError получает параметром форму, в которой
     // находится проверяемое поле, и само это поле
     hideInputError(formElement, inputElement, settings);
   }
@@ -69,7 +66,7 @@ function showInputError(formElement, inputElement, errorMessage, settings) {
   errorElement.textContent = errorMessage;
   errorElement.classList.add(settings.errorInputClass); // span error style
 }
-// p.s - обе функции берут DOM-элемент ошибки из внутренней области видимости.
+// DOM-элемент ошибки из внутренней области видимости.
 // Они находят нужный элемент формы для поля, которое проверяется в данный момент.
 // Чтобы знать, где искать такой элемент, мы передаём функции параметр formElement и ищем элемент ошибки в нём.
 
@@ -81,11 +78,7 @@ function hideInputError(formElement, inputElement, settings) {
   errorElement.textContent = '';
 }
 
-// Функция enableValidation найдёт на странице и обработает все формы с классом form. Каждое поле формы проверяется отдельно.
-
 // Функция принимает массив полей
-// и проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита. Но она ничего не делает с самой кнопкой «Отправить»:
-
 function hasInvalidInput(inputList) {
   // проходим по этому массиву методом some
   return inputList.some((inputElement) => {
