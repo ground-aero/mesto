@@ -189,30 +189,14 @@ btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profil
 
 // ------- слушатели клика на попапы и кнопки "Х"
 
-// слушатель на попап edit / overlay
-popupEditNode.addEventListener('mousedown', (evt) => {
-  if (
-    evt.target.classList.contains('popup__btn-close') ||
-    evt.target.classList.contains('popup')
-  ) {
-    closePopup(popupEditNode);
-  }
-});
-// слушатель на попап add place / overlay
-popupAddPlaceNode.addEventListener('mousedown', (evt) => {
-  if (
-    evt.target.classList.contains('popup__btn-close') ||
-    evt.target.classList.contains('popup')
-  ) {
-    closePopup(popupAddPlaceNode);
-  }
-});
-// слушатель на попап img / overlay
-popupOfImage.addEventListener('mousedown', (evt) => {
-  if (
-    evt.target.classList.contains('popup__btn-close') ||
-    evt.target.classList.contains('popup')
-  ) {
-    closePopup(popupOfImage);
-  }
+// универсальный слушатель на все попап оверлеи
+document.querySelectorAll('.popup').forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (
+      evt.target.classList.contains('popup__btn-close') ||
+      evt.target.classList.contains('popup')
+    ) {
+      closePopup(popup);
+    }
+  });
 });
