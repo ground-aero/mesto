@@ -13,8 +13,11 @@ const profileJobNode = page.querySelector('.profile__job');
 function openPopup(modal) {
   document.addEventListener('keyup', handleEscUp);
   // т.е. открыли попап, и тут же вешаем событие keydown на document. ***
-  // modal - параметр в который подставляютлся любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
+  // modal - параметр в который подставляются любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
   modal.classList.add('popup_opened');
+
+  btnCreatePlaceCard.classList.add('btn_status_disabled');
+  btnCreatePlaceCard.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
 }
 
 function closePopup(modal) {
@@ -67,7 +70,7 @@ const formElementCard = document.querySelector('#window_add-place'); // окно
 const formAddPlace = document.forms.place; // получаем форму place по св-ву name
 const inputAddPlaceName = formAddPlace.elements.name; // ('#input-name'); // input/field/name/ add place
 const inputAddPlaceLink = formAddPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
-const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать"
+const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать" место
 // <template>,  list <ul>, btn-del
 const cardsList = document.querySelector('.elements__list'); // список карточек <ul>
 const cardTemplate = document.querySelector('#element-template').content; //.querySelector(selectors.card); // темплейт .content, и children
@@ -144,7 +147,7 @@ function renderCard(container, data, position = 'before') {
 }
 
 // слушатель submit - формы / add place
-function addEventListener() {
+function setAddEventListeners() {
   formAddPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     renderCard(
@@ -156,38 +159,38 @@ function addEventListener() {
     formAddPlace.reset();
   });
 }
-addEventListener();
+setAddEventListeners();
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
 // кнопка "edit"
 function handleButtonEditClick(evt) {
-  evt.preventDefault();
   setPopupEditInputValue(); // вызв заполнение полей
   openPopup(popupEditNode);
 }
 
 // кнопка "+" / add place
-function handleButtonAddPlaceClick(evt) {
-  evt.preventDefault();
+function handleButtonAddPlaceClick() {
+  // evt.preventDefault();
   openPopup(popupAddPlaceNode);
 }
 
 // попап img / открыть
-function handleImagePopupClick(evt) {
-  evt.preventDefault();
+function handleImagePopupClick() {
   openPopup(popupOfImage);
 }
 
 //-------- слушатели кнопок
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
-btnSaveProfile.addEventListener('click', handleSaveSubmitEditForm); // save profile
-// btnClose.addEventListener('click', handleClosePopupClick); // addEL на кнопку "close"
+// btnSaveProfile.addEventListener('click', handleSaveSubmitEditForm); // save profile -!!! УЖЕ ЕСТЬ СЛУШАТЕЛЬ SUBMIT ФОРМЫ (СТР.192)
+// btnsClose.forEach((buttonClose) =>
+//   buttonClose.addEventListener('click', handleClosePopupClick)
+// ); // addEL на кнопку "close"
 
 // ------- слушатели клика на попапы и кнопки "Х"
 
 // слушатель на попап edit / overlay
-popupEditNode.addEventListener('click', (evt) => {
+popupEditNode.addEventListener('mousedown', (evt) => {
   if (
     evt.target.classList.contains('popup__btn-close') ||
     evt.target.classList.contains('popup')
@@ -196,7 +199,7 @@ popupEditNode.addEventListener('click', (evt) => {
   }
 });
 // слушатель на попап add place / overlay
-popupAddPlaceNode.addEventListener('click', (evt) => {
+popupAddPlaceNode.addEventListener('mousedown', (evt) => {
   if (
     evt.target.classList.contains('popup__btn-close') ||
     evt.target.classList.contains('popup')
@@ -205,7 +208,7 @@ popupAddPlaceNode.addEventListener('click', (evt) => {
   }
 });
 // слушатель на попап img / overlay
-popupOfImage.addEventListener('click', (evt) => {
+popupOfImage.addEventListener('mousedown', (evt) => {
   if (
     evt.target.classList.contains('popup__btn-close') ||
     evt.target.classList.contains('popup')

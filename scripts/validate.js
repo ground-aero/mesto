@@ -2,7 +2,7 @@ const settings = {
   formClass: '.popup__form',
   inputClass: '.popup__input',
   submitButtonClass: '.btn_submit',
-  disabledButtonClass: 'btn_status_disabled', // button disabled
+  disabledButtonClass: 'btn_status_disabled', // button disabled style
   errorInputClass: 'popup__input-span_error_active', // <span> error
   errorLineClass: 'popup__input_line_error',
 };
@@ -16,8 +16,8 @@ function setEventListeners(formElement, settings) {
   // в текущей форме кнопка отправки
   const buttonElement = formElement.querySelector(settings.submitButtonClass); // ??
 
+  // каждому полю добавим обработчик события 'input' (на ввод каждого символа)
   inputList.forEach((inputElement) => {
-    // каждому полю добавим обработчик события input
     inputElement.addEventListener('input', () => {
       // Внутри колбэка вызовем isValid,
       // передав ей форму и проверяемый элемент
@@ -46,7 +46,7 @@ function isValid(formElement, inputElement, settings) {
     showInputError(
       formElement,
       inputElement,
-      inputElement.validationMessage,
+      inputElement.validationMessage, // хранит текст браузерной текущей ошибки
       settings
     );
   } else {
@@ -80,7 +80,7 @@ function hideInputError(formElement, inputElement, settings) {
 
 // Функция принимает массив полей
 function hasInvalidInput(inputList) {
-  // проходим по этому массиву методом some
+  // проходим по массиву методом some
   return inputList.some((inputElement) => {
     // результат вызова some: true/false
     // Если поле не валидно, колбэк вернёт true
@@ -98,8 +98,10 @@ function toggleButtonState(inputList, buttonElement, settings) {
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
     buttonElement.classList.add(settings.disabledButtonClass);
+    buttonElement.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(settings.disabledButtonClass);
+    buttonElement.removeAttribute('disabled');
   }
 }
