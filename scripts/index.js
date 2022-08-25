@@ -1,3 +1,6 @@
+import { Card } from './Card.js';
+// import { FormValidator } from './FormValidator.js';
+
 // 'use strict';
 const page = document.querySelector('.page');
 // edit Profile
@@ -54,12 +57,12 @@ formProfile.addEventListener('submit', handleSaveSubmitEditForm); // Прикр�
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
 
 const selectors = {
-  card: '.element', // карточка
-  image: '.element__img', // img/card
-  title: '.element__title', // title/card
-  btnLike: '.element__btn-like', // like/card
-  btnDel: '.element__btn-del', // del/card
-  like: '.element__btn-like_active', // like/card
+  card: '.card', // карточка
+  image: '.card__img', // img/card
+  title: '.card__title', // title/card
+  btnLike: '.card__btn-like', // like/card
+  btnDel: '.card__btn-del', // del/card
+  like: '.card__btn-like_active', // like/card
 };
 // btn "+" & add place window
 const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
@@ -73,8 +76,8 @@ const inputAddPlaceLink = formAddPlace.elements.link; // page.querySelector('#in
 const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать" место
 // <template>,  list <ul>, btn-del
 const cardsList = document.querySelector('.elements__list'); // список карточек <ul>
-const cardTemplate = document.querySelector('#element-template').content; //.querySelector(selectors.card); // темплейт .content, и children
-const btnDel = cardTemplate.querySelectorAll('.element__btn-del');
+const cardTemplate = document.querySelector('#card-template').content; //.querySelector(selectors.card); // темплейт .content, и children
+const btnDel = cardTemplate.querySelectorAll('.card__btn-del');
 // image popup
 const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей img popup
 const popupImage = document.querySelector('.popup__img'); // img popup
@@ -98,14 +101,14 @@ function createCard(link, name) {
 
   // удаление карточки
   cardBtnDel.addEventListener('click', function () {
-    const cardElement = cardBtnDel.closest('.element');
+    const cardElement = cardBtnDel.closest('.card');
     cardElement.remove();
   });
   // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
   // лайк
   cardBtnLike.addEventListener('click', function like(el) {
-    el.target.classList.toggle('element__btn-like_active');
+    el.target.classList.toggle('card__btn-like_active');
   });
   // cardBtnLike.addEventListener('click', like);
 
@@ -189,8 +192,8 @@ btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profil
 
 // ------- слушатели клика на попапы и кнопки "Х"
 
-// универсальный слушатель на все попап оверлеи
 document.querySelectorAll('.popup').forEach((popup) => {
+  // универсальный слушатель на все попап оверлеи, на закрытие
   popup.addEventListener('mousedown', (evt) => {
     if (
       evt.target.classList.contains('popup__btn-close') ||

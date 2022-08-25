@@ -1,4 +1,4 @@
-.element__btn-like {
+.card__btn-like {
   width: 22px;
   height: 19px;
   background-image: url(../../../images/like.svg);
@@ -12,11 +12,11 @@
   /* background-size: 22px 19px; */
 }
 
-.element__btn-like:hover {
+.card__btn-like:hover {
   opacity: 0.5;
 }
 
-.element__btn-like:active {
+.card__btn-like:active {
   background-image: url(../../../images/like-active.svg);
   opacity: 1;
 }

@@ -28,13 +28,13 @@
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__list/elements__list.css);
 
-@import url(../blocks/element/element.css);
-@import url(../blocks/element/__img/element__img.css);
-@import url(../blocks/element/__info-wrap/element__info-wrap.css);
-@import url(../blocks/element/__title/element__title.css);
-@import url(../blocks/element/__btn-like/element__btn-like.css);
-@import url(../blocks/element/__btn-del/element__btn-del.css);
-@import url(../blocks/element/__btn-like/_active/element__btn-like_active.css);
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__btn-del/card__btn-del.css);
+@import url(../blocks/card/__img/card__img.css);
+@import url(../blocks/card/__info-wrap/card__info-wrap.css);
+@import url(../blocks/card/__title/card__title.css);
+@import url(../blocks/card/__btn-like/card__btn-like.css);
+@import url(../blocks/card/__btn-like/_active/card__btn-like_active.css);
 
 /* btn - general style */
 @import url(../blocks/btn/btn.css);

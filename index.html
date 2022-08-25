@@ -110,16 +110,16 @@
         </main>
 
         <!-- TEMPLATE карточка -->
-        <template id="element-template">
+        <template id="card-template">
             <!-- карточка -->
-            <li class="element">
-                <button class="element__btn-del opacity-transition" id="element__btn-del" type="button"
+            <li class="card">
+                <button class="card__btn-del opacity-transition" type="button"
                     aria-label="delete"></button>
-                <img class="element__img" alt="#" src="#">
+                <img class="card__img" alt="#" src="#">
                 <!-- flex -->
-                <div class="element__info-wrap">
-                    <h2 class="element__title">Место</h2>
-                    <button class="element__btn-like opacity-transition" type="button" aria-label="like"></button>
+                <div class="card__info-wrap">
+                    <h2 class="card__title">Место</h2>
+                    <button class="card__btn-like opacity-transition" type="button" aria-label="like"></button>
                 </div>
             </li>
         </template>
@@ -133,9 +133,11 @@
     </div>
 
 
+<!-- <script type="module">import { Card } from './Card.js'</script> -->
 
     <script src="./scripts/cards.js" defer></script>
-    <script src="./scripts/index.js" defer></script>
+    <script type="module" src="./scripts/index.js"></script>
+        <!-- <script type="module" src="./scripts/index.js" defer></script> -->
     <script src="./scripts/validate.js" defer></script>
 
 </body>

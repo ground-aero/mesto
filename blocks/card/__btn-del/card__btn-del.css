@@ -1,4 +1,4 @@
-.element__btn-del {
+.card__btn-del {
   width: 18px;
   height: 19px;
   position: absolute;
@@ -14,10 +14,10 @@
   transition: opacity 0.4s linear;
 }
 
-.element__btn-del:hover {
+.card__btn-del:hover {
   opacity: 0.6;
 }
 
-.element__btn-del:active {
+.card__btn-del:active {
   opacity: 1;
 }
