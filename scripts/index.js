@@ -1,6 +1,46 @@
 import { Card } from './Card.js';
 // import { FormValidator } from './FormValidator.js';
 
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+  },
+];
+const selectors = {
+  card: '.card', // карточка
+  image: '.card__img', // img/card
+  title: '.card__title', // title/card
+  btnLike: '.card__btn-like', // like/card
+  btnDel: '.card__btn-del', // del/card
+  like: '.card__btn-like_active', // like/card
+};
+
+// const cardItem = new Card(selectors);
+//   // console.dir(Card)
+// cardItem.createCard(); // вернет нам карточку
+//   console.dir(cardItem)
+
 // 'use strict';
 const page = document.querySelector('.page');
 // edit Profile
@@ -56,14 +96,6 @@ formProfile.addEventListener('submit', handleSaveSubmitEditForm); // Прикр�
 
 // XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
 
-const selectors = {
-  card: '.card', // карточка
-  image: '.card__img', // img/card
-  title: '.card__title', // title/card
-  btnLike: '.card__btn-like', // like/card
-  btnDel: '.card__btn-del', // del/card
-  like: '.card__btn-like_active', // like/card
-};
 // btn "+" & add place window
 const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 const popupAddPlaceNode = document.querySelector('#overlay_add-place'); // оверлей add place
@@ -83,70 +115,80 @@ const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей 
 const popupImage = document.querySelector('.popup__img'); // img popup
 const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
 
+// ПР-7 !!!!!!!!!!!!!!!!!!!! createCard
 // ф-ция создания узла/карточки (но еще не её добавление)
-function createCard(link, name) {
-  // const cardElement = cardTemplate.querySelector(selectors.card).cloneNode(true); // клонир содерж 1 карточки
-  const cardElement = cardTemplate
-    .querySelector(selectors.card)
-    .cloneNode(true); // клонир содерж 1 карточки
-  const cardImage = cardElement.querySelector(selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
-  const cardTitle = cardElement.querySelector(selectors.title);
-  const cardBtnDel = cardElement.querySelector(selectors.btnDel); // ++
-  const cardBtnLike = cardElement.querySelector(selectors.btnLike); // ++
+// function createCard(link, name) {
+//   // const cardElement = cardTemplate.querySelector(selectors.card).cloneNode(true); // клонир содерж 1 карточки
+//   const cardElement = cardTemplate.cloneNode(true); // клонир содерж template
+//   const cardImage = cardElement.querySelector(selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
+//   const cardTitle = cardElement.querySelector(selectors.title);
+//   const cardBtnDel = cardElement.querySelector(selectors.btnDel); // ++
+//   const cardBtnLike = cardElement.querySelector(selectors.btnLike); // ++
 
-  // (для клонированной карточки) присваиваем атрибуты с данными со входа
-  cardImage.src = link;
-  cardTitle.textContent = name;
-  cardImage.alt = name;
+//   // (для клонированной карточки) присваиваем атрибуты с данными со входа
+//   cardImage.src = link;
+//   cardTitle.textContent = name;
+//   cardImage.alt = name;
 
-  // удаление карточки
-  cardBtnDel.addEventListener('click', function () {
-    const cardElement = cardBtnDel.closest('.card');
-    cardElement.remove();
-  });
-  // cardBtnDel.addEventListener('click', () => cardElement.remove());
+//   // удаление карточки
+//   cardBtnDel.addEventListener('click', function () {
+//     const cardElement = cardBtnDel.closest('.card');
+//     cardElement.remove();
+//   });
+//   // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
-  // лайк
-  cardBtnLike.addEventListener('click', function like(el) {
-    el.target.classList.toggle('card__btn-like_active');
-  });
-  // cardBtnLike.addEventListener('click', like);
+//   // лайк
+//   cardBtnLike.addEventListener('click', function like(el) {
+//     el.target.classList.toggle('card__btn-like_active');
+//   });
+//   // cardBtnLike.addEventListener('click', like);
 
-  // img open-popup/ zoom
-  cardImage.addEventListener('click', () => {
-    popupImage.src = link;
-    popupText.textContent = name;
-    popupImage.alt = name;
-    openPopup(popupOfImage);
-  });
+//   // img open-popup/ zoom
+//   cardImage.addEventListener('click', () => {
+//     popupImage.src = link;
+//     popupText.textContent = name;
+//     popupImage.alt = name;
+//     openPopup(popupOfImage);
+//   });
 
-  return cardElement; // карточка с заполненным содержимым
-}
+//   return cardElement; // карточка с заполненным содержимым
+// }
 
+    // перебираем массив объектов InitialCards
 function createInitialCards() {
   initialCards.forEach(function (item) {
-    // перебираемый объект
-    renderCard(cardsList, item, 'before'); // // передаем весь объект
+
+    renderCard(cardsList, item, 'before'); // передаем весь объект: 1) <ul></ul>, 2)  
     // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
   });
 }
 createInitialCards();
 
-// ф-ция: добавление на страницу. container - лист
-function renderCard(container, data, position = 'before') {
-  // Ф-ция renderCard ЖДЕТ ОБЪЕКТ
-  // const cardElement = createCard(data); //node
+// ф-ция: добавить разметку на страницу списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
+//ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки 
+function renderCard(container, data, position = 'before') { // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
+  // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
+  const cardItem = new Card(data, selectors); // data.name, data.link?//
+  console.dir(cardItem);
+  // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
+  const card = cardItem.getCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+
+  // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
   switch (position) {
     case 'before':
-      container.prepend(createCard(data.link, data.name));
+      container.prepend(card);
       break;
     case 'after':
-      container.append(createCard(data.link, data.name));
+      container.append(card);
       break;
+    // case 'before': container.prepend(createCard(data.link, data.name));
+    //   break;
+    // case 'after': container.append(createCard(data.link, data.name));
+    //   break;
     default:
       break;
   }
-  // container.append(card)
+  // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
 }
 
 // слушатель submit - формы / add place
@@ -203,3 +245,5 @@ document.querySelectorAll('.popup').forEach((popup) => {
     }
   });
 });
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
