@@ -1,7 +1,8 @@
-export { FormValidator };
+//класс FormValidator, который настраивает валидацию полей формы:
+export class FormValidator {
+    constructor() {
 
-// //класс FormValidator, который настраивает валидацию полей формы:
-class FormValidator {
+    }
 //   //принимает в конструктор объект настроек с селекторами и классами формы
 //   //принимает вторым параметром элемент той формы, которая валидируется;
 //   constructor(settings, xx) {

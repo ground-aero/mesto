@@ -1,5 +1,5 @@
+import { FormValidator } from './FormValidator.js';
 import { Card } from './Card.js';
-// import { FormValidator } from './FormValidator.js';
 
 const initialCards = [
   {
@@ -154,32 +154,33 @@ const popupText = document.querySelector('.popup__subtitle'); // текст/по
 //   return cardElement; // карточка с заполненным содержимым
 // }
 
-    // перебираем массив объектов InitialCards
+// перебираем массив объектов InitialCards
 function createInitialCards() {
   initialCards.forEach(function (item) {
-
-    renderCard(cardsList, item, 'before'); // передаем весь объект: 1) <ul></ul>, 2)  
+    renderCard(cardsList, item, 'before'); // передаем весь объект: 1) списокКарточ <ul>, 2)item = name&link of each
     // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
+    console.log(item)
   });
 }
 createInitialCards();
 
-// ф-ция: добавить разметку на страницу списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
-//ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки 
-function renderCard(container, data, position = 'before') { // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
+// ф-ция: добавить на страницу разметку списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
+//ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки
+function renderCard(container, data, position = 'before') {
+  // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
   // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
   const cardItem = new Card(data, selectors); // data.name, data.link?//
   console.dir(cardItem);
   // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
-  const card = cardItem.getCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+  const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
 
   // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
   switch (position) {
     case 'before':
-      container.prepend(card);
+      container.prepend(cards);
       break;
     case 'after':
-      container.append(card);
+      container.append(cards);
       break;
     // case 'before': container.prepend(createCard(data.link, data.name));
     //   break;
@@ -245,5 +246,7 @@ document.querySelectorAll('.popup').forEach((popup) => {
     }
   });
 });
+
+export { openPopup, popupOfImage, popupImage, popupText };
 
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

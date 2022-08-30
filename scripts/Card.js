@@ -1,60 +1,64 @@
 // класс Card, который создаёт карточку с текстом и ссылкой на изображение
+import { openPopup, popupOfImage, popupImage, popupText } from './index.js';
 export class Card {
   static _template = document.querySelector('#card-template').content; //возвращ #document fragment
   //принимает в конструктор её данные и селектор её template-элемента ??
-  constructor(data, selectors) {
-    this._data = data; // _data.name,, _data.link
+  constructor({ name, link, openPopup, popupImage }, selectors) {
+    this._name = name; // _data.name,, _data.link
+    this._link = link; // _data.name,, _data.link
     this._selectors = selectors;
     this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
-    this._handleClickLike = this._handleClickLike;
+    this._handleClickLike = this._handleClickLike.bind(this);
+    this._openPopup = openPopup;
+    this._popupImage = popupImage;
     // this._name = name;
     // this._link = link;
   }
 
   //класс уже умеет создавать карточки с картинкой и текстом
-  _getTemplate() {
-    // // забираем разметку из HTML и клонируем элемент
-    // this._view = document
-    //   .querySelector('#card-template')
-    //   .content.querySelector('.card')
-    //   .cloneNode(true); // ВМЕСТО const cardElement -> this._view
-    // return this._view;
-  }
+  // _getTemplate() {
+  //   // // забираем разметку из HTML и клонируем элемент
+  //   // this._view = document
+  //   //   .querySelector('#card-template')
+  //   //   .content.querySelector('.card')
+  //   //   .cloneNode(true); // ВМЕСТО const cardElement -> this._view
+  //   // return this._view;
+  // }
 
-  //класс уже умеет создавать карточки с картинкой и текстом
-  getCard() {
-    //вызов getCard -> забирает разметку из HTML и клонирует элемент. // возвращает разметку (!)
+  _getTemplateCard() {
+    //вызов cloneCard (getCard) -> забирает разметку из HTML и клонирует элемент. // возвращает разметку (!)
     // ВМЕСТО cardElement -> this._view
     this._view = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
+    
+    //ВЫНЕСТИ ПЕРЕМЕННЫЕ В setEventListeners и т.п..
     this._cardImage = this._view.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
     this._cardTitle = this._view.querySelector(this._selectors.title); //++
     this._cardBtnDel = this._view.querySelector(this._selectors.btnDel); //++
     this._cardBtnLike = this._view.querySelector(this._selectors.btnLike); //++
 
     // (для клонированной карточки) присваиваем атрибуты с данными со входа
-    this._cardTitle.textContent = this._data.name; //_data.name ++
-    this._cardImage.src = this._data.link; //_data.link ++
-    this._cardImage.alt = this._data.name;
+    this._cardTitle.textContent = this._name; //_data.name ++
+    this._cardImage.src = this._link; //_data.link ++
+    this._cardImage.alt = this._name;
 
-    // удаление карточки
+    // ВЫНЕСТИ ОТДЕЛЬНО: setEventListeners() - -объединить слушатели 
+    // слушатель на кнопку удаления карточки
     this._cardBtnDel.addEventListener('click', this._handleClickDeleteCard);
     // cardBtnDel.addEventListener('click', () => cardElement.remove());
 
-    // лайк
-    this._cardBtnLike.addEventListener('click', (el) => {
-      this._handleClickLike(el);
-    })
+    // слушатель на лайк
+    this._cardBtnLike.addEventListener('click', this._handleClickLike);
     // this._cardBtnLike.addEventListener('click', function like(el) {
     //   el.target.classList.toggle(this._selectors.like);
     // });
     // cardBtnLike.addEventListener('click', like);
 
-    // img open-popup/ zoom
+    // слушатель на img / open-popup/ zoom
     this._cardImage.addEventListener('click', () => {
-      this._popupImage.src = this._link;
-      this._popupText.textContent = this._data.name;
-      this._popupImage.alt = this._data.name;
-      openPopup(popupOfImage);
+      popupImage.src = this._link;
+      popupImage.alt = this._name;
+      popupText.textContent = this._name;
+      openPopup(popupOfImage); //openPopup(popupOfImage);
     });
 
     return this._view; // возвращает карточку с заполненным содержимым
@@ -62,18 +66,7 @@ export class Card {
 
   // Ф-ция: добавить карточку в DOM на страницу в контейнер (с помощью метода массивов)
   renderCard() {
-
-    // append -> в контейнер 
-  }
-
-  _handleClickDeleteCard() {
-    // this._view = this._cardBtnDel.closest(this._selectors.card);
-    console.log(this);
-    this._view.remove();
-  }
-
-  _handleClickLike = () => {
-    this.classList.toggle(this._selectors.like);
+    // append -> в контейнер
   }
   // generateCard() {
   //   // Запишем разметку в приватное поле _element.
@@ -87,6 +80,18 @@ export class Card {
   //   return this._element;
   // }
   // - - -
+
+  _handleClickDeleteCard() {
+    this._view.remove();
+  }
+
+  _handleClickLike() {
+    this._cardBtnLike.classList.toggle('card__btn-like_active');
+  }
+
+  _openImagePopup() {
+    this._openPopup(data);
+  }
 }
 //содержит приватные методы, которые работают с разметкой, устанавливают слушателей событий;
 
