@@ -101,10 +101,10 @@ const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кно�
 const popupAddPlaceNode = document.querySelector('#overlay_add-place'); // оверлей add place
 const formElementCard = document.querySelector('#window_add-place'); // окно 430px add place
 // input & form / add place:
-// const formAddPlace = document.querySelector('.popup__form'); // input/form
-const formAddPlace = document.forms.place; // получаем форму place по св-ву name
-const inputAddPlaceName = formAddPlace.elements.name; // ('#input-name'); // input/field/name/ add place
-const inputAddPlaceLink = formAddPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
+// const formPlace = document.querySelector('.popup__form'); // input/form
+const formPlace = document.forms.place; // получаем форму place по св-ву name
+const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
+const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
 const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать" место
 // <template>,  list <ul>, btn-del
 const cardsList = document.querySelector('.elements__list'); // список карточек <ul>
@@ -190,6 +190,7 @@ class Card {
     //ВЫНЕСТИ ПЕРЕМЕННЫЕ В setEventListeners и т.п..
     this._cardImage = this._cardElement.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
     this._cardTitle = this._cardElement.querySelector(this._selectors.title); //++
+    this._cardText = this._cardElement.querySelector(this._selectors.title);
     this._cardBtnDel = this._cardElement.querySelector(this._selectors.btnDel); //++
     this._cardBtnLike = this._cardElement.querySelector(
       this._selectors.btnLike
@@ -198,34 +199,11 @@ class Card {
     // // (для клонированной карточки) присваиваем атрибуты с данными со входа
     this._cardTitle.textContent = this._name; //_data.name ++
     this._cardImage.src = this._link; //_data.link ++
-    this._cardImage.alt = this._name;
-
-    // ВЫНЕСТИ ОТДЕЛЬНО: setEventListeners() - -объединить слушатели
-    // слушатель на кнопку удаления карточки
-    // this._cardBtnDel.addEventListener('click', this._handleClickDeleteCard);
-    // // cardBtnDel.addEventListener('click', () => cardElement.remove());
-
-    // // слушатель на лайк
-    // this._cardBtnLike.addEventListener('click', this._handleClickLike);
-    // // this._cardBtnLike.addEventListener('click', function like(el) {
-    // //   el.target.classList.toggle(this._selectors.like);
-    // // });
-    // // cardBtnLike.addEventListener('click', like);
-
-    // // слушатель на img / open-popup/ zoom
-    // this._cardImage.addEventListener('click', () => {
-    //   popupImage.src = this._link;
-    //   popupImage.alt = this._name;
-    //   popupText.textContent = this._name;
-    //   openPopup(popupOfImage); //openPopup(popupOfImage);
-    // });
 
     return this._cardElement; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
   }
 
-  // Метод публичный, чтобы возвращать готовые карточки внешним функциям.
-  // добавит данные в разметку, а в следующих уроках научится управлять поведением карточек.
-  // Подготовка карточки к публикации.
+  // публичный.  добавит данные в разметку и возвращает готовые карточки внешним функциям.
   generateCard() {
     // Запишем разметку в приватное поле _element.
     // Так у других элементов появится доступ к ней.
@@ -233,8 +211,8 @@ class Card {
     this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
 
     // Добавим данные
-    this._element.querySelector('.card__img').src = this._link;
-    this._element.querySelector('.card__title').textContent = this._name;
+    // this._element.querySelector('.card__img').src = this._link;
+    // this._element.querySelector('.card__title').textContent = this._name;
 
     // Вернём элемент наружу
     return this._element;
@@ -242,6 +220,8 @@ class Card {
 
   //универсальный метод всех слушателей - - - - - - - -
   _setEventListeners() {
+    this._formPlace = document.forms.place;
+
     // слушатель на лайк
     this._cardBtnLike.addEventListener('click', () => {
       this._handleClickLike();
@@ -256,12 +236,13 @@ class Card {
     this._cardImage.addEventListener('click', () => {
       popupImage.src = this._link;
       popupImage.alt = this._name;
-      popupText.textContent = this._name;
+      popupText.textContent = `на изображении: ${this._name}`;
       openPopup(popupOfImage); //openPopup(popupOfImage);
     });
   }
 
   // хендлеры
+
   _handleClickLike() {
     this._cardBtnLike.classList.toggle('card__btn-like_active');
   }
@@ -295,7 +276,7 @@ class Card {
 initialCards.forEach((item) => {
   // Создадим экземпляр карточки
   const card = new Card(item, selectors); // ВМЕСТО: '#card-template'
-  // console.dir(card);
+  console.dir(card);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // console.dir(cardElement);
@@ -307,35 +288,36 @@ initialCards.forEach((item) => {
 
 // ф-ция: добавить на страницу разметку списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
 //ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки
-// function renderCard(container, data, position = 'before') {
-//   // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
-//   // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
-//   const cardItem = new Card(data, selectors); // data.name, data.link?//
-//   console.dir(cardItem);
-//   // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
-//   const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+function renderCard(container, data, position = 'before') {
+  // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
+  // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
+  const cardItem = new Card(data, selectors); // data.name, data.link?//
+  console.dir(cardItem);
+  // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
+  const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
 
-//   // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
-//   switch (position) {
-//     case 'before':
-//       container.prepend(cards);
-//       break;
-//     case 'after':
-//       container.append(cards);
-//       break;
-//     // case 'before': container.prepend(createCard(data.link, data.name));
-//     //   break;
-//     // case 'after': container.append(createCard(data.link, data.name));
-//     //   break;
-//     default:
-//       break;
-//   }
-//   // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
-// }
+  // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
+  switch (position) {
+    case 'before':
+      container.prepend(cards);
+      break;
+    case 'after':
+      container.append(cards);
+      break;
+    // case 'before': container.prepend(createCard(data.link, data.name));
+    //   break;
+    // case 'after': container.append(createCard(data.link, data.name));
+    //   break;
+    default:
+      break;
+  }
+  // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
+}
 
+// ПЕРЕНЕСЕН В CLASS CARD !!!!!!!!!!!!!!!!!!!!
 // слушатель submit - формы / add place
 function setAddEventListeners() {
-  formAddPlace.addEventListener('submit', (evt) => {
+  formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     renderCard(
       cardsList,
@@ -343,7 +325,7 @@ function setAddEventListeners() {
       'before'
     ); // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!
     closePopup(popupAddPlaceNode);
-    formAddPlace.reset();
+    formPlace.reset();
   });
 }
 setAddEventListeners();
@@ -390,4 +372,25 @@ document.querySelectorAll('.popup').forEach((popup) => {
 
 export { openPopup, popupOfImage, popupImage, popupText };
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+// FormValidator class
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+//КОНФИГИ ФОРМ
+const settings = {
+  formClass: '.popup__form',
+  inputClass: '.popup__input',
+  submitButtonClass: '.btn_submit',
+  disabledButtonClass: 'btn_status_disabled', // button disabled style
+  errorInputClass: 'popup__input-span_error_active', // <span> error
+  errorLineClass: 'popup__input_line_error',
+};
+
+const formProfileValid = new FormValidator(settings, formProfile);
+formProfileValid.enableValidation();
+console.log(formProfileValid);
+
+const formPlaceValid = new FormValidator(settings, formPlace);
+formPlaceValid.enableValidation();
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+// FormValidator class
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ

@@ -1,20 +1,129 @@
 //класс FormValidator, который настраивает валидацию полей формы:
 export class FormValidator {
-    constructor() {
-
-    }
-//   //принимает в конструктор объект настроек с селекторами и классами формы
-//   //принимает вторым параметром элемент той формы, которая валидируется;
-//   constructor(settings, xx) {
-//     this._settings = settings;
-//     this._xx = xx;
+  //1) принимает объект настроек с селекторами и классами формы;
+  //2) принимает элемент той формы, которая валидируется
+  constructor(settings, form) {
+    this._settings = settings;
+    this._form = form;
+    this._isValid = this._isValid.bind(this);
+    this._hasInvalidInput = this._hasInvalidInput.bind(this);
+    this._showInputError = this._showInputError.bind(this);
   }
 
-//   // имеет приватные методы, которые обрабатывают форму:
-//   //проверяют валидность поля, изменяют состояние кнопки сабмита, устанавливают все обработчики;
+  //  // имеет приватные методы, которые обрабатывают форму:
+  //  // 1.проверяют валидность поля,
+  //  // 2.изменяют состояние кнопки сабмита,
+  //  // 3.устанавливают все обработчики;
 
-//   // имеет один публичный метод enableValidation, который включает валидацию формы.
-// }
+  //  // 4. имеет один публичный метод enableValidation, который включает валидацию формы.
 
-// // !!! Для каждой проверяемой формы создайте экземпляр класса FormValidator.
-// const Xxx = new FormValidator('', '')
+  //  // 5.Для каждой проверяемой формы создайте экземпляр класса FormValidator
+  //       const formValidator = new FormValidator('', '')
+
+  //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ 
+// Функция принимает formElement и inputElement, а не берёт их из внешней области видимости
+_isValid(formElement, inputElement, settings) {
+  if (!inputElement.validity.valid) {
+    // showInputError получает параметром форму, в которой
+    // находится проверяемое поле, и само это поле
+    this._showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage, // хранит текст браузерной текущей ошибки
+      settings
+    );
+  } else {
+    // hideInputError получает параметром форму, в которой
+    // находится проверяемое поле, и само это поле
+    this._hideInputError(formElement, inputElement, settings);
+  }
+}
+
+// Функция принимает массив полей
+_hasInvalidInput(inputList) {
+  // проходим по массиву методом some
+  return inputList.some((inputElement) => {
+    // результат вызова some: true/false
+    // Если поле не валидно, колбэк вернёт true
+    // Обход массива прекратится и вся функция
+    // hasInvalidInput вернёт true
+    return !inputElement.validity.valid;
+  });
+}
+
+// 1. formElement — html-элемент формы, в которой находится проверяемое поле ввода. Он нужен для поиска элемента ошибки в форме.
+// 2. inputElement — проверяемое поле ввода.
+// принятие и обработка входящих параметров:
+
+_showInputError(formElement, inputElement, errorMessage, settings) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`); // span error
+  inputElement.classList.add(this._settings.errorLineClass); // red line
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(this._settings.errorInputClass); // span error style
+}
+
+// DOM-элемент ошибки из внутренней области видимости.
+// Они находят нужный элемент формы для поля, которое проверяется в данный момент.
+// Чтобы знать, где искать такой элемент, мы передаём функции параметр formElement и ищем элемент ошибки в нём.
+
+// спрятать ошибку
+_hideInputError(formElement, inputElement, settings) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`); // Находим элемент ошибки
+  inputElement.classList.remove(this._settings.errorLineClass);
+  errorElement.classList.remove(this._settings.errorInputClass);
+  errorElement.textContent = '';
+}
+
+// Ф-ция добавление обработчиков всем формам
+enableValidation(settings) {
+  const formList = Array.from(
+    document.querySelectorAll(this._settings.formClass)
+  );
+  formList.forEach((formElement) => {
+    this._setEventListeners(formElement, settings);
+  });
+}
+// enableValidation(settings)
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// добавляем addEL ВСЕМ полям
+_setEventListeners(formElement, settings) {
+  // поля внутри формы,
+  const inputList = Array.from(
+    formElement.querySelectorAll(this._settings.inputClass)
+  ); // +
+  // в текущей форме кнопка отправки
+  const buttonElement = formElement.querySelector(
+    this._settings.submitButtonClass
+  ); // ??
+
+  // каждому полю добавим обработчик события 'input' (на ввод каждого символа)
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      // Внутри колбэка вызовем isValid,
+      // передав ей форму и проверяемый элемент
+      this._isValid(formElement, inputElement, settings);
+      // Вызовем toggleButtonState и передадим ей массив полей и кнопку
+      this._toggleButtonState(inputList, buttonElement, settings);
+    });
+  });
+}
+
+// Функция принимает массив полей ввода и элемент кнопки, состояние которой нужно менять
+_toggleButtonState(inputList, buttonElement, settings) {
+  // Если есть хотя бы один невалидный инпут
+  if (this._hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+    buttonElement.classList.add(this._settings.disabledButtonClass);
+    buttonElement.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
+  } else {
+    // иначе сделай кнопку активной
+    buttonElement.classList.remove(this._settings.disabledButtonClass);
+    buttonElement.removeAttribute('disabled');
+  }
+}
+
+
+
+
+}
