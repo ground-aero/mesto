@@ -259,18 +259,8 @@ class Card {
 // ЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧ
 // ЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧ
 
-// перебираем массив объектов InitialCards
-// function createInitialCards() {
-//   initialCards.forEach(function (item) {
-//     renderCard(cardsList, item, 'before'); // передаем весь объект: 1) списокКарточ <ul>, 2)item = name&link of each
-//     // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
-//     // console.log(item)
-//   });
-// }
-// createInitialCards();
-
 // ПР-7 -- ПРИМЕНИТЬ  !!!!!!!!!!!!!!!!!!!!
-// Цикл отрисовки карточек - обойдет массив messageList и для каждого его элемента:
+// Вызываем генерацию отрисовки массива карточек (initialCards) - методом перебора, для каждого его элемента
 // создаст новый экземпляр класса Card,  // подготовит карточку к публикации,
 // добавит новую карточку в DOM.
 initialCards.forEach((item) => {
@@ -286,23 +276,23 @@ initialCards.forEach((item) => {
   // document.body.append(cardElement);
 });
 
-// ф-ция: добавить на страницу разметку списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
-//ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки
+// ф-ция: добавление карточки, при нажатии submit / formPlace /btnCreatePlaceCard // ф-ция ЖДЕТ Объект
+// 1) вызывает внутри себя экземпляр карточки, 2) вызыват метод создания карточки
 function renderCard(container, data, position = 'before') {
   // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
   // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
   const cardItem = new Card(data, selectors); // data.name, data.link?//
   console.dir(cardItem);
   // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
-  const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+  const card = cardItem.generateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
 
   // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
   switch (position) {
     case 'before':
-      container.prepend(cards);
+      container.prepend(card);
       break;
     case 'after':
-      container.append(cards);
+      container.append(card);
       break;
     // case 'before': container.prepend(createCard(data.link, data.name));
     //   break;
@@ -343,21 +333,11 @@ function handleButtonAddPlaceClick() {
   openPopup(popupAddPlaceNode);
 }
 
-// попап img / открыть
-// function handleImagePopupClick() {
-//   openPopup(popupOfImage);
-// }
-
 //-------- слушатели кнопок
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
-// btnSaveProfile.addEventListener('click', handleSaveSubmitEditForm); // save profile -!!! УЖЕ ЕСТЬ СЛУШАТЕЛЬ SUBMIT ФОРМЫ (СТР.192)
-// btnsClose.forEach((buttonClose) =>
-//   buttonClose.addEventListener('click', handleClosePopupClick)
-// ); // addEL на кнопку "close"
 
 // ------- слушатели клика на попапы и кнопки "Х"
-
 document.querySelectorAll('.popup').forEach((popup) => {
   // универсальный слушатель на все попап оверлеи, на закрытие
   popup.addEventListener('mousedown', (evt) => {
