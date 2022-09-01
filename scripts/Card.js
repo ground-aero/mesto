@@ -28,20 +28,22 @@ export class Card {
   _getTemplateCard() {
     //вызов cloneCard (getCard) -> забирает разметку из HTML и клонирует элемент. // возвращает разметку (!)
     // ВМЕСТО cardElement -> this._view
-    this._view = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
-    
+    this._cardElement = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
+
     //ВЫНЕСТИ ПЕРЕМЕННЫЕ В setEventListeners и т.п..
-    this._cardImage = this._view.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
-    this._cardTitle = this._view.querySelector(this._selectors.title); //++
-    this._cardBtnDel = this._view.querySelector(this._selectors.btnDel); //++
-    this._cardBtnLike = this._view.querySelector(this._selectors.btnLike); //++
+    this._cardImage = this._cardElement.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
+    this._cardTitle = this._cardElement.querySelector(this._selectors.title); //++
+    this._cardBtnDel = this._cardElement.querySelector(this._selectors.btnDel); //++
+    this._cardBtnLike = this._cardElement.querySelector(
+      this._selectors.btnLike
+    ); //++
 
     // (для клонированной карточки) присваиваем атрибуты с данными со входа
     this._cardTitle.textContent = this._name; //_data.name ++
     this._cardImage.src = this._link; //_data.link ++
     this._cardImage.alt = this._name;
 
-    // ВЫНЕСТИ ОТДЕЛЬНО: setEventListeners() - -объединить слушатели 
+    // ВЫНЕСТИ ОТДЕЛЬНО: setEventListeners() - -объединить слушатели
     // слушатель на кнопку удаления карточки
     this._cardBtnDel.addEventListener('click', this._handleClickDeleteCard);
     // cardBtnDel.addEventListener('click', () => cardElement.remove());
@@ -61,7 +63,23 @@ export class Card {
       openPopup(popupOfImage); //openPopup(popupOfImage);
     });
 
-    return this._view; // возвращает карточку с заполненным содержимым
+    return this._cardElement; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
+  }
+
+  // Метод публичный, чтобы возвращать готовые карточки внешним функциям.
+  // добавит данные в разметку, а в следующих уроках научится управлять поведением карточек.
+  // Подготовка карточки к публикации.
+  generateCard() {
+    // Запишем разметку в приватное поле _element.
+    // Так у других элементов появится доступ к ней.
+    this._element = this._getTemplateCard();
+
+    // Добавим данные
+    this._element.querySelector('.card__img').src = this._link;
+    this._element.querySelector('.card__title').textContent = this._name;
+
+    // Вернём элемент наружу
+    return this._element;
   }
 
   // Ф-ция: добавить карточку в DOM на страницу в контейнер (с помощью метода массивов)
@@ -82,7 +100,7 @@ export class Card {
   // - - -
 
   _handleClickDeleteCard() {
-    this._view.remove();
+    this._cardElement.remove();
   }
 
   _handleClickLike() {

@@ -1,5 +1,5 @@
 import { FormValidator } from './FormValidator.js';
-import { Card } from './Card.js';
+// import { Card } from './Card.js';
 
 const initialCards = [
   {
@@ -154,43 +154,184 @@ const popupText = document.querySelector('.popup__subtitle'); // текст/по
 //   return cardElement; // карточка с заполненным содержимым
 // }
 
-// перебираем массив объектов InitialCards
-function createInitialCards() {
-  initialCards.forEach(function (item) {
-    renderCard(cardsList, item, 'before'); // передаем весь объект: 1) списокКарточ <ul>, 2)item = name&link of each
-    // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
-    console.log(item)
-  });
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+class Card {
+  static _template = document.querySelector('#card-template').content; //возвращ #document fragment
+  //принимает в конструктор её данные и селектор её template-элемента ??
+  constructor(data, selectors) {
+    //DLETED: openPopup, popupImage
+    this._name = data.name; // _data.name,, _data.link
+    this._link = data.link; // _data.name,, _data.link
+    this._selectors = selectors;
+    this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
+    this._handleClickLike = this._handleClickLike.bind(this);
+    this._openPopup = openPopup;
+    this._popupImage = popupImage;
+
+    // this._templateSelector = templateSelector;
+  }
+
+  //класс уже умеет создавать карточки с картинкой и текстом
+  // _getTemplate() {
+  //   // // забираем разметку из HTML и клонируем элемент
+  //   // this._view = document
+  //   //   .querySelector('#card-template')
+  //   //   .content.querySelector('.card')
+  //   //   .cloneNode(true); // ВМЕСТО const cardElement -> this._view
+  //   // return this._view;
+  // }
+
+  _getTemplateCard() {
+    //вызов cloneCard (getCard) -> забирает разметку из HTML и клонирует элемент. // возвращает разметку (!)
+    // ВМЕСТО cardElement -> this._view
+    // const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
+    this._cardElement = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
+
+    //ВЫНЕСТИ ПЕРЕМЕННЫЕ В setEventListeners и т.п..
+    this._cardImage = this._cardElement.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
+    this._cardTitle = this._cardElement.querySelector(this._selectors.title); //++
+    this._cardBtnDel = this._cardElement.querySelector(this._selectors.btnDel); //++
+    this._cardBtnLike = this._cardElement.querySelector(
+      this._selectors.btnLike
+    ); //++
+
+    // // (для клонированной карточки) присваиваем атрибуты с данными со входа
+    this._cardTitle.textContent = this._name; //_data.name ++
+    this._cardImage.src = this._link; //_data.link ++
+    this._cardImage.alt = this._name;
+
+    // ВЫНЕСТИ ОТДЕЛЬНО: setEventListeners() - -объединить слушатели
+    // слушатель на кнопку удаления карточки
+    // this._cardBtnDel.addEventListener('click', this._handleClickDeleteCard);
+    // // cardBtnDel.addEventListener('click', () => cardElement.remove());
+
+    // // слушатель на лайк
+    // this._cardBtnLike.addEventListener('click', this._handleClickLike);
+    // // this._cardBtnLike.addEventListener('click', function like(el) {
+    // //   el.target.classList.toggle(this._selectors.like);
+    // // });
+    // // cardBtnLike.addEventListener('click', like);
+
+    // // слушатель на img / open-popup/ zoom
+    // this._cardImage.addEventListener('click', () => {
+    //   popupImage.src = this._link;
+    //   popupImage.alt = this._name;
+    //   popupText.textContent = this._name;
+    //   openPopup(popupOfImage); //openPopup(popupOfImage);
+    // });
+
+    return this._cardElement; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
+  }
+
+  // Метод публичный, чтобы возвращать готовые карточки внешним функциям.
+  // добавит данные в разметку, а в следующих уроках научится управлять поведением карточек.
+  // Подготовка карточки к публикации.
+  generateCard() {
+    // Запишем разметку в приватное поле _element.
+    // Так у других элементов появится доступ к ней.
+    this._element = this._getTemplateCard();
+    this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
+
+    // Добавим данные
+    this._element.querySelector('.card__img').src = this._link;
+    this._element.querySelector('.card__title').textContent = this._name;
+
+    // Вернём элемент наружу
+    return this._element;
+  }
+
+  //универсальный метод всех слушателей - - - - - - - -
+  _setEventListeners() {
+    // слушатель на лайк
+    this._cardBtnLike.addEventListener('click', () => {
+      this._handleClickLike();
+    });
+
+    // слушатель на кнопку удаления карточки
+    this._cardBtnDel.addEventListener('click', () => {
+      this._handleClickDeleteCard();
+    });
+
+    // // слушатель на img zoom/ open-popup
+    this._cardImage.addEventListener('click', () => {
+      popupImage.src = this._link;
+      popupImage.alt = this._name;
+      popupText.textContent = this._name;
+      openPopup(popupOfImage); //openPopup(popupOfImage);
+    });
+  }
+
+  // хендлеры
+  _handleClickLike() {
+    this._cardBtnLike.classList.toggle('card__btn-like_active');
+  }
+
+  _handleClickDeleteCard() {
+    this._cardElement.remove();
+  }
+
+  _openImagePopup() {
+    this._openPopup(data);
+  }
 }
-createInitialCards();
+
+// ЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧ
+// ЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧЧ
+
+// перебираем массив объектов InitialCards
+// function createInitialCards() {
+//   initialCards.forEach(function (item) {
+//     renderCard(cardsList, item, 'before'); // передаем весь объект: 1) списокКарточ <ul>, 2)item = name&link of each
+//     // xxxx в список на странице втавляем склонированный контент, со всеми св-вами отобранными выше xxxxxx
+//     // console.log(item)
+//   });
+// }
+// createInitialCards();
+
+// ПР-7 -- ПРИМЕНИТЬ  !!!!!!!!!!!!!!!!!!!!
+// Цикл отрисовки карточек - обойдет массив messageList и для каждого его элемента:
+// создаст новый экземпляр класса Card,  // подготовит карточку к публикации,
+// добавит новую карточку в DOM.
+initialCards.forEach((item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item, selectors); // ВМЕСТО: '#card-template'
+  // console.dir(card);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+  // console.dir(cardElement);
+
+  // Добавляем в DOM
+  document.querySelector('.elements__list').append(cardElement);
+  // document.body.append(cardElement);
+});
 
 // ф-ция: добавить на страницу разметку списка - container(</ul>), в DOM // ф-ция ЖДЕТ Объект
 //ф-ция: 1) вызывает внутри себя экземпляр карточки, 2) вызываем метод создания карточки
-function renderCard(container, data, position = 'before') {
-  // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
-  // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
-  const cardItem = new Card(data, selectors); // data.name, data.link?//
-  console.dir(cardItem);
-  // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
-  const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+// function renderCard(container, data, position = 'before') {
+//   // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
+//   // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
+//   const cardItem = new Card(data, selectors); // data.name, data.link?//
+//   console.dir(cardItem);
+//   // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
+//   const cards = cardItem._getTemplateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
 
-  // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
-  switch (position) {
-    case 'before':
-      container.prepend(cards);
-      break;
-    case 'after':
-      container.append(cards);
-      break;
-    // case 'before': container.prepend(createCard(data.link, data.name));
-    //   break;
-    // case 'after': container.append(createCard(data.link, data.name));
-    //   break;
-    default:
-      break;
-  }
-  // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
-}
+//   // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
+//   switch (position) {
+//     case 'before':
+//       container.prepend(cards);
+//       break;
+//     case 'after':
+//       container.append(cards);
+//       break;
+//     // case 'before': container.prepend(createCard(data.link, data.name));
+//     //   break;
+//     // case 'after': container.append(createCard(data.link, data.name));
+//     //   break;
+//     default:
+//       break;
+//   }
+//   // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
+// }
 
 // слушатель submit - формы / add place
 function setAddEventListeners() {
@@ -221,9 +362,9 @@ function handleButtonAddPlaceClick() {
 }
 
 // попап img / открыть
-function handleImagePopupClick() {
-  openPopup(popupOfImage);
-}
+// function handleImagePopupClick() {
+//   openPopup(popupOfImage);
+// }
 
 //-------- слушатели кнопок
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
