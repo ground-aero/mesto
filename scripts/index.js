@@ -112,14 +112,17 @@ const popupText = document.querySelector('.popup__subtitle'); // текст/по
 // ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 // ПР-7 --
 
+//ИНИЦИАЛИЗАЦИЯ КЛАССА Card, И ВОЗВРАЩЕНИЕ В РАЗМЕТКУ
+const initialiseClassCard = (data) => {
+  const card = new Card(data, selectors);
+  return card.generateCard(); // 1. метод возвращает разметку();
+};
+
+//ПЕРЕБОРОМ МАССИВА КАРТОЧЕК, СОЗДАЕМ ИНСТАНС, ВЫЗЫВАЕМ ГЕНЕРИРОВАНИЕ КАЖДОЙ КАРТОЧКИ, АПЕНДИМ ИХ В СПИСОК
 initialCards.forEach((item) => {
-  // Создадим экземпляр карточки
   const card = new Card(item, selectors); // ВМЕСТО: '#card-template'
-  console.dir(card);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
-  // console.dir(cardElement);
-
   // Добавляем в DOM
   cardsList.append(cardElement);
   // document.body.append(cardElement);
@@ -127,11 +130,7 @@ initialCards.forEach((item) => {
 
 // ВОЗВРАЩАЕМ ГОТОВЫЙ ЭЛЕМЕНТ КАРТОЧКИ, при нажатии submit / formPlace /btnCreatePlaceCard
 function renderCard(container, data, position = 'before') {
-  // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
-  const cardItem = new Card(data, selectors); //  // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
-  const card = cardItem.generateCard(data);
-
-  // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
+  const card = initialiseClassCard(data); // 2. разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
   switch (position) {
     case 'before':
       container.prepend(card);
@@ -139,10 +138,7 @@ function renderCard(container, data, position = 'before') {
     case 'after':
       container.append(card);
       break;
-    // case 'before': container.prepend(createCard(data.link, data.name));
-    //   break;
-    // case 'after': container.append(createCard(data.link, data.name));
-    //   break;
+
     default:
       break;
   }
@@ -158,7 +154,7 @@ function addCard() {
       cardsList,
       { name: inputAddPlaceName.value, link: inputAddPlaceLink.value },
       'before'
-    ); // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!
+    );
     closePopup(popupAddPlaceNode);
     formPlace.reset();
   });

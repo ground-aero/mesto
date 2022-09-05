@@ -7,6 +7,8 @@ export class FormValidator {
     this._isValid = this._isValid.bind(this);
     this._hasInvalidInput = this._hasInvalidInput.bind(this);
     this._showInputError = this._showInputError.bind(this);
+    // this._inputList = Array.from(this._form.querySelectorAll(this._settings.inputClass);
+    // );
   }
 
   //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ. Ф-ция принимает formElement и inputElement, а не берёт их из внешней области видимости

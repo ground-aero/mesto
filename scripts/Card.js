@@ -31,6 +31,8 @@ export class Card {
     // // (для клонированной карточки) присваиваем атрибуты с данными со входа
     this._cardTitle.textContent = this._name; //_data.name ++
     this._cardImage.src = this._link; //_data.link ++
+    this._cardImage.alt = this._link; 
+    
 
     return this._cardTemplate; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
   }
@@ -65,7 +67,7 @@ export class Card {
       popupImage.src = this._link;
       popupImage.alt = this._name;
       popupText.textContent = `на изображении: ${this._name}`;
-      openPopup(popupOfImage); //openPopup(popupOfImage);
+      openPopup(popupOfImage);
     });
   }
 
@@ -77,9 +79,7 @@ export class Card {
   //УДАЛИТЬ КАРТОЧКУ
   _handleClickDeleteCard() {
     this._cardTemplate.remove();
+    this._cardTemplate = null;
   }
-  //ОТКРЫТЬ КАРТОЧКУ
-  _openImagePopup() {
-    this._openPopup(data);
-  }
+
 }
