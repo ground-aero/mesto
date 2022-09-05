@@ -2,56 +2,60 @@
 import { openPopup, popupOfImage, popupImage, popupText } from './index.js';
 export class Card {
   static _template = document.querySelector('#card-template').content; //возвращ #document fragment
-  //принимает в конструктор её данные и селектор её template-элемента ??
+
   constructor(data, selectors) {
+    //DLETED: openPopup, popupImage
     this._name = data.name; // _data.name,, _data.link
     this._link = data.link; // _data.name,, _data.link
     this._selectors = selectors;
     this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
     this._handleClickLike = this._handleClickLike.bind(this);
     this._openPopup = openPopup;
-    this._popupImage = popupImage;
-
-    // this._templateSelector = templateSelector;
+    // this._popupImage = popupImage;
   }
 
+  // 1. НАХОДИМ ШАБЛОН
   _getTemplateCard() {
-    this._cardElement = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
-    this._cardImage = this._cardElement.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
-    this._cardTitle = this._cardElement.querySelector(this._selectors.title);
-    this._cardText = this._cardElement.querySelector(this._selectors.title);
-    this._cardBtnDel = this._cardElement.querySelector(this._selectors.btnDel);
-    this._cardBtnLike = this._cardElement.querySelector(
+    // const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
+    this._cardTemplate = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
+
+    //ВЫНЕСТИ ПЕРЕМЕННЫЕ В setEventListeners и т.п..
+    this._cardImage = this._cardTemplate.querySelector(this._selectors.image); // объявл переменные дочерн.элементв клонируемой карточки
+    this._cardTitle = this._cardTemplate.querySelector(this._selectors.title);
+    this._cardText = this._cardTemplate.querySelector(this._selectors.title);
+    this._cardBtnDel = this._cardTemplate.querySelector(this._selectors.btnDel);
+    this._cardBtnLike = this._cardTemplate.querySelector(
       this._selectors.btnLike
     );
 
-    // (для клонированной карточки) присваиваем атрибуты с данными со входа
+    // // (для клонированной карточки) присваиваем атрибуты с данными со входа
     this._cardTitle.textContent = this._name; //_data.name ++
     this._cardImage.src = this._link; //_data.link ++
 
-    return this._cardElement; // лишь возвращаем разметку карточки
+    return this._cardTemplate; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
   }
 
-  // публичный.  добавит данные в разметку и возвращает готовые карточки внешним функциям.
+  // 2. ПОЛУЧИТЬ РАЗМЕТКУ ТЕМПЛЕЙТА (публичный метод)
+  //вызов (getCard) -> забирает разметку из HTML и клонирует элемент - возвращает готовые карточки внешним функциям (!)
   generateCard() {
-    // Запишем разметку в приватное поле _element. Так у других элементов появится доступ к ней.
-    this._element = this._getTemplateCard();
+    // Запишем разметку в приватное поле _cardElement. Так у других элементов появится доступ к ней.
+    this._cardElement = this._getTemplateCard();
     this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
 
     // Вернём элемент наружу
-    return this._element;
+    return this._cardElement;
   }
 
-  //универсальный метод слушателей
+  //универсальный метод всех слушателей - - - - - - - -
   _setEventListeners() {
     this._formPlace = document.forms.place;
 
-    // на лайк
+    // на лайке
     this._cardBtnLike.addEventListener('click', () => {
       this._handleClickLike();
     });
 
-    // на кнопку удаления карточки
+    // на кнопке удаления карточки
     this._cardBtnDel.addEventListener('click', () => {
       this._handleClickDeleteCard();
     });
@@ -66,14 +70,15 @@ export class Card {
   }
 
   // хендлеры
+  //ПОСТАВИТЬ ЛАЙК
   _handleClickLike() {
     this._cardBtnLike.classList.toggle('card__btn-like_active');
   }
-
+  //УДАЛИТЬ КАРТОЧКУ
   _handleClickDeleteCard() {
-    this._cardElement.remove();
+    this._cardTemplate.remove();
   }
-
+  //ОТКРЫТЬ КАРТОЧКУ
   _openImagePopup() {
     this._openPopup(data);
   }

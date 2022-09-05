@@ -9,8 +9,8 @@
     minmax(282px, 1fr)
   ); /* repeat(3, 282px); */
   grid-auto-rows: auto;
-
   row-gap: 20px;
   column-gap: 17px;
   list-style: none;
+  justify-items: center;
 }

@@ -88,7 +88,7 @@ function handleSaveSubmitEditForm(evt) {
 }
 formProfile.addEventListener('submit', handleSaveSubmitEditForm); // слушатель по событию сабмит на форме (“submit” - «отправка») даже при нажатии на Enter
 
-// ------------------ ДОБАВИТЬ МЕСТО - ------------------------
+// XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
 
 // btn "+" & add place window
 const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
@@ -109,27 +109,27 @@ const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей 
 const popupImage = document.querySelector('.popup__img'); // img popup
 const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
 
-// ПР-7 -------------------
-// Вызываем генерацию отрисовки массива карточек (initialCards) - методом перебора, для каждого его элемента
-// создаст новый экземпляр класса Card,  // подготовит карточку к публикации, добавит новую карточку в DOM.
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+// ПР-7 --
+
 initialCards.forEach((item) => {
   // Создадим экземпляр карточки
   const card = new Card(item, selectors); // ВМЕСТО: '#card-template'
   console.dir(card);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
+  // console.dir(cardElement);
 
-  document.querySelector('.elements__list').append(cardElement);
+  // Добавляем в DOM
+  cardsList.append(cardElement);
   // document.body.append(cardElement);
 });
 
-// ф-ция: добавление элемента карточки, по событию submit / formPlace /btnCreatePlaceCard // ф-ция ЖДЕТ Объект
-// 1) вызывает внутри себя экземпляр карточки, 2) вызыват метод создания карточки
+// ВОЗВРАЩАЕМ ГОТОВЫЙ ЭЛЕМЕНТ КАРТОЧКИ, при нажатии submit / formPlace /btnCreatePlaceCard
 function renderCard(container, data, position = 'before') {
-  const cardItem = new Card(data, selectors); // data.name, data.link?//
-  console.dir(cardItem);
-  // 2.Вызываем метод, который возвращает разметку карточки. Присваиваем разметку = card.
-  const card = cardItem.generateCard(); //node <li></li>.card //создались. У кажд карточки свой data.name, data.link !! Зд. (data) передавать не надо, т.к. createCard() не принимает никаких данных.
+  // где container принимает: 1) <ul> тег списка, 2) каждый элемент InitialCards, 3) Позицию размещ 'before'
+  const cardItem = new Card(data, selectors); //  // 1.Инициализируем Класс Card, передаем data(data.name, data.link), а также селекторы содерж карточки
+  const card = cardItem.generateCard(data);
 
   // 3.Разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
   switch (position) {
@@ -146,23 +146,24 @@ function renderCard(container, data, position = 'before') {
     default:
       break;
   }
+  return card;
   // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
 }
 
-// слушатель submit - формы / add place
-function setAddEventListeners() {
+//ДОБАВИТЬ СВОЮ КАРТОЧКУ
+function addCard() {
   formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     renderCard(
       cardsList,
-      { link: inputAddPlaceLink.value, name: inputAddPlaceName.value },
+      { name: inputAddPlaceName.value, link: inputAddPlaceLink.value },
       'before'
     ); // Ф-ция renderCard ЖДЕТ ОБЪЕКТ !!!!
     closePopup(popupAddPlaceNode);
     formPlace.reset();
   });
 }
-setAddEventListeners();
+addCard();
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
 // кнопка "edit"
@@ -196,7 +197,7 @@ document.querySelectorAll('.popup').forEach((popup) => {
 
 export { openPopup, popupOfImage, popupImage, popupText };
 
-// ПР-7 --------------------------------------------------
+// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 // FormValidator class
 
 //КОНФИГИ ФОРМ
@@ -211,8 +212,6 @@ const settings = {
 
 const formProfileValid = new FormValidator(settings, formProfile);
 formProfileValid.enableValidation();
-console.log(formProfileValid);
 
 const formPlaceValid = new FormValidator(settings, formPlace);
 formPlaceValid.enableValidation();
-// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ

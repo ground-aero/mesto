@@ -6,4 +6,6 @@
   background-color: #fff;
   list-style: none;
   position: relative;
+  max-width: 282px;
+  min-width: 282px;
 }
