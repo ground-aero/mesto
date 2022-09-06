@@ -4,14 +4,12 @@ export class Card {
   static _template = document.querySelector('#card-template').content; //возвращ #document fragment
 
   constructor(data, selectors) {
-    //DLETED: openPopup, popupImage
     this._name = data.name; // _data.name,, _data.link
     this._link = data.link; // _data.name,, _data.link
     this._selectors = selectors;
     this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
     this._handleClickLike = this._handleClickLike.bind(this);
     this._openPopup = openPopup;
-    // this._popupImage = popupImage;
   }
 
   // 1. НАХОДИМ ШАБЛОН
@@ -31,24 +29,21 @@ export class Card {
     // // (для клонированной карточки) присваиваем атрибуты с данными со входа
     this._cardTitle.textContent = this._name; //_data.name ++
     this._cardImage.src = this._link; //_data.link ++
-    this._cardImage.alt = this._link; 
-    
+    this._cardImage.alt = this._link;
 
     return this._cardTemplate; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
   }
 
   // 2. ПОЛУЧИТЬ РАЗМЕТКУ ТЕМПЛЕЙТА (публичный метод)
-  //вызов (getCard) -> забирает разметку из HTML и клонирует элемент - возвращает готовые карточки внешним функциям (!)
   generateCard() {
     // Запишем разметку в приватное поле _cardElement. Так у других элементов появится доступ к ней.
     this._cardElement = this._getTemplateCard();
     this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
 
-    // Вернём элемент наружу
     return this._cardElement;
   }
 
-  //универсальный метод всех слушателей - - - - - - - -
+  //универсальный
   _setEventListeners() {
     this._formPlace = document.forms.place;
 
@@ -81,5 +76,4 @@ export class Card {
     this._cardTemplate.remove();
     this._cardTemplate = null;
   }
-
 }

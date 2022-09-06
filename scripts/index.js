@@ -43,14 +43,11 @@ const btnEditProfile = document.querySelector('.profile__btn-edit'); // кноп
 const formProfile = document.forms.profile; // получаем форму profile по св-ву name
 const inputEditName = formProfile.elements.nameEdit; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
 const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
-const btnSaveProfile = document.querySelector('.btn_type_save-profile');
 const profileNameNode = page.querySelector('.profile__name');
 const profileJobNode = page.querySelector('.profile__job');
 
 function openPopup(modal) {
   document.addEventListener('keyup', handleEscUp);
-  // т.е. открыли попап, и тут же вешаем событие keydown на document. ***
-  // modal - параметр в который подставляются любые нод-элементы, и дальше на него вешается classList. (popupNode тоже подставлется в modal)
   modal.classList.add('popup_opened');
 
   btnCreatePlaceCard.classList.add('btn_status_disabled');
@@ -62,7 +59,6 @@ function closePopup(modal) {
   modal.classList.remove('popup_opened');
 }
 
-// И дальше внутри коллбэка у нас есть объект event и мы можем узнать в каком месте произошел клик:
 function handleEscUp(evt) {
   evt.preventDefault();
   if (evt.key === 'Escape') {
@@ -71,7 +67,6 @@ function handleEscUp(evt) {
   }
 }
 
-// --- input values & textContent
 function setPopupEditInputValue() {
   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
   inputEditJob.value = profileJobNode.textContent; // .trim();
@@ -94,8 +89,6 @@ formProfile.addEventListener('submit', handleSaveSubmitEditForm); // слуша�
 const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 const popupAddPlaceNode = document.querySelector('#overlay_add-place'); // оверлей add place
 const formElementCard = document.querySelector('#window_add-place'); // окно 430px add place
-// input & form / add place:
-// const formPlace = document.querySelector('.popup__form'); // input/form
 const formPlace = document.forms.place; // получаем форму place по св-ву name
 const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
 const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
@@ -109,7 +102,6 @@ const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей 
 const popupImage = document.querySelector('.popup__img'); // img popup
 const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
 
-// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 // ПР-7 --
 
 //ИНИЦИАЛИЗАЦИЯ КЛАССА Card, И ВОЗВРАЩЕНИЕ В РАЗМЕТКУ
@@ -193,7 +185,6 @@ document.querySelectorAll('.popup').forEach((popup) => {
 
 export { openPopup, popupOfImage, popupImage, popupText };
 
-// ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 // FormValidator class
 
 //КОНФИГИ ФОРМ
