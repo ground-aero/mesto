@@ -1,0 +1,27 @@
+.btn_type_create-place {
+  width: 100%;
+  margin: 0;
+  padding: 16px 0 14px;
+  border: none;
+  border-radius: 2px;
+  justify-self: end;
+  transition: opacity 0.4s linear;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+}
+
+.btn_type_create-place:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .btn_type_create-place {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

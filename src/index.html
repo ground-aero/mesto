@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
+    <link rel="stylesheet" href="./styles/index.css">
     <title lang="en">Mesto</title>
 </head>
 
@@ -33,16 +33,13 @@
                 <button class="btn profile__btn-addplace opacity-transition" type="button" aria-label="add"></button>
             </section>
 
-            <!-- elements section -->
-            <!-- <button class="element__btn-del" id="element__btn-del" type="button" aria-label="delete"></button> -->
             <section class="elements content__section">
-                <!-- grid list - for loading & adding cards -->
                 <ul class="elements__list">
-
+                    <!-- Контейнер для добавления карточек -->
                 </ul>
             </section>
 
-            <!-- //////////////// POPUPS /////////////// -->
+            <!-- POPUPS -->
             <!-- popup Edit Profile -->
             <div class="popup" id="overlay_edit">
                 <!-- flex -->
@@ -108,7 +105,7 @@
             </div>
         </main>
 
-        <!-- TEMPLATE карточка -->
+        <!-- TEMPLATE карточки -->
         <template id="card-template">
             <!-- карточка -->
             <li class="card">
@@ -134,10 +131,10 @@
     <!-- <script type="module">import { Card } from './Card.js'</script> -->
 
     <!-- <script src="./scripts/cards.js" defer></script> -->
-    <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./pages/index.js"></script> 
     <!-- <script type="module" src="./scripts/index.js" defer></script> -->
-
-    <!-- <script src="./scripts/validate.js" defer></script> -->
+    <!-- <script src="./scripts/Card.js"></script> -->
+       <!-- <script src="./scripts/validate.js" defer></script> -->
 
 </body>
 
