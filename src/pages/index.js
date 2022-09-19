@@ -55,7 +55,7 @@ function handleRemoveCard(node) {
 // Card ------------------------- создается экземпляр карточки, и возвращает готовую разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
-    { data: dataCard, handleImageOpenPopup, handleRemoveCard }, //handleCardClick: open
+    { data: dataCard, handleCardClick, handleRemoveCard }, //handleCardClick: open
     '#card-template'
   );
 
@@ -157,7 +157,7 @@ const section = new Section(
 //   section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
 // });
 
-//--PW-8------ popup new Popup --------------------------------------------------
+//--PW-8------ new POPUPs --------------------------------------------------
 const newPopupProfile = new PopupWithForm(
   '#overlay_edit',
   '#form-add-profile',
@@ -174,15 +174,12 @@ const newPopupAddPlace = new PopupWithForm(
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 // newPopupAddPlace.open()
 
-// const newPopupAdd = new PopupWithForm('#form-add-profile')
-// document.forms.profile
-
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 popupWithImage.setEventListeners();
 
-function handleImageOpenPopup(data) {
- popupWithImage.open(data)
+function handleCardClick(data) {
+  popupWithImage.open(data);
 }
 
 
@@ -200,13 +197,6 @@ function closePopup(modal) {
   modal.classList.remove('popup_opened');
 }
 
-// function handleEscUp(evt) {
-//   evt.preventDefault();
-//   if (evt.key === 'Escape') {
-//     const activePopup = document.querySelector('.popup_opened');
-//     closePopup(activePopup);
-//   }
-// }
 
 function setPopupEditInputValue() {
   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.

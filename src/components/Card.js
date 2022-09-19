@@ -8,12 +8,13 @@ import {
 } from '../pages/index.js';
 
 export class Card {
-  constructor({ data, handleImageOpenPopup, handleRemoveCard }, cardSelector) { //handleCardClick
+  constructor({ data, handleCardClick, handleRemoveCard }, cardSelector) {
+    //handleCardClick
     this._data = data; // this._link = data.link; _data.name,, _data.link
     // console.log(this._data);
     this._cardSelector = cardSelector;
     // this._handleCardClick = handleCardClick;
-    this._handleImageOpenPopup = handleImageOpenPopup;
+    this.handleCardClick = handleCardClick;
     this._handleRemoveCard = handleRemoveCard;
     // this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
     this._handleClickLike = this._handleClickLike.bind(this);
@@ -73,14 +74,7 @@ export class Card {
 
     // на img zoom/ open-popup
     cardImage.addEventListener('click', () => {
-      popupImage.src = this._data.link;
-      popupImage.alt = this._data.name;
-      popupText.textContent = `на изображении: ${this._data.name}`;
-      openPopup(popupOfImage);
-    });
-
-    cardImage.addEventListener('click', () => {
-      this._handleImageOpenPopup(this._data);
+      this.handleCardClick(this._data);
     });
   }
 
@@ -96,23 +90,3 @@ export class Card {
   //   this._cardTemplate = null;
   // }
 }
-
-// // 1. НАХОДИМ ШАБЛОН
-// _getTemplateCard() {
-//   this._cardTemplate = Card._template.querySelector('.card').cloneNode(true); // клонир Элемент из #document fragment | карточки
-
-//   return this._cardTemplate; // лишь возвращаем разметку карточки (DOM-элемент карточки) через return
-// }
-
-// // 2. ПОЛУЧИТЬ РАЗМЕТКУ ТЕМПЛЕЙТА (публичный метод)
-// generateCard() {
-//   // Запишем разметку в приватное поле _cardElement. Так у других элементов появится доступ к ней.
-//   this._element = this._getTemplateCard();
-//   this._setEventListeners(); // !!! тогда метод создаст карточки уже с обработчиком.
-
-//   this._element.querySelector('.card__title').textContent = this._name;
-//   this._element.querySelector('.card__img').src = this._link;
-//   this._element.querySelector('.card__img').alt = this._name;
-
-//   return this._element;
-// }
