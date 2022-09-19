@@ -1,5 +1,5 @@
-// класс Card, который создаёт карточку с текстом и ссылкой на изображение
-// Class должен поставлять готовую карточку со всей разметкой
+// 1. Card создаёт карточку с текстом и ссылкой на изображение. должен поставлять готовую карточку со всей разметкой
+// 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
 import {
   openPopup,
   popupOfImage,
@@ -8,13 +8,14 @@ import {
 } from '../pages/index.js';
 
 export class Card {
-  constructor({ data, handleCardClick }, cardSelector) {
-    //, handleCardClick
+  constructor({ data, handleImageOpenPopup, handleRemoveCard }, cardSelector) { //handleCardClick
     this._data = data; // this._link = data.link; _data.name,, _data.link
-    console.log(this._data);
+    // console.log(this._data);
     this._cardSelector = cardSelector;
-    this._handleCardClick = handleCardClick;
-    this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
+    // this._handleCardClick = handleCardClick;
+    this._handleImageOpenPopup = handleImageOpenPopup;
+    this._handleRemoveCard = handleRemoveCard;
+    // this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
     this._handleClickLike = this._handleClickLike.bind(this);
     // this._setEventListeners = this._setEventListeners.bind(this)
     this._openPopup = openPopup;
@@ -44,24 +45,31 @@ export class Card {
     cardImage.src = this._data.link; //_data.link ++
     cardImage.alt = this._data.name;
 
+    const cardBtnDel = this._cardElement.querySelector('.card__btn-del');
+
+    //УДАЛИТЬ КАРТОЧКУ (СЛУШАТЕЛЬ)-----PW-8
+    cardBtnDel.addEventListener('click', () => {
+      this._handleRemoveCard(this._cardElement);
+    });
+
     return this._cardElement;
   }
 
   //универсальный
   _setEventListeners() {
     this._formPlace = document.forms.place;
-    const cardBtnDel = this._cardElement.querySelector('.card__btn-del');
     const cardBtnLike = this._cardElement.querySelector('.card__btn-like');
     const cardImage = this._cardElement.querySelector('.card__img');
+
     // на лайке
     cardBtnLike.addEventListener('click', () => {
       this._handleClickLike();
     });
 
     // на кнопке удаления карточки
-    cardBtnDel.addEventListener('click', () => {
-      this._handleClickDeleteCard();
-    });
+    // cardBtnDel.addEventListener('click', () => {
+    //   this._handleClickDeleteCard();
+    // });
 
     // на img zoom/ open-popup
     cardImage.addEventListener('click', () => {
@@ -72,7 +80,7 @@ export class Card {
     });
 
     cardImage.addEventListener('click', () => {
-      this._handleCardClick();
+      this._handleImageOpenPopup(this._data);
     });
   }
 
@@ -83,10 +91,10 @@ export class Card {
     cardBtnLike.classList.toggle('card__btn-like_active');
   }
   //УДАЛИТЬ КАРТОЧКУ
-  _handleClickDeleteCard() {
-    this._cardTemplate.remove();
-    this._cardTemplate = null;
-  }
+  // _handleClickDeleteCard() {
+  //   this._cardTemplate.remove();
+  //   this._cardTemplate = null;
+  // }
 }
 
 // // 1. НАХОДИМ ШАБЛОН

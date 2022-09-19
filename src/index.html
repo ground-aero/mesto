@@ -42,15 +42,14 @@
             <!-- POPUPS -->
             <!-- popup Edit Profile -->
             <div class="popup" id="overlay_edit">
-                <!-- flex -->
                 <div class="popup__container" id="popup__container_edit">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
-                    <form action="#" class="popup__form" name="profile" tabindex="0" novalidate>
-                        <!--novalidate отменяет стандартные браузерные сообщ об ошибке -->
-                        <!-- <h2 class="popup__title">Редактировать профиль</h2> -->
+                    
+                    <form action="#" class="popup__form" id="form-add-profile" name="profile" tabindex="0" novalidate>
+                        <!--novalidate отм станд браузерные сообщ об ошибке -->
                         <h2 class="popup__title">Редактировать профиль</h2>
                         <span class="popup__input-field popup__input-field_wrap">
-                            <input type="text" class="popup__input" id="name-input" name="nameEdit"
+                            <input type="text" class="popup__input" id="name-input" name="name"
                                 placeholder="Ваше имя" tabindex="1" minlength="2" maxlength="40" required>
                             <span class="popup__input-span popup__input-span_error_disabled name-input-error"
                                 id="input-error-edit"></span> <!-- display: none -->
@@ -67,11 +66,12 @@
 
                 </div>
             </div>
+
             <!-- popup Add Place -->
             <div class="popup" id="overlay_add-place">
                 <div class="popup__container" id="window_add-place">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
-                    <form action="#" class="popup__form" name="place" tabindex="0" novalidate>
+                    <form action="#" class="popup__form" id="form-place" name="place" tabindex="0" novalidate>
                         <!-- <h2 class="popup__title">Новое место</h2> -->
                         <h2 class="popup__title">Новое место</h2>
                         <span class="popup__input-field popup__input-field_wrap">
@@ -94,7 +94,7 @@
                     </form>
                 </div>
             </div>
-            <!-- // img open-popup/ zoom-->
+            <!-- // POPUP IMAGE / zoom-->
             <div class="popup popup_img-bg" id="overlay_img-zoom">
                 <div class="popup__container-img popup__container-img_type_zoomer">
                     <button class="popup__close-img popup__btn-close opacity-transition opacity-transition_type_middle"

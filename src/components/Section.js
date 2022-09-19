@@ -1,17 +1,17 @@
-//  ./components/Section.js - ОТВЕЧАЕТ ЗА: только рендеринг карточек на страницу (добавляет его в контейнер и просто рендерит)
+//  ОТВЕЧАЕТ ЗА: только рендеринг карточек на страницу (добавляет его в контейнер и просто рендерит)
 // p.s - в Section прокинуть ф-цию рендеринга (ф-ция renderer не обойдется без класса Card)
 export class Section {
   constructor({ items, renderer }, containerSelector) {
     //1. items = initialCards, 2.renderer = отрендерить изнач массив карточек
-    this._initialArr = items; //массив данных карточек
-      console.log(this._initialArr);
-    this._renderer = renderer; //ф-ция колл-бэк
+    this._initialArr = items; //[массив данных {объектов} карточек]
+      // console.log(this._initialArr);
+    this._renderer = renderer; //ф-ция колл-бэк (наприм передаем по ссылке)
     this._container = document.querySelector(containerSelector);
   }
 
   addItem(node) {
     //принимает DOM-элемент и добавляет его в контейнер.
-    this._container.append(node);
+    this._container.prepend(node);
   }
   // addItem(node, position = 'before') {
   //   switch (position) {
@@ -26,18 +26,19 @@ export class Section {
   //   }
   // }
 
-  renderItems() {
-    // [{name: '', link: ''}, {name: '', link: ''},{name: '', link: ''}]
-    this._initialArr.forEach((item) => {
-      //item - аргумент
-      this._renderer(item, this._container);
-    });
-  }
-  // renderItems(dataArr) {//ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
-  //   dataArr.forEach((dataItem) => {
-  //     this._renderer(dataItem, this._container);//вызывается рендеринг и в нее передаются данные каждой карточки
+  // 1-й Вариант.
+  // renderItems() {
+  //   // [{name: '', link: ''}, {name: '', link: ''},{name: '', link: ''}]
+  //   this._initialArr.forEach((item) => {
+  //     //кол-бэк ф-ция метода forEach, срабатыв для каждого эл массива
+  //     //item - аргумент
+  //     this._renderer(item, this._container); //передаем данные кажд карточки при вызове ф-ции
   //   });
   // }
+  // 2-й Вариант (сокращенный).
+  renderItems(dataArr) {//ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
+    dataArr.forEach(this._renderer);//вызывается рендеринг по ссылке
+  }
 }
 
 
@@ -70,7 +71,7 @@ export class Section {
 //       { name: inputAddPlaceName.value, link: inputAddPlaceLink.value },
 //       'before'
 //     );
-//     closePopup(popupAddPlaceNode);
+//     closePopup(popupAddPlace);
 //     formPlace.reset();
 //   });
 // }
