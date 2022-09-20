@@ -44,34 +44,39 @@ export const settings = {
 };
 
 export const userInfo = {
-  name: 'Вас',
-  job: 'bb',
-}
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job',
+};
 
 export const popupSelectorsImage = {
   popupClass: 'popup_img-bg',
   popupActiveClass: 'popup_opened',
 };
 
+// const page = document.querySelector('.page');
 export const cardsListSelector = '.elements__list';
 export const cardsList = document.querySelector('.elements__list'); 
 
-// // forms (430px)
-// export const formElement = document.querySelectorAll()
+// buttons
+export const btnEditProfile = document.querySelector('.profile__btn-edit'); 
+export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
+
+// forms (430px)
 export const formProfile = document.forms.profile; // по св-ву name
 export const inputEditName = formProfile.elements.name; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
 export const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
+
+export const formPlace = document.forms.place
+export const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
+export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
 
 // POPUPS & inputs - ----------------------
 
 // edit Profile (open)
 // export const popupEdit = document.querySelector('#overlay_edit'); // оверлей popup Edit
-// export const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
+
 // export const btnSaveProfile = document.querySelector('.btn_type_save-profile');
 
-export const formPlace = document.forms.place
-export const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
-export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
 // // add place (open)
 // export const popupAddPlace = document.querySelector('#overlay_add-place'); // оверлей add place
 

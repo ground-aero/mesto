@@ -2,88 +2,39 @@
  Файл содержит только инициализацию необходимых главной странице модулей — функций и классов */
 // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
 
-// import { FormValidator } from '../scripts/FormValidator.js';
+import { FormValidator } from '../components/FormValidator.js';
 
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import { Popup } from '../components/Popup.js';
-import {UserInfo} from '../components/UserInfo.js';
+import { UserInfo } from '../components/UserInfo.js';
 import {
+  btnEditProfile,
+  btnAddPlace,
   userInfo,
-  settings,
-  selectors,
   initialCards,
-  cardsList,
+  settings,
   formProfile,
-  inputEditName,
-  inputEditJob,
   formPlace,
-  inputAddPlaceName,
-  inputAddPlaceLink,
-  popupSelectorsImage,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-const page = document.querySelector('.page');
-// edit Profile
-const popupEdit = document.querySelector('#overlay_edit'); // оверлей popup Edit
-const btnEditProfile = document.querySelector('.profile__btn-edit'); // кнопка редактировать
-
-const profileNameNode = page.querySelector('.profile__name');
-const profileJobNode = page.querySelector('.profile__job');
-// XXXXXXXXXXXXXXXXX  ДОБАВИТЬ МЕСТО - ХХХХХХХХХХХХХХХХХХХХХХХ
-// btn "+" & add place window
-const popupAddPlace = document.querySelector('#overlay_add-place'); // оверлей add place
-const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
-const formElementCard = document.querySelector('#window_add-place'); // окно 430px add place
-const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать" место
-// <template>,  list <ul>, btn-del
-const cardTemplate = document.querySelector('#card-template').content; //.querySelector(selectors.card); // темплейт .content, и children
-const btnDel = cardTemplate.querySelectorAll('.card__btn-del');
-// image popup
-const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей img popup
-const popupImage = document.querySelector('.popup__img'); // img popup
-const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
-
-//--remove card----PW-8----------------------------------------------------
+//--remove card----PW-8----------
 function handleRemoveCard(node) {
   //получаем ноду, удаляем ноду
   node.remove();
   node = null;
 }
 
-// Card ------------------------- создается экземпляр карточки, и возвращает готовую разметку
+// Card ----------- создается экз карточки, и возвращает готовую разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
     { data: dataCard, handleCardClick, handleRemoveCard }, //handleCardClick: open
     '#card-template'
   );
 
-  return newCard.generateCard(); //возвращает готовую разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
+  return newCard.generateCard(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
-// УДАЛИТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// //ПЕРЕБОРОМ МАССИВА КАРТОЧЕК, СОЗДАЕМ ИНСТАНС, ВЫЗЫВАЕМ ГЕНЕРИРОВАНИЕ КАЖДОЙ КАРТОЧКИ, РЕНДЕРИМ ИХ В СПИСОК
-// initialCards.forEach((card) => {
-//   const newCard = initialiseCard(card);
-//   renderToContainer(cardsList, newCard)
-// })
-// // ВСТАВКА ЭЛЕМЕНТОВ В РАЗМЕТКУ - ВОЗВРАЩАЕМ ГОТОВЫЙ ЭЛЕМЕНТ КАРТОЧКИ, при нажатии submit / formPlace /btnCreatePlaceCard
-// function renderToContainer(container, element) {
-// container.append(element)
-//   // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
-// }
-// - - -
-// initialCards.forEach((item) => {
-//   const card = new Card(item, '#card-template', () => {
-//   popupWithImage.openPopup(item.link, item.name); //?? open ??
-//   }); // ВМЕСТО: '#card-template'
-//   // Создаём карточку и возвращаем наружу
-//   const cardElement = card.generateCard();
-//   // Добавляем в DOM
-//   renderToContainer(cardsList, cardElement)
-//   // cardsList.append(cardElement);
-// });
 
 // -----------------------------------------------
 
@@ -95,7 +46,7 @@ function submitHandlerPlace(formDataObject) {
   section.addItem(initialiseCard(formDataObject));
 }
 
-// Section ----------------------------------------------
+// Section ------------------------------------
 // cardsList = section
 // Ф-ция говорит что нужно сделать ДЛЯ ОДНОЙ КАРТОЧКИ когда получим данные, то что вернет initialiseCard() -готовую разметку
 // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
@@ -182,56 +133,37 @@ function handleCardClick(data) {
   popupWithImage.open(data);
 }
 
-//----------------------------------------------------------------------------
-// function openPopup(modal) {
-//   // document.addEventListener('keyup', handleEscUp);
-//   modal.classList.add('popup_opened');
+//-PW-8 -------------NEW userInfo ----------------------
 
-//   // btnCreatePlaceCard.classList.add('btn_status_disabled');
-//   // btnCreatePlaceCard.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
-// }
-
-// function closePopup(modal) {
-//   // document.removeEventListener('keyup', handleEscUp); // удаляем событие keydown // Закрыли попап -- листенер можно удалить ****
-//   modal.classList.remove('popup_opened');
-// }
-
-//-PW-8 -------------NEW userInfo --------------------------------------
-
-function initialiseUser() {
-  const {name, job} = userInfo;
-  const newUser = new UserInfo({ name, job });
-}
-// name: '.profile__name', 
+// function initialiseUser() {
+const { nameSelector, jobSelector } = userInfo;
+const newUser = new UserInfo({ nameSelector, jobSelector });
+// name: '.profile__name',
 // job: '.profile__job'
 
+//-------------------------------------------------------
 
+// function setPopupEditInputValue() {
+//   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
+//   inputEditJob.value = profileJobNode.textContent; // .trim();
+// }
+// function setEditNodeTextContent() {
+//   profileNameNode.textContent = inputEditName.value; // Вставьте новые значения с помощью textContent
+//   profileJobNode.textContent = inputEditJob.value; // Получаем значение полей inputEditName  и inputEditJob из свойства value. // Выберите элементы, куда должны быть вставлены значения полей.
+// }
 
-//----------------------------------------------------------------------------
-
-function setPopupEditInputValue() {
-  inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
-  inputEditJob.value = profileJobNode.textContent; // .trim();
-}
-
-function setEditNodeTextContent() {
-  profileNameNode.textContent = inputEditName.value; // Вставьте новые значения с помощью textContent
-  profileJobNode.textContent = inputEditJob.value; // Получаем значение полей inputEditName  и inputEditJob из свойства value. //  // Выберите элементы, куда должны быть вставлены значения полей.
-}
 // ф-ция обработчик по форме Edit / "сохранить" и "отправить" данные из строки формы профиля
-function handleSaveSubmitEditForm(evt) {
-  // evt.preventDefault(); // Эта строка отменяет стандартную отправку формы.
-  setEditNodeTextContent();
+function handleSaveSubmitEditForm(formDataObject) {
+  // setEditNodeTextContent();
+  newUser.setUserInfo(formDataObject);
   newPopupProfile.close();
   // closePopup(popupEdit);
 }
-// formProfile.addEventListener('submit', handleSaveSubmitEditForm); // слушатель по событию сабмит на форме (“submit” - «отправка») даже при нажатии на Enter
-
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
 // кнопка "edit"
 function handleButtonEditClick() {
-  setPopupEditInputValue(); // вызв заполнение полей
+  // setPopupEditInputValue(); // вызв заполнение полей
   newPopupProfile.open();
   // openPopup(popupEdit);
 }
@@ -246,13 +178,12 @@ function handleButtonAddPlaceClick() {
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
-
 // FormValidator class ------------------------------------
 
-// const formProfileValid = new FormValidator(settings, formProfile);
-// formProfileValid.enableValidation();
+const formProfileValid = new FormValidator(settings, formProfile);
+formProfileValid.enableValidation();
 
-// const formPlaceValid = new FormValidator(settings, formPlace);
-// formPlaceValid.enableValidation();
+const formPlaceValid = new FormValidator(settings, formPlace);
+formPlaceValid.enableValidation();
 
 section.renderItems(initialCards);

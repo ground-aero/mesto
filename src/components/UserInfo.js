@@ -1,19 +1,28 @@
 /*отвечает за: управление отображением информации о пользователе на странице*/
+import {userInfo} from '../utils/constants.js'
+
 export class UserInfo {
   // Принимает объект с селекторами двух элементов: 1. элемента имени пользователя 2. элемента информации о себе.
-  constructor({
-    userNameSelector = 'Жак-Ив Кусто',
-    infoAboutMeSelector = 'Исследователь океана',
-  }) {
-    this._userNameSelector = userNameSelector;
-    this._infoAboutMeSelector = infoAboutMeSelector;
+  constructor({ nameSelector, jobSelector }) {
+    this._name = document.querySelector(nameSelector);
+    // console.log(this._name);
+    this._job = document.querySelector(jobSelector);
+
+    // this._userInfo = userInfo
   }
 
-  //   возвращает объект с данными пользователя.
+  // забираем из ДОМ элементов их текст, и возвращаем такой объект с данными пользователя. Пользователя нужно будет подставить в форму при открытии.
   getUserInfo() {
-    // Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
+    return {
+      name: `${this._name.textContent}`,
+      job: `${this._job.textContent}`,
+    };
   }
 
-  //   принимает новые данные пользователя и добавляет их на страницу.
-  setUserInfo() {}
+  // в эти элементы устанавливает тот текст который был передан выше  
+  // принимает новые данные пользователя из ДОМ (и внутри себя ), 2. Устанавливать данные в ДОМ... и добавляет их на страницу.
+  setUserInfo(formData) {
+    this._name.textContent = formData.name;
+    this._job.textContent = formData.job
+  }
 }
