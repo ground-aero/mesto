@@ -1,25 +1,13 @@
 // 1. Card создаёт карточку с текстом и ссылкой на изображение. должен поставлять готовую карточку со всей разметкой
 // 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
-import {
-  openPopup,
-  popupOfImage,
-  popupImage,
-  popupText,
-} from '../pages/index.js';
-
 export class Card {
   constructor({ data, handleCardClick, handleRemoveCard }, cardSelector) {
-    //handleCardClick
     this._data = data; // this._link = data.link; _data.name,, _data.link
     // console.log(this._data);
     this._cardSelector = cardSelector;
-    // this._handleCardClick = handleCardClick;
     this.handleCardClick = handleCardClick;
     this._handleRemoveCard = handleRemoveCard;
-    // this._handleClickDeleteCard = this._handleClickDeleteCard.bind(this); //возвращает ф-цию с уже явно привязанным контекстом
     this._handleClickLike = this._handleClickLike.bind(this);
-    // this._setEventListeners = this._setEventListeners.bind(this)
-    this._openPopup = openPopup;
   }
 
   // 1. НАХОДИМ НОДУ (но ее еще нет в DOM ! )
@@ -58,7 +46,6 @@ export class Card {
 
   //универсальный
   _setEventListeners() {
-    this._formPlace = document.forms.place;
     const cardBtnLike = this._cardElement.querySelector('.card__btn-like');
     const cardImage = this._cardElement.querySelector('.card__img');
 
@@ -67,12 +54,7 @@ export class Card {
       this._handleClickLike();
     });
 
-    // на кнопке удаления карточки
-    // cardBtnDel.addEventListener('click', () => {
-    //   this._handleClickDeleteCard();
-    // });
-
-    // на img zoom/ open-popup
+    // img zoom/ open(data)
     cardImage.addEventListener('click', () => {
       this.handleCardClick(this._data);
     });

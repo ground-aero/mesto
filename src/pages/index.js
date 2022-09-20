@@ -8,7 +8,9 @@ import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import { Popup } from '../components/Popup.js';
+import {UserInfo} from '../components/UserInfo.js';
 import {
+  userInfo,
   settings,
   selectors,
   initialCards,
@@ -43,7 +45,6 @@ const btnDel = cardTemplate.querySelectorAll('.card__btn-del');
 const popupOfImage = document.querySelector('.popup_img-bg'); // оверлей img popup
 const popupImage = document.querySelector('.popup__img'); // img popup
 const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
-
 
 //--remove card----PW-8----------------------------------------------------
 function handleRemoveCard(node) {
@@ -91,7 +92,7 @@ function submitHandlerPlace(formDataObject) {
   // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
   // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
   //  вариант-2
-    section.addItem(initialiseCard(formDataObject)) 
+  section.addItem(initialiseCard(formDataObject));
 }
 
 // Section ----------------------------------------------
@@ -163,7 +164,7 @@ const newPopupProfile = new PopupWithForm(
   '#form-add-profile',
   handleSaveSubmitEditForm
 );
-newPopupProfile.setEventListeners();// слушатель вызываем в прямом потоке кода, после создания экземпляра класса
+newPopupProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
 // newPopupProfile.open()
 
 const newPopupAddPlace = new PopupWithForm(
@@ -174,7 +175,6 @@ const newPopupAddPlace = new PopupWithForm(
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 // newPopupAddPlace.open()
 
-
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 popupWithImage.setEventListeners();
 
@@ -182,21 +182,32 @@ function handleCardClick(data) {
   popupWithImage.open(data);
 }
 
+//----------------------------------------------------------------------------
+// function openPopup(modal) {
+//   // document.addEventListener('keyup', handleEscUp);
+//   modal.classList.add('popup_opened');
+
+//   // btnCreatePlaceCard.classList.add('btn_status_disabled');
+//   // btnCreatePlaceCard.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
+// }
+
+// function closePopup(modal) {
+//   // document.removeEventListener('keyup', handleEscUp); // удаляем событие keydown // Закрыли попап -- листенер можно удалить ****
+//   modal.classList.remove('popup_opened');
+// }
+
+//-PW-8 -------------NEW userInfo --------------------------------------
+
+function initialiseUser() {
+  const {name, job} = userInfo;
+  const newUser = new UserInfo({ name, job });
+}
+// name: '.profile__name', 
+// job: '.profile__job'
+
+
 
 //----------------------------------------------------------------------------
-function openPopup(modal) {
-  // document.addEventListener('keyup', handleEscUp);
-  modal.classList.add('popup_opened');
-
-  // btnCreatePlaceCard.classList.add('btn_status_disabled');
-  // btnCreatePlaceCard.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
-}
-
-function closePopup(modal) {
-  // document.removeEventListener('keyup', handleEscUp); // удаляем событие keydown // Закрыли попап -- листенер можно удалить ****
-  modal.classList.remove('popup_opened');
-}
-
 
 function setPopupEditInputValue() {
   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
@@ -211,44 +222,32 @@ function setEditNodeTextContent() {
 function handleSaveSubmitEditForm(evt) {
   // evt.preventDefault(); // Эта строка отменяет стандартную отправку формы.
   setEditNodeTextContent();
-  closePopup(popupEdit);
+  newPopupProfile.close();
+  // closePopup(popupEdit);
 }
 // formProfile.addEventListener('submit', handleSaveSubmitEditForm); // слушатель по событию сабмит на форме (“submit” - «отправка») даже при нажатии на Enter
 
-// ПР-7 --
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
 // кнопка "edit"
-function handleButtonEditClick(evt) {
+function handleButtonEditClick() {
   setPopupEditInputValue(); // вызв заполнение полей
-  openPopup(popupEdit);
+  newPopupProfile.open();
+  // openPopup(popupEdit);
 }
-
-// ---PW-8 ------------------- IMAGE POPUP
 
 // // кнопка "+" / add place
 function handleButtonAddPlaceClick() {
-  openPopup(popupAddPlace);
+  newPopupAddPlace.open();
+  //openPopup(popupAddPlace);
 }
 
-//-------- слушатели кнопок
+//-------- СЛУШАТЕЛИ КНОПОК
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
-// // ------- слушатели клика на попапы и кнопки "Х"
-document.querySelectorAll('.popup').forEach((popup) => {
-  // универсальный слушатель на все попап оверлеи, на закрытие
-  popup.addEventListener('mousedown', (evt) => {
-    if (
-      evt.target.classList.contains('popup__btn-close') ||
-      evt.target.classList.contains('popup')
-    ) {
-      closePopup(popup);
-    }
-  });
-});
 
-// FormValidator class
+// FormValidator class ------------------------------------
 
 // const formProfileValid = new FormValidator(settings, formProfile);
 // formProfileValid.enableValidation();
@@ -257,5 +256,3 @@ document.querySelectorAll('.popup').forEach((popup) => {
 // formPlaceValid.enableValidation();
 
 section.renderItems(initialCards);
-
-export { openPopup, popupOfImage, popupImage, popupText };

@@ -43,6 +43,11 @@ export const settings = {
   errorLineClass: 'popup__input_line_error',
 };
 
+export const userInfo = {
+  name: 'Вас',
+  job: 'bb',
+}
+
 export const popupSelectorsImage = {
   popupClass: 'popup_img-bg',
   popupActiveClass: 'popup_opened',
