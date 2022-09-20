@@ -14,9 +14,6 @@ export class Popup {
   open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keyup', this._handleEscClose);
-
-    //   btnCreatePlaceCard.classList.add('btn_status_disabled');
-    //   btnCreatePlaceCard.setAttribute('disabled', 'disabled'); // устанавливаем атрибут disabled
   }
 
   close() {

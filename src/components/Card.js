@@ -66,9 +66,5 @@ export class Card {
     const cardBtnLike = this._cardElement.querySelector('.card__btn-like');
     cardBtnLike.classList.toggle('card__btn-like_active');
   }
-  //УДАЛИТЬ КАРТОЧКУ
-  // _handleClickDeleteCard() {
-  //   this._cardTemplate.remove();
-  //   this._cardTemplate = null;
-  // }
+
 }

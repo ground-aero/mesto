@@ -10,7 +10,7 @@ export class PopupWithForm extends Popup {
     this._submitHandler = submitHandler;
   }
 
-  // это код для ПР-9
+  // код для ПР-9
   // setSubmitAction(action) {
   //   this._submitHandler = action;
   // }
@@ -37,8 +37,7 @@ export class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    //Расширяем родительский метод.
-    //должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
+    //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
       this._submitHandler(this._getInputValues());

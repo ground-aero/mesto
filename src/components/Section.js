@@ -13,19 +13,7 @@ export class Section {
     //принимает DOM-элемент и добавляет его в контейнер.
     this._container.prepend(node);
   }
-  // addItem(node, position = 'before') {
-  //   switch (position) {
-  //     case 'before':
-  //       this._container.prepend(node)
-  //       break;
-  //     case 'after':
-  //       this._container.append(node)
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
+ 
   // 1-й Вариант.
   // renderItems() {
   //   // [{name: '', link: ''}, {name: '', link: ''},{name: '', link: ''}]
@@ -40,39 +28,3 @@ export class Section {
     dataArr.forEach(this._renderer);//вызывается рендеринг по ссылке
   }
 }
-
-
-// Класс Section будет решать отдельную задачу — вставку элементов в разметку.
-
-// ВСТАВКА ЭЛЕМЕНТОВ В РАЗМЕТКУ - ВОЗВРАЩАЕМ ГОТОВЫЙ ЭЛЕМЕНТ КАРТОЧКИ, при нажатии submit / formPlace /btnCreatePlaceCard
-// function renderCard(container, data, position = 'before') {
-//   const card = initialiseClassCard(data); // 2. разметка попадает в переменную card, и ренедерится с помощью метода renderCard.
-//   switch (position) {
-//     case 'before':
-//       container.prepend(card);
-//       break;
-//     case 'after':
-//       container.append(card);
-//       break;
-
-//     default:
-//       break;
-//   }
-//   return card;
-//   // container.append(card); // !!! Теперь данная функциональность не нужна (после реализованного выше)
-// }
-
-// //ДОБАВИТЬ СВОЮ КАРТОЧКУ
-// function addCard() {
-//   formPlace.addEventListener('submit', (evt) => {
-//     evt.preventDefault();
-//     renderCard(
-//       cardsList,
-//       { name: inputAddPlaceName.value, link: inputAddPlaceLink.value },
-//       'before'
-//     );
-//     closePopup(popupAddPlace);
-//     formPlace.reset();
-//   });
-// }
-// addCard();

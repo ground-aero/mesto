@@ -21,12 +21,12 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 
 //--remove card----PW-8----------
 function handleRemoveCard(node) {
-  //получаем ноду, удаляем ноду
+  //получаем ноду, удаляем ее
   node.remove();
   node = null;
 }
 
-// Card ----------- создается экз карточки, и возвращает готовую разметку
+// Card ----------- создается экз, и возвращает разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
     { data: dataCard, handleCardClick, handleRemoveCard }, //handleCardClick: open
@@ -48,8 +48,7 @@ function submitHandlerPlace(formDataObject) {
 
 // Section ------------------------------------
 // cardsList = section
-// Ф-ция говорит что нужно сделать ДЛЯ ОДНОЙ КАРТОЧКИ когда получим данные, то что вернет initialiseCard() -готовую разметку
-// Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
+// Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет initialiseCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
   {
     items: initialCards,
@@ -61,62 +60,13 @@ const section = new Section(
   '.elements__list'
 );
 
-// ---------------------------------------------------------
-//ДОБАВИТЬ СВОЮ КАРТОЧКУ
-// function addCard() {
-//   formPlace.addEventListener('submit', (evt) => {
-//     evt.preventDefault();
-//     renderToContainer(
-//       cardsList,
-//       { name: inputAddPlaceName.value, link: inputAddPlaceLink.value },
-//       'before'
-//     );
-//     closePopup(popupAddPlace);
-//     formPlace.reset();
-//   });
-// }
-// addCard();
-
-// -PW-8-------- работа с формой ----------------------------------------
-// УДАЛИТЬ !!!!!!!!!!!!!
-
-// function handleFormSubmit(formDataObject) {
-//   console.log(formDataObject);
-//   cardList.addItem(generateCard(formDataObject), 'before');
-// }
-// PW-8 перенести код в класс
-// слушатель на окно формы (430px)
-// formProfile.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   const formDataObject = {};
-//   const inputElements = formProfile.querySelectorAll('.popup__input');
-//   [...inputElements].forEach((input) => {
-//     formDataObject[input.name] = input.value; //'name - знач атрибута name=""
-//     formDataObject[input.job] = input.value;
-//   });
-// });
-
-// formPlace.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   const formDataObject = {};
-//   const inputElements = formPlace.querySelectorAll('.popup__input');
-//   [...inputElements].forEach((input) => {
-//     formDataObject[input.name] = input.value; //'name - знач атрибута name=""
-//     formDataObject[input.link] = input.value;
-//   });
-
-//   const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
-//   section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
-// });
-
-//--PW-8------ new POPUPs --------------------------------------------------
+//----- new POPUPs ----------------------------
 const newPopupProfile = new PopupWithForm(
   '#overlay_edit',
   '#form-add-profile',
   handleSaveSubmitEditForm
 );
 newPopupProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
-// newPopupProfile.open()
 
 const newPopupAddPlace = new PopupWithForm(
   '#overlay_add-place',
@@ -124,7 +74,6 @@ const newPopupAddPlace = new PopupWithForm(
   submitHandlerPlace
 );
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
-// newPopupAddPlace.open()
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 popupWithImage.setEventListeners();
@@ -133,7 +82,7 @@ function handleCardClick(data) {
   popupWithImage.open(data);
 }
 
-//-PW-8 -------------NEW userInfo ----------------------
+//----------NEW userInfo ----------------------
 
 // function initialiseUser() {
 const { nameSelector, jobSelector } = userInfo;
@@ -143,29 +92,17 @@ const newUser = new UserInfo({ nameSelector, jobSelector });
 
 //-------------------------------------------------------
 
-// function setPopupEditInputValue() {
-//   inputEditName.value = profileNameNode.textContent; // .trim(); // При открытии попапа поля формы заполняются данными из профиля.
-//   inputEditJob.value = profileJobNode.textContent; // .trim();
-// }
-// function setEditNodeTextContent() {
-//   profileNameNode.textContent = inputEditName.value; // Вставьте новые значения с помощью textContent
-//   profileJobNode.textContent = inputEditJob.value; // Получаем значение полей inputEditName  и inputEditJob из свойства value. // Выберите элементы, куда должны быть вставлены значения полей.
-// }
-
 // ф-ция обработчик по форме Edit / "сохранить" и "отправить" данные из строки формы профиля
 function handleSaveSubmitEditForm(formDataObject) {
-  // setEditNodeTextContent();
-  newUser.setUserInfo(formDataObject);
-  newPopupProfile.close();
-  // closePopup(popupEdit);
+  newUser.setUserInfo(formDataObject); // setEditNodeTextContent();
+  newPopupProfile.close(); // closePopup(popupEdit);
 }
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
 // кнопка "edit"
 function handleButtonEditClick() {
   // setPopupEditInputValue(); // вызв заполнение полей
-  newPopupProfile.open();
-  // openPopup(popupEdit);
+  newPopupProfile.open(); // openPopup(popupEdit);
 }
 
 // // кнопка "+" / add place
@@ -179,7 +116,6 @@ btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profil
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
 // FormValidator class ------------------------------------
-
 const formProfileValid = new FormValidator(settings, formProfile);
 formProfileValid.enableValidation();
 
