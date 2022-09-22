@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/index.css">
-    <title lang="en">Mesto</title>
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+    <title lang="ru">Mesto</title>
 </head>
 
 <body class="page">
@@ -15,13 +15,15 @@
     <div class="page__container">
         <!-- header -->
         <header class="header">
-            <img class="header__logo" src="./images/logo.svg" alt="лого Mesto">
+            <!-- <img class="header__logo" src="./images/logo.svg" alt="лого Mesto"> -->
+            <img src="<%=require('./images/logo.svg')%>" alt="лого Mesto">
         </header>
         <main class="content">
             <!-- profile section -->
             <section id="profile" class="profile content__section">
                 <!--flex-->
-                <img class="profile__avatar" src="./images/avatar.png" alt="бюст улыбающегося человека в красной шапке">
+                <!-- <img class="profile__avatar" src="./images/avatar.png" alt="бюст улыбающегося человека в красной шапке"> -->
+                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -44,13 +46,13 @@
             <div class="popup" id="overlay_edit">
                 <div class="popup__container" id="popup__container_edit">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
-                    
+
                     <form action="#" class="popup__form" id="form-add-profile" name="profile" tabindex="0" novalidate>
                         <!--novalidate отм станд браузерные сообщ об ошибке -->
                         <h2 class="popup__title">Редактировать профиль</h2>
                         <span class="popup__input-field popup__input-field_wrap">
-                            <input type="text" class="popup__input" id="name-input" name="name"
-                                placeholder="Ваше имя" tabindex="1" minlength="2" maxlength="40" required>
+                            <input type="text" class="popup__input" id="name-input" name="name" placeholder="Ваше имя"
+                                tabindex="1" minlength="2" maxlength="40" required>
                             <span class="popup__input-span popup__input-span_error_disabled name-input-error"
                                 id="input-error-edit"></span> <!-- display: none -->
                         </span>
@@ -131,10 +133,10 @@
     <!-- <script type="module">import { Card } from './Card.js'</script> -->
 
     <!-- <script src="./scripts/cards.js" defer></script> -->
-    <script type="module" src="./pages/index.js"></script> 
+    <script type="module" src="./pages/index.js"></script>
     <!-- <script type="module" src="./scripts/index.js" defer></script> -->
     <!-- <script src="./scripts/Card.js"></script> -->
-       <!-- <script src="./scripts/validate.js" defer></script> -->
+    <!-- <script src="./scripts/validate.js" defer></script> -->
 
 </body>
 
