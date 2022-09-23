@@ -1,22 +1,22 @@
 // ЗАДАЧА: Показать попап. перезаписать метод open. В методе open нужно вставлять в попап картинку и атрибут src изображения.
 // картинки заменить src
 
-import {Popup} from './Popup.js';
+import { Popup } from './Popup.js';
 
 export default class PopupWithImage extends Popup {
-  constructor(popupSelector, callback) {
-    super(popupSelector)
+  constructor(popupSelector) {
+    super(popupSelector);
+    this._image = this._popup.querySelector('.popup__img');
+    this._subTitle = this._popup.querySelector('.popup__subtitle');
   }
 
-  open({name, link}){
+  open({ name, link }) {
     //методе open нужно вставлять в попап картинку и атрибут src изображения.
-    this._popup.querySelector('.popup__img').src = link;
-    this._popup.querySelector('.popup__img').alt = name;
-    this._popup.querySelector(
-      '.popup__subtitle'
-    ).textContent = `на изображении: ${name}`;
-
-    console.log('тут логика открытия  карточки', name);
     super.open();
+
+    this._image.src = link;
+    this._image.alt = name;
+    this._subTitle.textContent = `на изображении: ${name}`;
+    // console.log('тут логика открытия  карточки', name);
   }
 }
