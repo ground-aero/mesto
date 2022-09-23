@@ -39,7 +39,7 @@ function initialiseCard(dataCard) {
 // -----------------------------------------------
 
 // ф-ция создает объект из полей формы (перекидываем из index -> PopupWithForm)
-function submitHandlerPlace(formDataObject) {
+function handlePlaceSubmit(formDataObject) {
   // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
   // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
   //  вариант-2
@@ -71,7 +71,7 @@ newPopupProfile.setEventListeners(); // слушатель вызываем в �
 const newPopupAddPlace = new PopupWithForm(
   '#overlay_add-place',
   '#form-place',
-  submitHandlerPlace
+  handlePlaceSubmit
 );
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 

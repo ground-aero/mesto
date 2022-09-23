@@ -1,18 +1,18 @@
 /*ЗАДАЧА: Помимо открытия/закрытия попапа(ов), добавить обработчики формы которая находится внутри попапа */
 /* => ф-цию обработчика передаем в конструктор  
 Для каждого попапа создавайте свой экземпляр класса PopupWithForm. */
-import {Popup} from './Popup.js'
+import { Popup } from './Popup.js';
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, formSelector, submitHandler = null) {
+  constructor(popupSelector, formSelector, handlePlaceSubmit = null) {
     super(popupSelector);
     this._form = this._popup.querySelector(formSelector);
-    this._submitHandler = submitHandler;
+    this._handlePlaceSubmit = handlePlaceSubmit;
   }
 
   // код для ПР-9
   // setSubmitAction(action) {
-  //   this._submitHandler = action;
+  //   this._handlePlaceSubmit(вместо)submitHandler = action;
   // }
   _getInputValues() {
     // собирает данные всех полей формы.
@@ -33,14 +33,13 @@ export class PopupWithForm extends Popup {
     super.close();
   }
 
-  _setInputValues(data) {
-  }
+  _setInputValues(data) {}
 
   setEventListeners() {
     //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._submitHandler(this._getInputValues());
+      this._handlePlaceSubmit(this._getInputValues());
 
       this.close();
     });
