@@ -3,7 +3,7 @@ export class FormValidator {
   constructor(settings, form) {
     this._settings = settings;
     this._form = form;
-    this._isValid = this._isValid.bind(this);
+    this._checkValidityInput = this._checkValidityInput.bind(this);
     this._hasInvalidInput = this._hasInvalidInput.bind(this);
     this._showInputError = this._showInputError.bind(this);
     this._hideInputError = this._hideInputError.bind(this);
@@ -14,7 +14,7 @@ export class FormValidator {
   }
 
   //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ. 
-  _isValid(formElement, inputElement, settings) {
+  _checkValidityInput(formElement, inputElement, settings) {
     if (!inputElement.validity.valid) {
 
       this._showInputError(
@@ -66,7 +66,7 @@ export class FormValidator {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         // Внутри колбэка вызовем isValid, передав ей форму и проверяемый элемент
-        this._isValid(formElement, inputElement, settings);
+        this._checkValidityInput(formElement, inputElement, settings);
         // Вызовем toggleButtonState и передадим ей массив полей и кнопку
         this._toggleButtonState(this._inputList, this._buttonElement, settings);
       });
