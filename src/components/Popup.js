@@ -21,13 +21,17 @@ export class Popup {
     document.removeEventListener('keyup', this._handleEscClose); // Закрыли попап -- листенер можно удалить ****
   }
 
-// добавляет слушатель клика иконке закрытия попапа.  // -- слушатели клика на попап-оверлеи и на "Х"
+  // добавляет слушатель клика иконке закрытия попапа.  // -- слушатели клика на попап-оверлеи и на "Х"
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
       if (
-        evt.target.classList.contains('popup__btn-close' || evt.target.classList.contains('popup'))) {
+        evt.target.classList.contains('popup__btn-close') ||
+        evt.target.classList.contains('popup')
+      ) {
         this.close();
       }
     });
   }
+
+  // ---end---
 }

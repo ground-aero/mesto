@@ -53,7 +53,7 @@ export class FormValidator {
   // enableValidation(settings) - вызываем в index.js, сразу после создания экземпляра форм(ы)
 
   // addEL ВСЕМ полям
-  _setEventListeners(formElement, settings) {
+  _setEventListeners() {
     // поля внутри формы
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
