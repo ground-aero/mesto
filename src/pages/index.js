@@ -19,17 +19,17 @@ import {
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-//--remove card----PW-8----------
-function handleRemoveCard(node) {
-  //получаем ноду, удаляем ее
-  node.remove();
-  node = null;
-}
+// //--remove card----PW-8----------
+// function handleRemoveCard(node) {
+//   //получаем ноду, удаляем ее
+//   node.remove();
+//   node = null;
+// }
 
 // Card ----------- создается экз, и возвращает разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
-    { data: dataCard, handleCardClick, handleRemoveCard }, //handleCardClick: open
+    { data: dataCard, handleCardClick }, //handleCardClick: open, handleRemoveCard
     '#card-template'
   );
 
@@ -99,15 +99,17 @@ function handleSaveSubmitEditForm(formDataObject) {
 }
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
+
 // кнопка "edit"
 function handleButtonEditClick() {
-  // setPopupEditInputValue(); // вызв заполнение полей
+  newPopupProfile.setInputValues(); // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ - ИСПРАВЛЕНО.
   newPopupProfile.open(); // openPopup(popupEdit);
 }
 
 // // кнопка "+" / add place
 function handleButtonAddPlaceClick() {
   newPopupAddPlace.open();
+  formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
   //openPopup(popupAddPlace);
 }
 

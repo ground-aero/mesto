@@ -66,6 +66,9 @@ export const formProfile = document.forms.profile; // по св-ву name
 export const inputEditName = formProfile.elements.name; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
 export const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
 
+export const profileNameNode = document.querySelector('.profile__name');
+export const profileJobNode = document.querySelector('.profile__job');
+
 export const formPlace = document.forms.place
 export const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
 export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
