@@ -10,11 +10,10 @@ import {
 } from '../utils/constants.js';
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, formSelector, handleSubmit) {
+  constructor(popupSelector, formSelector, handlePlaceSubmit = null) {
     super(popupSelector);
     this._form = this._popup.querySelector(formSelector);
-    this._handleSubmit = handleSubmit;
-    this._inputElements = this._form.querySelectorAll('.popup__input');
+    this._handlePlaceSubmit = handlePlaceSubmit;
   }
 
   // код для ПР-9
@@ -22,38 +21,16 @@ export class PopupWithForm extends Popup {
   //   this._handlePlaceSubmit(вместо)submitHandler = action;
   // }
 
-  // данные вводимые в инпуты, собирает в объект{} и привязывает к конкр. полю
+  // собирает данные всех полей формы.
   _getInputValues() {
     const formDataObject = {};
-    [...this._inputElements].forEach((input) => {
-      formDataObject[input.name] = input.value; //'name - берется сам атрибут name="" каждого из инпутов
+    const inputElements = this._form.querySelectorAll('.popup__input');
+    [...inputElements].forEach((input) => {
+      formDataObject[input.name] = input.value; //'name - знач атрибута name=""
+      formDataObject[input.link] = input.value;
     });
 
     return formDataObject;
-  }
-
-  // текст. данные из DOM вставляет в инпут(ы) - Profile
-  setInputValues() {
-    inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
-    inputEditJob.value = profileJobNode.textContent; //
-  }
-  // ЭТОТ ВАРИАНТ ВЫДАЕТ ОШИБКИ...
-  // setInputValues(data) {
-  //   [...this._inputElements].forEach((input) => {
-  //     // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
-  //     input.value = data[input.name];
-  //   });
-  // }
-
-  setEventListeners() {
-    //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
-    this._form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this._handleSubmit(this._getInputValues());
-
-      this.close();
-    });
-    super.setEventListeners();
   }
 
   close() {
@@ -63,5 +40,19 @@ export class PopupWithForm extends Popup {
     super.close();
   }
 
-  // --end--
+  setInputValues() {
+      inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
+      inputEditJob.value = profileJobNode.textContent; // 
+  }
+
+  setEventListeners() {
+    //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
+    this._form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this._handlePlaceSubmit(this._getInputValues());
+
+      this.close();
+    });
+    super.setEventListeners();
+  }
 }

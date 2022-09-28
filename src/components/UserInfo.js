@@ -1,4 +1,6 @@
 /*отвечает за: управление отображением информации о пользователе на странице*/
+import {userInfo} from '../utils/constants.js'
+
 export class UserInfo {
   // Принимает объект с селекторами двух элементов: 1. элемента имени пользователя 2. элемента информации о себе.
   constructor({ nameSelector, jobSelector }) {
