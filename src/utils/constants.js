@@ -34,7 +34,7 @@ export const selectors = {
   like: '.card__btn-like_active', // like/card
 };
 //КОНФИГИ ФОРМ
-export const settings = {
+export const config = {
   formClass: '.popup__form',
   inputClass: '.popup__input',
   submitButtonClass: '.btn_submit',
