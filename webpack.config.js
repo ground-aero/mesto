@@ -9,14 +9,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js', // указали в какой файл будет собираться весь js и дали ему имя
-    publicPath: '',
+    publicPath: ''
   },
   mode: 'development', // добавили режим разработчика
   devServer: {
     static: path.resolve(__dirname, './dist'), // путь, куда "смотрит" режим разработчика
     compress: true, // это ускорит загрузку в режиме разработки
     port: 8080, // порт, чтобы открывать сайт по адресу localhost:8080, но можно поменять порт
-
     open: true, // сайт будет открываться сам при запуске npm run dev
   },
   module: {
@@ -29,7 +28,7 @@ module.exports = {
         // при обработке этих файлов нужно использовать babel-loader
         use: 'babel-loader',
         // исключает папку node_modules, файлы в ней обрабатывать не нужно
-        exclude: '/node_modules/',
+        exclude: '/node_modules/'
       },
       // добавили правило для обработки файлов
       {
@@ -37,6 +36,10 @@ module.exports = {
         test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource',
       },
+      // {
+      //   test: /\.html$/i,
+      //   loader: 'html-loader',
+      // },
       // добавьте ещё одно правило:
       {
         // применять это правило только к CSS-файлам
