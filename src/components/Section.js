@@ -4,7 +4,7 @@ export class Section {
   constructor({ items, renderer }, containerSelector) {
     //1. items = initialCards, 2.renderer = отрендерить изнач массив карточек
     this._initialArr = items; //[массив данных {объектов} карточек]
-      // console.log(this._initialArr);
+    // console.log(this._initialArr);
     this._renderer = renderer; //ф-ция колл-бэк (наприм передаем по ссылке)
     this._container = document.querySelector(containerSelector);
   }
@@ -13,7 +13,12 @@ export class Section {
     //принимает DOM-элемент и добавляет его в контейнер.
     this._container.prepend(node);
   }
- 
+  // МЕТОД КРАСИВЫЙ, НО НЕ ПОНЯЛ КАК СВЯЗАТЬ ЕГО
+  // addItem(item) {
+  //   const card = this._renderer(item);
+  //   this._container.prepend(card);
+  // }
+
   // 1-й Вариант.
   // renderItems() {
   //   // [{name: '', link: ''}, {name: '', link: ''},{name: '', link: ''}]
@@ -24,7 +29,8 @@ export class Section {
   //   });
   // }
   // 2-й Вариант (сокращенный).
-  renderItems(dataArr) {//ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
-    dataArr.forEach(this._renderer);//вызывается рендеринг по ссылке
+  renderItems(dataArr) {
+    //ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
+    dataArr.forEach(this._renderer); //вызывается рендеринг по ссылке
   }
 }

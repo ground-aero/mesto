@@ -13,18 +13,9 @@ import {
   btnAddPlace,
   userInfo,
   initialCards,
-  settings,
-  formProfile,
-  formPlace,
+  config,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-
-// //--remove card----PW-8----------
-// function handleRemoveCard(node) {
-//   //получаем ноду, удаляем ее
-//   node.remove();
-//   node = null;
-// }
 
 // Card ----------- создается экз, и возвращает разметку
 function initialiseCard(dataCard) {
@@ -38,16 +29,21 @@ function initialiseCard(dataCard) {
 
 // -----------------------------------------------
 
-// ф-ция создает объект из полей формы (перекидываем из index -> PopupWithForm)
-function handlePlaceSubmit(formDataObject) {
+// ф-ция обработчик формы Edit / "сохранить" и "отправить" данные из строки формы профиля
+function handleProfileFormSubmit(formDataObject) {
+  newUser.setUserInfo(formDataObject); // setEditNodeTextContent();
+  newPopupProfile.close(); // closePopup(popupEdit);
+}
+
+// ф-ция обработчик формы Place (перекидываем из index -> PopupWithForm)
+function handlePlaceFormSubmit(formDataObject) {
   // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
   // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
   //  вариант-2
   section.addItem(initialiseCard(formDataObject));
 }
 
-// Section ------------------------------------
-// cardsList = section
+// Section ---------------------------------------- (cardsList = section)
 // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет initialiseCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
   {
@@ -64,14 +60,14 @@ const section = new Section(
 const newPopupProfile = new PopupWithForm(
   '#overlay_edit',
   '#form-add-profile',
-  handleSaveSubmitEditForm
+  handleProfileFormSubmit
 );
 newPopupProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
 
 const newPopupAddPlace = new PopupWithForm(
   '#overlay_add-place',
   '#form-place',
-  handlePlaceSubmit
+  handlePlaceFormSubmit
 );
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 
@@ -82,23 +78,12 @@ function handleCardClick(data) {
   popupWithImage.open(data);
 }
 
-//----------NEW userInfo ----------------------
-
+//----------NEW UserInfo ---------------------------------------
 // function initialiseUser() {
 const { nameSelector, jobSelector } = userInfo;
-const newUser = new UserInfo({ nameSelector, jobSelector });
-// name: '.profile__name',
-// job: '.profile__job'
+const newUser = new UserInfo({ nameSelector, jobSelector }); // name: '.profile__name', // job: '.profile__job'
 
-//-------------------------------------------------------
-
-// ф-ция обработчик по форме Edit / "сохранить" и "отправить" данные из строки формы профиля
-function handleSaveSubmitEditForm(formDataObject) {
-  newUser.setUserInfo(formDataObject); // setEditNodeTextContent();
-  newPopupProfile.close(); // closePopup(popupEdit);
-}
-
-// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ:
+// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---------------------------------
 
 // кнопка "edit"
 function handleButtonEditClick() {
@@ -109,19 +94,38 @@ function handleButtonEditClick() {
 // // кнопка "+" / add place
 function handleButtonAddPlaceClick() {
   newPopupAddPlace.open();
-  formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
-  //openPopup(popupAddPlace);
+  // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
+  formValidators['profile'].toggleButtonState(); //'profile' - атрибут name, формы
 }
 
 //-------- СЛУШАТЕЛИ КНОПОК
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
-// FormValidator class ------------------------------------
-const formProfileValid = new FormValidator(settings, formProfile);
-formProfileValid.enableValidation();
+// Включение валидации // --- Вар - 1 ---------------------------------------------
 
-const formPlaceValid = new FormValidator(settings, formPlace);
-formPlaceValid.enableValidation();
+// const formProfileValid = new FormValidator(formProfile, config);
+// formProfileValid.enableValidation();
+
+// const formPlaceValid = new FormValidator(formPlace, config);
+// formPlaceValid.enableValidation();
+
+// Включение валидации // --- Вар - 2 ---
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formClass));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config);
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name');
+
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(config);
 
 section.renderItems(initialCards);
