@@ -4,24 +4,23 @@
 import { Popup } from './Popup.js';
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, formSelector, handlePlaceSubmit = null) {
+  constructor(popupSelector, formSelector, handleSubmit) {
     super(popupSelector);
     this._form = this._popup.querySelector(formSelector);
-    this._handlePlaceSubmit = handlePlaceSubmit;
+    this._handleSubmit = handleSubmit;
+    this._inputElements = this._form.querySelectorAll('.popup__input');
   }
 
   // код для ПР-9
   // setSubmitAction(action) {
-  //   this._handlePlaceSubmit(вместо)submitHandler = action;
+  //   this._handleSubmit(вместо)submitHandler = action;
   // }
 
   // собирает данные всех полей формы.
   _getInputValues() {
     const formDataObject = {};
-    const inputElements = this._form.querySelectorAll('.popup__input');
-    [...inputElements].forEach((input) => {
+    [...this._inputElements].forEach((input) => {
       formDataObject[input.name] = input.value; //'name - знач атрибута name=""
-      formDataObject[input.link] = input.value;
     });
 
     return formDataObject;
@@ -30,7 +29,6 @@ export class PopupWithForm extends Popup {
   close() {
     //Перезапись родительского метода. При закрытии попапа форма должна ещё и сбрасываться.
     this._form.reset();
-
     super.close();
   }
 
@@ -38,7 +36,7 @@ export class PopupWithForm extends Popup {
     //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._handlePlaceSubmit(this._getInputValues());
+      this._handleSubmit(this._getInputValues());
 
       this.close();
     });
