@@ -34,12 +34,6 @@ export class PopupWithForm extends Popup {
     super.close();
   }
 
-  // ОШИБКА !!! это харкод под 2 инпута профиля. нужно удалить !!
-  // setInputValues() {
-  //   inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
-  //   inputEditJob.value = profileJobNode.textContent; //
-  // }
-
   setEventListeners() {
     //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
     this._form.addEventListener('submit', (e) => {
