@@ -13,11 +13,13 @@ import {
   btnAddPlace,
   userInfo,
   initialCards,
+  inputEditName,
+  inputEditJob,
   config,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-// Card ----------- создается экз, и возвращает разметку
+// Card ----------- создает экз, и возвращает разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
     { data: dataCard, handleCardClick }, //handleCardClick: open, handleRemoveCard
@@ -29,13 +31,13 @@ function initialiseCard(dataCard) {
 
 // -----------------------------------------------
 
-// ф-ция обработчик формы Edit / "сохранить" и "отправить" данные из строки формы профиля
+// обработчик формы Edit / "сохранить" данные из инпутов формы профиля
 function handleProfileFormSubmit(formDataObject) {
-  newUser.setUserInfo(formDataObject); // setEditNodeTextContent();
-  newPopupProfile.close(); // closePopup(popupEdit);
+  newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+  newPopupProfile.close(); // закрываем попап
 }
 
-// ф-ция обработчик формы Place (перекидываем из index -> PopupWithForm)
+// обработчик формы Place (перекидываем из index -> PopupWithForm)
 function handlePlaceFormSubmit(formDataObject) {
   // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
   // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
@@ -80,18 +82,25 @@ function handleCardClick(data) {
 
 //----------NEW UserInfo ---------------------------------------
 // function initialiseUser() {
-const { nameSelector, jobSelector } = userInfo;
-const newUser = new UserInfo({ nameSelector, jobSelector }); // name: '.profile__name', // job: '.profile__job'
+// const { nameSelector, jobSelector } = userInfo;
+const newUser = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job',
+}); // name: '.profile__name', // job: '.profile__job'
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---------------------------------
 
 // кнопка "edit"
 function handleButtonEditClick() {
-  newPopupProfile.setInputValues(); // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ - ИСПРАВЛЕНО.
-  newPopupProfile.open(); // openPopup(popupEdit);
+  // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ.
+  const userInfo = newUser.getUserInfo(); //получаем объект {name:.., job:..}
+  inputEditName.value = userInfo.name; //Жак-Ив Кусто
+  inputEditJob.value = userInfo.job; //Исследователь
+
+  newPopupProfile.open();
 }
 
-// // кнопка "+" / add place
+// кнопка "+" / add place
 function handleButtonAddPlaceClick() {
   newPopupAddPlace.open();
   // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки

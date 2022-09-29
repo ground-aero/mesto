@@ -1,17 +1,13 @@
 /*отвечает за: управление отображением информации о пользователе на странице*/
-import {userInfo} from '../utils/constants.js'
-
 export class UserInfo {
   // Принимает объект с селекторами двух элементов: 1. элемента имени пользователя 2. элемента информации о себе.
   constructor({ nameSelector, jobSelector }) {
     this._name = document.querySelector(nameSelector);
     // console.log(this._name);
     this._job = document.querySelector(jobSelector);
-
-    // this._userInfo = userInfo
   }
 
-  // забираем из ДОМ элементов их текст, и возвращаем такой объект с данными пользователя. Пользователя нужно будет подставить в форму при открытии.
+  // забираем из DOM элементов текст, и возвращаем такой объект с данными пользователя. Пользователя нужно будет подставить в форму при открытии.
   getUserInfo() {
     return {
       name: `${this._name.textContent}`,

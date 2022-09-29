@@ -2,12 +2,6 @@
 /* => ф-цию обработчика передаем в конструктор  
 Для каждого попапа создавайте свой экземпляр класса PopupWithForm. */
 import { Popup } from './Popup.js';
-import {
-  inputEditName,
-  inputEditJob,
-  profileNameNode,
-  profileJobNode,
-} from '../utils/constants.js';
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, formSelector, handlePlaceSubmit = null) {
@@ -40,10 +34,11 @@ export class PopupWithForm extends Popup {
     super.close();
   }
 
-  setInputValues() {
-      inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
-      inputEditJob.value = profileJobNode.textContent; // 
-  }
+  // ОШИБКА !!! это харкод под 2 инпута профиля. нужно удалить !!
+  // setInputValues() {
+  //   inputEditName.value = profileNameNode.textContent; // При открытии попапа поля формы заполняются данными из профиля.
+  //   inputEditJob.value = profileJobNode.textContent; //
+  // }
 
   setEventListeners() {
     //Расширяем родительский метод. должен не только расширить обработчик клика иконке закрытия, но и добавить обработчик сабмита формы (Т.к. это его ответственность!).
@@ -53,6 +48,7 @@ export class PopupWithForm extends Popup {
 
       this.close();
     });
+
     super.setEventListeners();
   }
 }
