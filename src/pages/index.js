@@ -95,7 +95,7 @@ function handleButtonEditClick() {
 function handleButtonAddPlaceClick() {
   newPopupAddPlace.open();
   // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
-  formValidators['profile'].toggleButtonState(); //'profile' - атрибут name, формы
+  formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
 }
 
 //-------- СЛУШАТЕЛИ КНОПОК
