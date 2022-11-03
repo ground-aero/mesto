@@ -1,6 +1,5 @@
 // ЗАДАЧА: Показать попап. перезаписать метод open. В методе open нужно вставлять в попап картинку и атрибут src изображения.
 // картинки заменить src
-
 import { Popup } from './Popup.js';
 
 export default class PopupWithImage extends Popup {
