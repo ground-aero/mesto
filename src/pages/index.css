@@ -33,7 +33,9 @@
 @import url(../blocks/card/__img/card__img.css);
 @import url(../blocks/card/__info-wrap/card__info-wrap.css);
 @import url(../blocks/card/__title/card__title.css);
+@import url(../blocks/card/__btn-like-wrap/card__btn-like-wrap.css);
 @import url(../blocks/card/__btn-like/card__btn-like.css);
+@import url(../blocks/card/__btn-like-count/card__btn-like-count.css);
 @import url(../blocks/card/__btn-like/_active/card__btn-like_active.css);
 
 /* btn - general style */

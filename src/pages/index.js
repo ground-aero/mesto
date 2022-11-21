@@ -1,6 +1,7 @@
 /* index.js - Корневая точка проекта. Файл содержит только инициализацию необходимых главной странице модулей — функций и классов */
 // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
 import './index.css';
+import {Api} from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
@@ -13,8 +14,12 @@ import {
   inputEditName,
   inputEditJob,
   config,
+  configApi,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+
+
+const api = new Api(configApi)
 
 // Card ----------- создает экз, и возвращает разметку
 function initialiseCard(dataCard) {
@@ -134,4 +139,13 @@ const enableValidation = (config) => {
 
 enableValidation(config);
 
-section.renderItems(initialCards);
+// section.renderItems(initialCards) - перенесена в api.()
+
+//ВЫЗОВ МЕТОДОВ:
+api.getAllCards()
+    .then(function(cards) {
+      section.renderItems(cards) //перенесено с конца кода *cards = initialCards
+    })
+    .catch(function(err) {
+      console.log('неуспешно', err)
+    })

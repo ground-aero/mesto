@@ -41,8 +41,7 @@ export class Card {
   }
 
   // --remove card----PW-9--- (перенесен из index.js)
-  _handleRemoveCard() {
-    //получаем ноду, удаляем ее
+  _handleRemoveCard() { //получаем ноду, удаляем ее
     this._clonedCard.remove();
     this._clonedCard = null;
     //   node.remove();
