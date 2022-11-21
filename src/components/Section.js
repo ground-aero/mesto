@@ -1,8 +1,8 @@
 //  ОТВЕЧАЕТ ЗА: только рендеринг карточек на страницу (добавляет его в контейнер и просто рендерит) // p.s - в Section прокинуть ф-цию рендеринга (ф-ция renderer не обойдется без класса Card)
 export class Section {
-  constructor({ items, renderer }, containerSelector) {
+  constructor({ renderer }, containerSelector) {
     //1. items = initialCards, 2.renderer = отрендерить изнач массив карточек
-    this._initialArr = items; //[массив данных {объектов} карточек]
+    //this._initialArr = items; //[массив данных {объектов} карточек]
     // console.log(this._initialArr);
     this._renderer = renderer; //ф-ция колл-бэк (наприм передаем по ссылке)
     this._container = document.querySelector(containerSelector);

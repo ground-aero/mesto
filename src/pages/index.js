@@ -1,7 +1,7 @@
 /* index.js - Корневая точка проекта. Файл содержит только инициализацию необходимых главной странице модулей — функций и классов */
 // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
 import './index.css';
-import {Api} from '../components/Api.js'
+import { Api } from '../components/Api.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
@@ -10,7 +10,7 @@ import { UserInfo } from '../components/UserInfo.js';
 import {
   btnEditProfile,
   btnAddPlace,
-  initialCards,
+  //initialCards,
   inputEditName,
   inputEditJob,
   config,
@@ -18,9 +18,7 @@ import {
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-
-const api = new Api(configApi)
-
+//1. ФУНКЦИИ
 // Card ----------- создает экз, и возвращает разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
@@ -31,15 +29,17 @@ function initialiseCard(dataCard) {
   return newCard.generateCard(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
 
-// -----------------------------------------------
+function handleCardClick(data) {
+  popupWithImage.open(data);
+}
 
-// обработчик формы Edit / "сохранить" данные из инпутов формы профиля
+// хендлер формы Edit / "сохранить" данные из инпутов формы профиля
 function handleProfileFormSubmit(formDataObject) {
   newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
   newPopupProfile.close(); // закрываем попап
 }
 
-// обработчик формы Place (перекидываем из index -> PopupWithForm)
+// хендлер формы Place (перекидываем из index -> PopupWithForm)
 function handlePlaceFormSubmit(formDataObject) {
   // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
   // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
@@ -47,12 +47,13 @@ function handlePlaceFormSubmit(formDataObject) {
   section.addItem(initialiseCard(formDataObject));
 }
 
+
+const api = new Api(configApi)
 // Section ---------------------------------------- (cardsList = section)
 // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет initialiseCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
   {
-    items: initialCards,
-    renderer: (cardItem, container) => {
+      renderer: (cardItem, container) => {
       //описывает что сделать с данными при переборе в цикле. //cardItem, container - просто параметры
       section.addItem(initialiseCard(cardItem, container));
     },
@@ -78,10 +79,6 @@ newPopupAddPlace.setEventListeners(); //вызываем на экземпляр
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 popupWithImage.setEventListeners();
 
-function handleCardClick(data) {
-  popupWithImage.open(data);
-}
-
 //----------NEW UserInfo ---------------------------------------
 // function initialiseUser() {
 // const { nameSelector, jobSelector } = userInfo;
@@ -90,7 +87,7 @@ const newUser = new UserInfo({
   jobSelector: '.profile__job',
 }); // name: '.profile__name', // job: '.profile__job'
 
-// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---------------------------------
+// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---
 
 // кнопка "edit"
 function handleButtonEditClick() {
@@ -109,7 +106,7 @@ function handleButtonAddPlaceClick() {
   formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
 }
 
-//-------- СЛУШАТЕЛИ КНОПОК
+//2. СЛУШАТЕЛИ КНОПОК
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
