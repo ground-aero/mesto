@@ -1,5 +1,4 @@
 # Проект: Место
-- [link](https://ground-aero.github.io/mesto/)
 
 ### Обзор
 
@@ -24,4 +23,6 @@
 - [к ПР#6](https://concrete-web-bad.notion.site/6-52aad679d21241f69cd4306afb252e8b)
 - [к ПР#8](https://concrete-web-bad.notion.site/8-b4da86cf48854922bef2b0525d74c7cf)
 
-** *** **
+**Проект "Место"**
+
+- [Ссылка на сайт](https://ground-aero.github.io/mesto/)
