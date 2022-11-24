@@ -1,5 +1,5 @@
 export const configApi = {
-  url: 'https://mesto.nomoreparties.co/v1/cohort-51',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
   headers: {
     "content-type": "application/json",
     "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"

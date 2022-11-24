@@ -19,13 +19,21 @@ import {
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
 //1. ФУНКЦИИ
-// Card ----------- создает экз, и возвращает разметку
+// создать инстанс Card, вернуть разметку
 function initialiseCard(dataCard) {
   const newCard = new Card(
-    { data: dataCard, handleCardClick }, //handleCardClick: open, handleRemoveCard
+    { data: dataCard,
+      handleCardClick,
+      handleClickDelete: (cardInstance) => {
+          // console.log(cardInstance.getId())
+        api.deleteCard(cardInstance.getId())
+            .then(() => {
+                cardInstance.remove()
+            })
+      }
+      },
     '#card-template'
   );
-
   return newCard.generateCard(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
 
@@ -33,19 +41,45 @@ function handleCardClick(data) {
   popupWithImage.open(data);
 }
 
+// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---
+
+// кнопка "edit"
+function handleButtonEditClick() {
+    // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ.
+    const userInfo = newUser.getUserInfo(); //получаем объект {name:.., job:..}
+    inputEditName.value = userInfo.name; //Жак-Ив Кусто
+    inputEditJob.value = userInfo.job; //Исследователь
+
+    newPopupProfile.open();
+}
+
+// кнопка "+" / add place
+function handleButtonAddPlaceClick() {
+    newPopupAddPlace.open();
+    // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
+    formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
+}
+
 // хендлер формы Edit / "сохранить" данные из инпутов формы профиля
-function handleProfileFormSubmit(formDataObject) {
-  newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+function handleProfileFormSubmit(formValuesObject) {
+  newUser.setUserInfo(formValuesObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
   newPopupProfile.close(); // закрываем попап
 }
 
-// хендлер формы Place (перекидываем из index -> PopupWithForm)
-function handlePlaceFormSubmit(formDataObject) {
-  // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
-  // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
-  //  вариант-2
-  section.addItem(initialiseCard(formDataObject));
+//  добавить карточку (из формы) на сервер // сабмит формы Place (перекидываем из index -> PopupWithForm)
+function addPlaceFormSubmit(formValuesObject) {
+    const cardToServer = {name: formValuesObject}
+    api.postCard(cardToServer)
+        .then(function(dataFromServer) {
+            section.addItem(initialiseCard(dataFromServer));
+        })
 }
+// function handlePlaceFormSubmit(formDataObject) {
+    // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
+    // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
+    //  вариант-2
+    // section.addItem(initialiseCard(formDataObject));
+// }
 
 
 const api = new Api(configApi)
@@ -72,7 +106,7 @@ newPopupProfile.setEventListeners(); // слушатель вызываем в �
 const newPopupAddPlace = new PopupWithForm(
   '#overlay_add-place',
   '#form-place',
-  handlePlaceFormSubmit
+  addPlaceFormSubmit
 );
 newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 
@@ -87,24 +121,6 @@ const newUser = new UserInfo({
   jobSelector: '.profile__job',
 }); // name: '.profile__name', // job: '.profile__job'
 
-// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ---
-
-// кнопка "edit"
-function handleButtonEditClick() {
-  // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ.
-  const userInfo = newUser.getUserInfo(); //получаем объект {name:.., job:..}
-  inputEditName.value = userInfo.name; //Жак-Ив Кусто
-  inputEditJob.value = userInfo.job; //Исследователь
-
-  newPopupProfile.open();
-}
-
-// кнопка "+" / add place
-function handleButtonAddPlaceClick() {
-  newPopupAddPlace.open();
-  // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
-  formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
-}
 
 //2. СЛУШАТЕЛИ КНОПОК
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
@@ -145,4 +161,5 @@ api.getAllCards()
     })
     .catch(function(err) {
       console.log('неуспешно', err)
+      //errorPopup.open() - для улучшения UI
     })

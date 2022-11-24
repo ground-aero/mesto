@@ -23,8 +23,8 @@ export class Section {
   //   });
   // }
   // 2-й Вариант (сокращенный).
-  renderItems(dataArr) {
+  renderItems(cardsArr) {
     //ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
-    dataArr.forEach(this._renderer); //вызывается рендеринг по ссылке
+    cardsArr.forEach(this._renderer); //вызывается рендеринг по ссылке
   }
 }
