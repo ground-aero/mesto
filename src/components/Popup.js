@@ -1,4 +1,4 @@
-/* Popup ОТВЕЧАЕТ ЗА: открытие и закрытие попапа. */
+/* Popup ОТВЕЧАЕТ ЗА: открытие и закрытие любого из попапов. */
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
@@ -21,17 +21,16 @@ export class Popup {
     document.removeEventListener('keyup', this._handleEscClose); // Закрыли попап -- листенер можно удалить ****
   }
 
-  // добавляет слушатель клика иконке закрытия попапа.  // -- слушатели клика на попап-оверлеи и на "Х"
+  // добавляем слушатели клика на "Х" и попап-оверлей
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
       if (
-        evt.target.classList.contains('popup__btn-close') ||
-        evt.target.classList.contains('popup')
+          evt.target.classList.contains('popup__btn-close') ||
+          evt.target.classList.contains('popup')
       ) {
         this.close();
       }
     });
   }
-
   // ---end---
 }

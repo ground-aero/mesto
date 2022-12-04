@@ -1,11 +1,3 @@
-export const configApi = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
-  headers: {
-    "content-type": "application/json",
-    "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
-  }
-}
-
 // export const initialCards = [
 //   {
 //     name: 'Архыз',
@@ -32,6 +24,13 @@ export const configApi = {
 //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
 //   },
 // ];
+export const apiConfig = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
+  headers: {
+    "content-type": "application/json",
+    "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
+  }
+}
 
 export const selectors = {
   card: '.card', // карточка
@@ -63,10 +62,10 @@ export const popupSelectorsImage = {
 
 // const page = document.querySelector('.page');
 export const cardsListSelector = '.elements__list';
-export const cardsList = document.querySelector('.elements__list'); 
+export const cardsList = document.querySelector('.elements__list');
 
 // buttons
-export const btnEditProfile = document.querySelector('.profile__btn-edit'); 
+export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 
 // forms (430px)
@@ -105,3 +104,4 @@ export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector(
 // export const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
 
 // export const popupCloseButton = document.querySelectorAll('.popup__btn-close');
+

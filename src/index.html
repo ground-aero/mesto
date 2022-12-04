@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+     <link rel="stylesheet" href="./pages/index.css">
     <title lang="ru">Mesto</title>
 </head>
 
@@ -15,13 +15,16 @@
     <div class="page__container">
         <!-- header -->
         <header class="header">
-            <img src="<%=require('./images/logo.svg')%>" alt="лого Mesto"> <!-- img class="header__logo" -->
+            <img src="./images/logo.svg" alt="лого Mesto">
+<!--            <img src="<%=require('./images/logo.svg')%>" alt="лого Mesto"> -->
+            <!-- img class="header__logo" -->
         </header>
         <main class="content">
             <!-- profile section -->
             <section id="profile" class="profile content__section">
                 <!--flex-->
-                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">
+                <img src="./images/avatar.png" alt="бюст улыбающегося человека в красной шапке">
+<!--                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">-->
                 <!-- img class="profile__avatar" -->
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
@@ -130,6 +133,8 @@
         <!-- end of page__container -->
 
     </div>
+
+    <script type="module" src="./pages/index.js"></script>
 
 </body>
 

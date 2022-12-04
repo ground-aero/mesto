@@ -1,12 +1,12 @@
 // 1. Card создаёт карточку с текстом и ссылкой на изображение. должен поставлять готовую карточку со всей разметкой
 // 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
 export class Card {
-  constructor({ data, handleCardClick, handleClickDelete }, templateSelector) {
+  constructor({ data, handleCardClick }, templateSelector) {
+    //handleRemoveCard
     this._data = data; // this._link = data.link; _data.name,, _data.link
     // console.log(this._data);
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
-    this._handleClickDelete = handleClickDelete;
     // this._handleRemoveCard = handleRemoveCard;
     this._handleClickLike = this._handleClickLike.bind(this);
 
@@ -21,13 +21,14 @@ export class Card {
   _getTemplateCard() {
     // return document.querySelector(this._cardTemplate).content.querySelector('.card').cloneNode(true);
     const clonedCard = document
-      .querySelector(this._templateSelector)
-      .content.querySelector('.card')
-      .cloneNode(true);
+        .querySelector(this._templateSelector)
+        .content.querySelector('.card')
+        .cloneNode(true);
+
     return clonedCard;
   }
 
-  // 2. ПОЛУЧИТЬ РАЗМЕТКУ ШАБЛОНА - ТЕМПЛЕЙТА (публичный)
+  // 2. ПОЛУЧАЕМ РАЗМЕТКУ ШАБЛОНА/ТЕМПЛЕЙТА (публичный)
   generateCard() {
     // Запишем разметку в приватное поле _cardElement (_clonedCard). Так у других элементов появится доступ к ней.
     this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
@@ -40,30 +41,25 @@ export class Card {
     return this._clonedCard;
   }
 
-  // хендлеры
   // --remove card----PW-9--- (перенесен из index.js)
-  remove() {
+  _handleRemoveCard() {
+    //получаем ноду, удаляем ее
     this._clonedCard.remove();
     this._clonedCard = null;
     //   node.remove();
-  }
-  // _handleRemoveCard() { //получаем ноду, удаляем ее
-  //   this._clonedCard.remove();
-  //   this._clonedCard = null;
-  //   //   node.remove();
-  // }
-
-  //ПОСТАВИТЬ ЛАЙК
-  _handleClickLike() {
-    this._cardBtnLike.classList.toggle('card__btn-like_active');
+    // node = null;
   }
 
   //универсальный
   _setEventListeners() {
     //УДАЛИТЬ КАРТОЧКУ ---PW-8
-    this._cardBtnDel.addEventListener('click', () => this._handleClickDelete(this));
+    this._cardBtnDel.addEventListener('click', () => {
+      this._handleRemoveCard(this._clonedCard);
+    });
 
-    this._cardBtnLike.addEventListener('click', () => this._handleClickLike());
+    this._cardBtnLike.addEventListener('click', () => {
+      this._handleClickLike();
+    });
 
     // img zoom/ open(data)
     this._cardImage.addEventListener('click', () => {
@@ -71,7 +67,9 @@ export class Card {
     });
   }
 
-  getId() {
-    return this._data._id;
+  // ХЕНДЛЕРЫ. /ПОСТАВИТЬ ЛАЙК
+  _handleClickLike() {
+    this._cardBtnLike.classList.toggle('card__btn-like_active');
   }
 }
+

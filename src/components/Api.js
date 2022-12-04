@@ -1,48 +1,44 @@
 //класс не связан с пользовательским интерфейсом, а полностью занят отправкой запросов на сервер и получением от них ответа.
-
 export class Api {
-    constructor(configApi) {
-        this._baseUrl = configApi.baseUrl;
-        this._headers = configApi.headers;
-        //console.log(configApi)
-        //console.log(this._baseUrl)
+    constructor(apiConfig) {
+        this._apiConfig = apiConfig;
+        // this._baseUrl = baseUrl;
+        // this._headers = headers;
     }
 
-    #onResponse(res) {
-        if (res.ok) {
-            return res.json()
-        }
-        return Promise.reject(`ошибка ${res.status}`)
-    }
-
-    //методы которые должен осуществлять данный класс:
-    // - получить список всех карточек в виде массива (GET)
     getAllCards() {
-      return fetch(`${this._baseUrl}/cards`, {
-          headers: this._headers
-      })
-          .then(this.#onResponse)
-     }
-
-    // - удалить карточку (DELETE)
-    deleteCard(idCard) {
-        return fetch(`${this._baseUrl}/cards/${idCard}`, {
-            method: 'DELETE',
-            headers: this._headers
-        })
-            .then(this.#onResponse)
+        return fetch(`${this._apiConfig.baseUrl}/cards`, {
+            method: 'GET',
+            headers: this._apiConfig.headers,
+        }) //response - это ответ сервера
+            .then((response) => {
+                if (response.ok) {
+                    return response.json(); //Promise.resolve()
+                } else {
+                    return Promise.reject(
+                        `Ошибка ${response.status} ${response.statusText}`
+                    );
+                }
+            });
     }
 
-    // - добавить карточку (POST)
-    postCard(data) {
-        return fetch(`${this._baseUrl}/cards`, {
+    addNewCard({ name, link }) {
+        return fetch(`${this._apiConfig.baseUrl}/cards`, {
             method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify(data)
-        })
-            .then(this.#onResponse)
+            headers: this._apiConfig.headers,
+            body: JSON.stringify({ name, link }),
+        }).then((response) => {
+            if (response.ok) {
+                return response.json(); //Promise.resolve()
+            } else {
+                return Promise.reject(
+                    `Ошибка ${response.status} ${response.statusText}`
+                );
+            }
+        });
     }
 
+    deleteCard() {}
     // - получить данные пользователя (GET)
     // - заменить данные пользователя (PATCH)
     // - заменить аватар (PATCH)

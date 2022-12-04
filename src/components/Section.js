@@ -2,18 +2,17 @@
 export class Section {
   constructor({ renderer }, containerSelector) {
     //1. items = initialCards, 2.renderer = отрендерить изнач массив карточек
-    //this._initialArr = items; //[массив данных {объектов} карточек]
-    // console.log(this._initialArr);
+    // this._initialArr = items; //[массив {объектов} карточек]
     this._renderer = renderer; //ф-ция колл-бэк (наприм передаем по ссылке)
     this._container = document.querySelector(containerSelector);
   }
 
   addItem(node) {
     //принимает DOM-элемент и добавляет его в контейнер.
-    this._container.prepend(node);
+    this._container.append(node);
   }
 
-  // 1-й Вариант.
+  // 1-й Вариант. //отрисовка с помощью колл-бэка
   // renderItems() {
   //   // [{name: '', link: ''}, {name: '', link: ''},{name: '', link: ''}]
   //   this._initialArr.forEach((item) => {
@@ -23,8 +22,9 @@ export class Section {
   //   });
   // }
   // 2-й Вариант (сокращенный).
-  renderItems(cardsArr) {
-    //ОТВЕЧАЕТ ЗА: рендеринг в цикле изнач массива карточек
-    cardsArr.forEach(this._renderer); //вызывается рендеринг по ссылке
+  renderItems(dataArr) {
+    //ОТВЕЧАЕТ ЗА: отрисовку (рендеринг) в цикле изнач массива карточек
+    dataArr.forEach(this._renderer); //вызывается рендеринг по ссылке
   }
+
 }
