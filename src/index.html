@@ -44,11 +44,10 @@
             </section>
 
             <!-- POPUPS -->
-            <!-- popup Edit Profile -->
+            <!-- POPUP Edit Profile -->
             <div class="popup" id="overlay_edit">
                 <div class="popup__container" id="popup__container_edit">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
-
                     <form action="#" class="popup__form" id="form-add-profile" name="profile" tabindex="0" novalidate>
                         <!--novalidate отм станд браузерные сообщ об ошибке -->
                         <h2 class="popup__title">Редактировать профиль</h2>
@@ -71,7 +70,7 @@
                 </div>
             </div>
 
-            <!-- popup Add Place -->
+            <!-- POPUP Add Place -->
             <div class="popup" id="overlay_add-place">
                 <div class="popup__container" id="window_add-place">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
@@ -98,13 +97,24 @@
                     </form>
                 </div>
             </div>
-            <!-- // POPUP IMAGE / zoom-->
+
+            <!-- POPUP Image / zoom-->
             <div class="popup popup_img-bg" id="overlay_img-zoom">
                 <div class="popup__container-img popup__container-img_type_zoomer">
                     <button class="popup__close-img popup__btn-close opacity-transition opacity-transition_type_middle"
                         type="button"></button>
                     <img class="popup__img" src="#" alt="#">
                     <h3 class="popup__subtitle"></h3>
+                </div>
+            </div>
+
+            <!-- POPUP Confirm Delete -->
+            <div class="popup" id="overlay_delete">
+                <div class="popup__container" id="popup__container_type_delete">
+                    <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
+                    <h2 class="popup__title">Вы уверены?</h2>
+                    <button type="submit"
+                            class="btn btn_submit btn_type_submit-delete opacity-transition">Да</button>
                 </div>
             </div>
         </main>

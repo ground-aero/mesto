@@ -1,14 +1,16 @@
 // 1. Card создаёт карточку с текстом и ссылкой на изображение. должен поставлять готовую карточку со всей разметкой
 // 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
 export class Card {
-  constructor({ data, handleCardClick }, templateSelector) {
+  constructor({ data, handleCardClick, handleLikeClick, handleCardDelete }, templateSelector) {
     //handleRemoveCard
-    this._data = data; // this._link = data.link; _data.name,, _data.link
-    // console.log(this._data);
+    this._data = data; // this._link = data.link; data.name,, data.link, data._id
+    this._id = data._id;
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
+    this._handleLikeClick = this._handleLikeClick.bind(this);
+    this.handleCardDelete = handleCardDelete;
+    // this.removeCard = handleCardDelete;
     // this._handleRemoveCard = handleRemoveCard;
-    this._handleClickLike = this._handleClickLike.bind(this);
 
     this._clonedCard = this._getTemplateCard();
     this._cardBtnLike = this._clonedCard.querySelector('.card__btn-like');
@@ -42,7 +44,7 @@ export class Card {
   }
 
   // --remove card----PW-9--- (перенесен из index.js)
-  _handleRemoveCard() {
+  removeCard() {
     //получаем ноду, удаляем ее
     this._clonedCard.remove();
     this._clonedCard = null;
@@ -54,11 +56,11 @@ export class Card {
   _setEventListeners() {
     //УДАЛИТЬ КАРТОЧКУ ---PW-8
     this._cardBtnDel.addEventListener('click', () => {
-      this._handleRemoveCard(this._clonedCard);
+      this.handleCardDelete(this._id);//_id вместо _clonedCard
     });
 
     this._cardBtnLike.addEventListener('click', () => {
-      this._handleClickLike();
+      this._handleLikeClick();
     });
 
     // img zoom/ open(data)
@@ -68,7 +70,7 @@ export class Card {
   }
 
   // ХЕНДЛЕРЫ. /ПОСТАВИТЬ ЛАЙК
-  _handleClickLike() {
+  _handleLikeClick() {
     this._cardBtnLike.classList.toggle('card__btn-like_active');
   }
 }

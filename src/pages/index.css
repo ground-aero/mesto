@@ -43,6 +43,7 @@
 @import url(../blocks/btn/_type/btn_type_save-profile.css);
 @import url(../blocks/btn/_type/btn_type_create-place.css);
 @import url(../blocks/btn/_status/btn_status_disabled.css);
+@import url(../blocks/btn/_type/btn_type_submit-delete.css);
 
 @import url(../blocks/opacity-transition/opacity-transition.css);
 

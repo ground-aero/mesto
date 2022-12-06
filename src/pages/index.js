@@ -68,8 +68,30 @@ const newUser = new UserInfo({
 
 // Card ----------- создает экз, и возвращает разметку =====================================================
 function initialiseCard(dataCard) {
-    const newCard = new Card(
-        { data: dataCard, handleCardClick }, //handleCardClick: open, handleRemoveCard
+    const newCard = new Card({
+            data: dataCard,
+            handleCardClick, //handleCardClick: open, handleRemoveCard
+            handleLikeClick: (data) => {
+            console.log('при клике на лайк', data)
+                api.addNewCard(data)
+                    .then((newCard) => {
+                        console.log(newCard)
+                        section.addItem(initialiseCard(newCard));//2.отрисовываем результат (карточки)
+                    })
+                    .catch((err) => {
+                        console.log(`ошибка при лайке карточки' ${err}`)
+                    })
+            },
+            handleCardDelete: (id) => {
+              console.log('handleCardDelete, id=', id)
+            api.deleteCard(id)
+                .then(() => {
+                    // console.log(res)
+                    newCard.removeCard()
+                })
+                .catch((err) => console.log(`ошибка при удалении: ${err}`))
+            }
+        },
         '#card-template'
     );
 

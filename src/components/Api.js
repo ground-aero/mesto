@@ -7,7 +7,7 @@ export class Api {
     }
 
     getAllCards() {
-        return fetch(`${this._apiConfig.baseUrl}/cards`, {
+        return fetch(`${this._apiConfig.baseUrl}/cards/`, {
             method: 'GET',
             headers: this._apiConfig.headers,
         }) //response - это ответ сервера
@@ -23,7 +23,7 @@ export class Api {
     }
 
     addNewCard({ name, link }) {
-        return fetch(`${this._apiConfig.baseUrl}/cards`, {
+        return fetch(`${this._apiConfig.baseUrl}/cards/`, {
             method: 'POST',
             headers: this._apiConfig.headers,
             body: JSON.stringify({ name, link }),
@@ -38,10 +38,37 @@ export class Api {
         });
     }
 
-    deleteCard() {}
+    deleteCard(id) {
+        // console.log(`${this._apiConfig.baseUrl}/cards/${id}`)
+        return fetch(`${this._apiConfig.baseUrl}/cards/${id}`, {
+            method: 'DELETE',
+            headers: this._apiConfig.headers
+        }).then((response) => {
+            if (response.ok) {
+                return response.json(); //Promise.resolve()
+            } else {
+                return Promise.reject(`ошибка при удалении ${response.status} ${response.statusText}`)
+            }
+        })
+    }
     // - получить данные пользователя (GET)
     // - заменить данные пользователя (PATCH)
     // - заменить аватар (PATCH)
     // - “залайкать” карточку (PUT)
+    likeCard({id}) {
+        return fetch(`${this._apiConfig.baseUrl}/cards/`, {
+            method: 'PUT',
+            headers: this._apiConfig.headers,
+            body: JSON.stringify({ id }),
+        }).then((response) => {
+            if (response.ok) {
+                return response.json(); //Promise.resolve()
+            } else {
+                return Promise.reject(
+                    `Ошибка ${response.status} ${response.statusText}`
+                );
+            }
+        });
+    }
     // - удалить лайк карточки (DELETE)
 }
