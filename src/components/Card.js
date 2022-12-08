@@ -2,15 +2,16 @@
 // 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
 export class Card {
   constructor({ data, handleCardClick, handleLikeClick, handleCardDelete }, templateSelector) {
-    //handleRemoveCard
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
     this._id = data._id;
+    this._likes = data.likes;
+      // console.log(this._likes)
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
-    this._handleLikeClick = this._handleLikeClick.bind(this);
+    // this._handleLikeClick = this._handleLikeClick.bind(this);
+    this._handleLikeClick = handleLikeClick;
     this.handleCardDelete = handleCardDelete;
     // this.removeCard = handleCardDelete;
-    // this._handleRemoveCard = handleRemoveCard;
 
     this._clonedCard = this._getTemplateCard();
     this._cardBtnLike = this._clonedCard.querySelector('.card__btn-like');
@@ -60,7 +61,7 @@ export class Card {
     });
 
     this._cardBtnLike.addEventListener('click', () => {
-      this._handleLikeClick();
+      this._handleLikeClick(this._likes);
     });
 
     // img zoom/ open(data)

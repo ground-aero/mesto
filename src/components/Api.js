@@ -6,6 +6,27 @@ export class Api {
         // this._headers = headers;
     }
 
+    getAllInfo() {//метод ожидает массив промисов - Promise1, Promise2 ...
+        return Promise.all([this.getUser(), this.getAllCards()])//вернет Promise
+    }
+
+    // - получить данные пользователя (GET)
+    getUser() {
+        return fetch(`${this._apiConfig.baseUrl}/users/me`, {
+            method: 'GET',
+            headers: this._apiConfig.headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();//Promise.resolve()
+                } else {
+                    return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
+                }
+            })
+    }
+    // - заменить данные пользователя (PATCH)
+    // - заменить аватар (PATCH)
+
     getAllCards() {
         return fetch(`${this._apiConfig.baseUrl}/cards/`, {
             method: 'GET',
@@ -51,15 +72,15 @@ export class Api {
             }
         })
     }
-    // - получить данные пользователя (GET)
-    // - заменить данные пользователя (PATCH)
-    // - заменить аватар (PATCH)
+
     // - “залайкать” карточку (PUT)
-    likeCard({id}) {
-        return fetch(`${this._apiConfig.baseUrl}/cards/`, {
+    likeCard(likes) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
+        //1. метод ставить лайк
+        //2. метод убирать лайк
+        return fetch(`${this._apiConfig.baseUrl}/cards/${likes}`, {
             method: 'PUT',
             headers: this._apiConfig.headers,
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ likes }),
         }).then((response) => {
             if (response.ok) {
                 return response.json(); //Promise.resolve()
@@ -71,4 +92,20 @@ export class Api {
         });
     }
     // - удалить лайк карточки (DELETE)
+    dislikeCard(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
+        //1. метод ставить лайк
+        //2. метод убирать лайк
+        return fetch(`${this._apiConfig.baseUrl}/cards/${id}`, {
+            method: 'DELETE',
+            headers: this._apiConfig.headers
+        }).then((response) => {
+            if (response.ok) {
+                return response.json(); //Promise.resolve()
+            } else {
+                return Promise.reject(
+                    `Ошибка ${response.status} ${response.statusText}`
+                );
+            }
+        });
+    }
 }

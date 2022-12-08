@@ -32,6 +32,12 @@ const section = new Section(
 
 const api = new Api(apiConfig)
 
+api.getAllInfo()
+    .then(([userData,getAll]) => {//деструктурируем массив, чтоб достать данные
+        console.log(userData, getAll)
+    })
+    .catch(err => console.log(err))
+
 //с сервера запрос карточек в лист-секцию
 api.getAllCards()
     .then((cards) => {
@@ -39,6 +45,14 @@ api.getAllCards()
         section.renderItems(cards)//рендеринг карточек в лист-секцию
     })
     .catch((err) => {console.log(err.status)})
+
+api.getUser()
+    .then((userData) => {
+        console.log(userData)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 
 //----- new POPUPs ----------------------------
 //При создании экземпляра PopupWithForm под попап "редактирования" ты в него передаешь колбэк, который будет рулить сабмитом формы "редактирования".
@@ -58,25 +72,29 @@ const newPopupAddPlace = new PopupWithForm(
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
 //----------NEW UserInfo ---------------------------------------
-// function initialiseUser() {
-// const { nameSelector, jobSelector } = userInfo;
 const newUser = new UserInfo({
-    nameSelector: '.profile__name',
+    profileName: '.profile__name',
     jobSelector: '.profile__job',
 }); // name: '.profile__name', // job: '.profile__job'
-
+console.log(newUser)
+// // function initialiseUser() {
+// // const { nameSelector, jobSelector } = userInfo;
+// const newUser = new UserInfo({
+//     nameSelector: '.profile__name',
+//     jobSelector: '.profile__job',
+// }); // name: '.profile__name', // job: '.profile__job'
 
 // Card ----------- создает экз, и возвращает разметку =====================================================
 function initialiseCard(dataCard) {
     const newCard = new Card({
             data: dataCard,
-            handleCardClick, //handleCardClick: open, handleRemoveCard
-            handleLikeClick: (data) => {
-            console.log('при клике на лайк', data)
-                api.addNewCard(data)
-                    .then((newCard) => {
-                        console.log(newCard)
-                        section.addItem(initialiseCard(newCard));//2.отрисовываем результат (карточки)
+            handleCardClick, //handleCardClick: open, handleRemoveCard //...что должно произойти при клике на картинку
+            handleLikeClick: (likes) => {
+            console.log('при клике на лайк', likes)
+                api.likeCard(likes)
+                    .then((likes) => {
+                        console.log(likes)
+                        // section.addItem(initialiseCard(newCard));//2.отрисовываем результат (карточки)
                     })
                     .catch((err) => {
                         console.log(`ошибка при лайке карточки' ${err}`)
@@ -98,13 +116,16 @@ function initialiseCard(dataCard) {
     return newCard.generateCard(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
 
-
-// -----------------------------------------------
-// обработчик формы Edit / "сохранить" данные из инпутов формы профиля
+// обработчик формы Edit / "сохранить" данные из ...сервера
 function handleFormProfileSubmit(formDataObject) {
     newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
     newPopupProfile.close(); // закрываем попап
 }
+// обработчик формы Edit / "сохранить" данные из инпутов формы профиля
+// function handleFormProfileSubmit(formDataObject) {
+//     newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+//     newPopupProfile.close(); // закрываем попап
+// }
 
 // Обработчик Form Place
 function handleFormPlaceSubmit(formDataObject) {
