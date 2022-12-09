@@ -18,6 +18,35 @@ import {
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
+const api = new Api(apiConfig)
+
+const userSelectors = {
+    nameSelector: '.profile__name',
+    jobSelector: '.profile__job',
+    avatarSelector: '.profile__img'
+}
+const userInfo = new UserInfo(userSelectors)
+console.log(userInfo.getUserInfo())
+
+api.getUser()
+    .then((userData) => {
+        console.log(userData)
+         console.log(userInfo)
+        userInfo.setUserInfo(userData)
+        //  console.log(userInfo)
+        userInfo.updateUserInfo()
+        // const newUser = new UserInfo({
+        //     userData,
+        //     nameSelector: '.profile__name',
+        //     jobSelector: '.profile__job',
+        // }); // name: '.profile__name', // job: '.profile__job'
+        // console.log(newUser)
+        // newUser.setUserInfo(userData); //
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
 // Section ---------------------------------------- (cardsList = section)
 // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет initialiseCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
@@ -30,13 +59,14 @@ const section = new Section(
     '.elements__list'
 );
 
-const api = new Api(apiConfig)
 
 api.getAllInfo()
-    .then(([userData,getAll]) => {//деструктурируем массив, чтоб достать данные
-        console.log(userData, getAll)
+    .then(([userData,getAllCards]) => {//деструктурируем массив, чтоб достать данные
+        // console.log(userData, getAllCards)
+        // section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
+        // newUser.setUserInfo(userData.name); // сохраняем в DOM данные вводимые <- из
     })
-    .catch(err => console.log(err))
+    .catch((err) => {console.log(err.status)})
 
 //с сервера запрос карточек в лист-секцию
 api.getAllCards()
@@ -46,15 +76,23 @@ api.getAllCards()
     })
     .catch((err) => {console.log(err.status)})
 
-api.getUser()
-    .then((userData) => {
-        console.log(userData)
-    })
-    .catch((err) => {
-        console.log(err)
-    })
 
-//----- new POPUPs ----------------------------
+//----------NEW UserInfo ------------------------------------------------
+// const newUser = new UserInfo({
+//     userData,
+//     nameSelector: '.profile__name',
+//     jobSelector: '.profile__job',
+// }); // name: '.profile__name', // job: '.profile__job'
+// console.log(newUser)
+// // function initialiseUser() {
+// // const { nameSelector, jobSelector } = userInfo;
+// const newUser = new UserInfo({
+//     nameSelector: '.profile__name',
+//     jobSelector: '.profile__job',
+// }); // name: '.profile__name', // job: '.profile__job'
+//----------------------------------------------------------------------
+
+//----- new POPUPs -------------------------------------------------------------
 //При создании экземпляра PopupWithForm под попап "редактирования" ты в него передаешь колбэк, который будет рулить сабмитом формы "редактирования".
 const newPopupProfile = new PopupWithForm(
     '#overlay_edit',
@@ -71,18 +109,6 @@ const newPopupAddPlace = new PopupWithForm(
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
-//----------NEW UserInfo ---------------------------------------
-const newUser = new UserInfo({
-    profileName: '.profile__name',
-    jobSelector: '.profile__job',
-}); // name: '.profile__name', // job: '.profile__job'
-console.log(newUser)
-// // function initialiseUser() {
-// // const { nameSelector, jobSelector } = userInfo;
-// const newUser = new UserInfo({
-//     nameSelector: '.profile__name',
-//     jobSelector: '.profile__job',
-// }); // name: '.profile__name', // job: '.profile__job'
 
 // Card ----------- создает экз, и возвращает разметку =====================================================
 function initialiseCard(dataCard) {
@@ -118,7 +144,7 @@ function initialiseCard(dataCard) {
 
 // обработчик формы Edit / "сохранить" данные из ...сервера
 function handleFormProfileSubmit(formDataObject) {
-    newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+    userInfo.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
     newPopupProfile.close(); // закрываем попап
 }
 // обработчик формы Edit / "сохранить" данные из инпутов формы профиля
@@ -148,9 +174,9 @@ function handleFormPlaceSubmit(formDataObject) {
 // кнопка "edit"
 function handleButtonEditClick() {
     // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ.
-    const userInfo = newUser.getUserInfo(); //получаем объект {name:.., job:..}
-    inputEditName.value = userInfo.name; //Жак-Ив Кусто
-    inputEditJob.value = userInfo.job; //Исследователь
+    const user = userInfo.getUserInfo(); //получаем объект {name:.., job:..}
+    inputEditName.value = user.name; //Жак-Ив Кусто
+    inputEditJob.value = user.about; //Исследователь
 
     newPopupProfile.open();
 }
