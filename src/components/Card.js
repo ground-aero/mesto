@@ -4,15 +4,14 @@ export class Card {
   constructor({ data, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
     this._id = data.id;
-     // console.log(this._id)
-    this._userId = data.userId;
+     // console.log(this._data)
+    this._myId = data.myId;
     this._ownerId = data.ownerId;
     // console.log(this._ownerId)
-    this._likes = data.likes;//массив
+    this._likes = data.likes;//массив лайков
       // console.log(this._likes)
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
-    // this._handleLikeClick = this._handleLikeClick.bind(this);
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteClick = handleDeleteClick;
     // this.removeCard = handleCardDelete;
@@ -24,11 +23,6 @@ export class Card {
     this._cardBtnDel = this._clonedCard.querySelector('.card__btn-del');
     this._cardLikeCounter = this._clonedCard.querySelector('.card__btn-like-count');
     // this._cardId = this._clonedCard.querySelector('.....????')
-    this._confirmBtnYes = document.querySelector('.btn_type_submit-delete')
-  }
-
-  getId() {
-    return this._id
   }
 
   // 1. НАХОДИМ НОДУ (но ее еще нет в DOM ! )
@@ -42,9 +36,19 @@ export class Card {
     return clonedCard;
   }
 
-  _setLikes() {//ф-ция которая будет находить внутри этот эл
+  setLikes(newLikes) {//ф-ция которая будет находить внутри этот эл
+    this._likes = newLikes;
     this._cardLikeCounter.textContent = this._likes.length;
-    // console.log(this._likes.length)
+
+    const userHasLikedCard = this._likes.find(user => user._id === this._myId)
+    if (userHasLikedCard) {
+      this._handleLikeColor()
+      // this._cardBtnLike.classList.add('card__btn-like_active')
+    }
+  }
+
+  _handleLikeColor() {
+    this._cardBtnLike.classList.toggle('card__btn-like_active');
   }
 
   // 2. ПОЛУЧАЕМ РАЗМЕТКУ ШАБЛОНА/ТЕМПЛЕЙТА (публичный)
@@ -57,23 +61,20 @@ export class Card {
     this._cardImage.src = this._data?.link; //_data.link ++
     this._cardImage.alt = this._data?.name;
 
-    this._setLikes()
-    // this._cardLikeCounter.textContent = this._data?.likes;//[массив лайков]
-    // this._id??????????.textContent = this._data?._id; ??????
+    this.setLikes(this._likes)
 
-    if (this._ownerId !== this._userId) {
+    if (this._ownerId !== this._myId) {
       this._cardBtnDel.style.display = 'none'
     }
 
     return this._clonedCard;
   }
 
-  // --remove card----PW-9--- (перенесен из index.js)
+  // remove card
   deleteCard() {
     //получаем ноду, удаляем ее
     this._clonedCard.remove();
     this._clonedCard = null;
-    //   node.remove();  // node = null;
   }
 
   //универсальный
@@ -83,12 +84,8 @@ export class Card {
       this._handleDeleteClick(this._id);//this._id //вместо _clonedCard
     });
 
-    // this._confirmBtnYes.addEventListener('click', () => {
-    //   this._handleDeleteClick(this._id);//_id вместо _clonedCard
-    // });
-
     this._cardBtnLike.addEventListener('click', () => {
-      this._handleLikeClick(this._likes);//?????????????????????
+      this._handleLikeClick(this._id);//this._likes?????????????????????
     });
 
     // img zoom/ open(data)
@@ -97,9 +94,5 @@ export class Card {
     });
   }
 
-  // ХЕНДЛЕРЫ. /ПОСТАВИТЬ ЛАЙК
-  _handleLikeClick() {
-    this._cardBtnLike.classList.toggle('card__btn-like_active');
-  }
 }
 

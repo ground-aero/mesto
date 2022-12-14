@@ -121,13 +121,13 @@ export class Api {
     }
 
     // - “залайкать” карточку (PUT)
-    likeCard(likes) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
+    putLike(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
         //1. метод ставить лайк
         //2. метод убирать лайк
-        return fetch(`${this._apiConfig.baseUrl}/cards/${likes}`, {
+        return fetch(`${this._apiConfig.baseUrl}/cards/likes/${id}`, {
             method: 'PUT',
             headers: this._apiConfig.headers,
-            body: JSON.stringify({ likes }),
+            body: JSON.stringify({ id }),
         })
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
             // .then((res) => {
@@ -139,11 +139,28 @@ export class Api {
             // })
             .catch(console.log)
     }
+    // putLike(likes) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
+    //     //1. метод ставить лайк
+    //     //2. метод убирать лайк
+    //     return fetch(`${this._apiConfig.baseUrl}/cards/${likes}`, {
+    //         method: 'PUT',
+    //         headers: this._apiConfig.headers,
+    //         body: JSON.stringify({ likes }),
+    //     })
+    //         .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
+    //         // .then((res) => {
+    //         //     if (res.ok) {
+    //         //         return res.json();//Promise.resolve()
+    //         //     } else {
+    //         //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
+    //         //     }
+    //         // })
+    //         .catch(console.log)
+    // }
+
     // - удалить лайк карточки (DELETE)
-    dislikeCard(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
-        //1. метод ставить лайк
-        //2. метод убирать лайк
-        return fetch(`${this._apiConfig.baseUrl}/cards/${id}`, {
+    deleteLike(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
+        return fetch(`${this._apiConfig.baseUrl}/cards/likes/${id}`, {
             method: 'DELETE',
             headers: this._apiConfig.headers
         })

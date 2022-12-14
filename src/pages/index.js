@@ -25,7 +25,7 @@ const userSelectors = {
     avatarSelector: '.profile__img'
 }
 
-let userId = null;// а уже внутри Promise.all
+let myId = null;// а уже внутри Promise.all
 const userInfo = new UserInfo(userSelectors)
 console.log(userInfo.getUserInfo())
 
@@ -42,14 +42,13 @@ api.getUser()
         // }); // name: '.profile__name', // job: '.profile__job'
         // console.log(newUser)
         // newUser.setUserInfo(userData); //
-        userId = userData._id//возвращает мой Id с сервера
+        myId = userData._id//возвращает мой Id с сервера
         console.log(userData)
     })
     .catch((err) => {
         console.log('ошибка при получении данных юзера', err)
     })
     .finally(()=>{}) // зд можно удалить прелоадер(загрузка-кружочек) (который долэен передаваться наверху)
-
 
 // Section ---------------------------------------- (cardsList = section)
 // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет createCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
@@ -68,7 +67,7 @@ const section = new Section(
 // api.getAllInfo()
 //     .then(([userData,getAllCards]) => {//деструктурируем массив, чтоб достать данные
 //         // console.log(userData, getAllCards)
-//         userId = userData._id;//переприсваиваем значение, ранее объявили ее в глобальной области
+//         myId = userData._id;//переприсваиваем значение, ранее объявили ее в глобальной области
 //         // section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
 //         section.renderItems({ data: getAllCards, id: userData._id}) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
 //         userInfo.setUserInfo(userData.name, userData.about); // сохраняем в DOM данные вводимые <- из
@@ -83,14 +82,13 @@ api.getAllCards()
             // console.log(dataCard)
              const card = createCard({
                  name: dataCard.name,
-                link: dataCard.link,
-                likes: dataCard.likes,
+                 link: dataCard.link,
+                 likes: dataCard.likes,
                  id: dataCard._id,
-                 userId: userId,
+                 myId: myId,
                  ownerId: dataCard.owner._id,
              })
-            // console.log(userId)
-            // console.log(card)
+            // console.log(card)//разметка карточки
             section.addItem(card)//рендеринг карточек в лист-секцию
         })
     })
@@ -146,15 +144,16 @@ function createCard(dataCard) {
     const newCard = new Card({
             data: dataCard,
             handleCardClick, //handleCardClick: open, handleRemoveCard //...что должно произойти при клике на картинку
-            handleLikeClick: (likes) => {
-            console.log('при клике на лайк', likes)
-                api.likeCard(likes)
-                    .then((likes) => {
-                        console.log(likes)
-                        // section.addItem(createCard(newCard));//2.отрисовываем результат (карточки)
+            handleLikeClick: (id) => {
+            console.log('при клике на лайк', id)
+                api.putLike(id)
+                    .then((res) => {
+                        console.log(res)
+                        newCard.setLikes(res.likes)
+                //         // section.addItem(createCard(newCard));//2.отрисовываем результат (карточки)
                     })
                     .catch((err) => {
-                        console.log(`ошибка при лайке карточки' ${err}`)
+                        console.log(`ошибка при лайке карточки ${err}`)
                     })
             },
             handleDeleteClick: (id) => {
@@ -215,7 +214,7 @@ function handleFormCardSubmit(formDataObject) {
                 link: newCard.link,
                 likes: newCard.likes,
                 id: newCard._id,
-                userId: userId,
+                myId: myId,
                 ownerId: newCard.owner._id,
             })
               console.log(card)
