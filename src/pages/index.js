@@ -146,15 +146,25 @@ function createCard(dataCard) {
             handleCardClick, //handleCardClick: open, handleRemoveCard //...что должно произойти при клике на картинку
             handleLikeClick: (id) => {
             console.log('при клике на лайк', id)
-                api.putLike(id)
-                    .then((res) => {
-                        console.log(res)
-                        newCard.setLikes(res.likes)
-                //         // section.addItem(createCard(newCard));//2.отрисовываем результат (карточки)
-                    })
-                    .catch((err) => {
-                        console.log(`ошибка при лайке карточки ${err}`)
-                    })
+                if (newCard.isLiked()) {
+                    api.deleteLike(id)
+                        .then(res => {
+                            console.log(res)
+                            newCard.setLikes(res.likes)
+                        })
+                        .catch((err) => {
+                            console.log(`ошибка при лайке карточки ${err}`)
+                        })
+                } else {
+                    api.putLike(id)
+                        .then((res) => {
+                            console.log(res)
+                            newCard.setLikes(res.likes)
+                        })
+                        .catch((err) => {
+                            console.log(`ошибка при лайке карточки ${err}`)
+                        })
+                }
             },
             handleDeleteClick: (id) => {
                    console.log('handleDeleteClick, id=', id)

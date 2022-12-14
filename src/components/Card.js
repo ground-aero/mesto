@@ -36,19 +36,25 @@ export class Card {
     return clonedCard;
   }
 
+  isLiked() {
+    const userHasLikedCard = this._likes.find(user => user._id === this._myId)
+
+    return userHasLikedCard
+  }
+
   setLikes(newLikes) {//ф-ция которая будет находить внутри этот эл
     this._likes = newLikes;
     this._cardLikeCounter.textContent = this._likes.length;
 
-    const userHasLikedCard = this._likes.find(user => user._id === this._myId)
-    if (userHasLikedCard) {
+    if (this.isLiked()) {
       this._handleLikeColor()
-      // this._cardBtnLike.classList.add('card__btn-like_active')
+    } else {
+      this._cardBtnLike.classList.remove('card__btn-like_active');
     }
   }
 
   _handleLikeColor() {
-    this._cardBtnLike.classList.toggle('card__btn-like_active');
+    this._cardBtnLike.classList.add('card__btn-like_active');
   }
 
   // 2. ПОЛУЧАЕМ РАЗМЕТКУ ШАБЛОНА/ТЕМПЛЕЙТА (публичный)
