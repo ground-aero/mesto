@@ -23,16 +23,16 @@
             <!-- profile section -->
             <section id="profile" class="profile content__section">
                 <!--flex-->
-                <img src="./images/avatar.png" class="profile__img" alt="бюст улыбающегося человека в красной шапке">
+                <img class="profile__img" src="#" alt="бюст улыбающегося человека в красной шапке"><!--./images/avatar.png" -->
 <!--                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">-->
                 <!-- img class="profile__avatar" -->
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
-                        <h1 class="profile__name">..Кусто</h1>
+                        <h1 class="profile__name">....</h1>
                         <button class="btn profile__btn-edit opacity-transition" type="button"
                             aria-label="edit"></button>
                     </div>
-                    <p class="profile__job">..океана</p>
+                    <p class="profile__job">..</p>
                 </div>
                 <button class="btn profile__btn-addplace opacity-transition" type="button" aria-label="add"></button>
             </section>
@@ -58,7 +58,7 @@
                                 id="input-error-edit"></span> <!-- display: none -->
                         </span>
                         <span class="popup__input-field popup__input-field_wrap">
-                            <input type="text" class="popup__input" id="job-input" name="job" placeholder="О себе"
+                            <input type="text" class="popup__input" id="job-input" name="about" placeholder="О себе"
                                 tabindex="2" minlength="2" maxlength="200" required>
                             <span class="popup__input-span popup__input-span_error_disabled job-input-error"
                                 id="input-error-edit_minimum"></span>
@@ -74,7 +74,7 @@
             <div class="popup" id="overlay_add-place">
                 <div class="popup__container" id="window_add-place">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
-                    <form action="#" class="popup__form" id="form-place" name="place" tabindex="0" novalidate>
+                    <form action="#" class="popup__form" id="form-place" name="place" tabindex="1" novalidate>
                         <!-- <h2 class="popup__title">Новое место</h2> -->
                         <h2 class="popup__title">Новое место</h2>
                         <span class="popup__input-field popup__input-field_wrap">
@@ -113,8 +113,10 @@
                 <div class="popup__container" id="popup__container_type_delete">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
                     <h2 class="popup__title">Вы уверены?</h2>
-                    <button type="submit"
-                            class="btn btn_submit btn_type_submit-delete opacity-transition">Да</button>
+                    <form action="#" class="popup__form" id="form-confirm" name="confirm" tabindex="3" novalidate>
+                        <button type="submit"
+                                class="btn btn_submit btn_type_submit-delete opacity-transition">Да</button>
+                    </form>
                 </div>
             </div>
         </main>
@@ -130,7 +132,7 @@
                     <h2 class="card__title">Место</h2>
                     <div class="card__btn-like-wrap">
                         <button class="card__btn-like opacity-transition" type="button" aria-label="like"></button>
-                        <span class="card__btn-like-count">0</span>
+                        <span class="card__btn-like-count"></span>
                     </div>
                 </div>
             </li>

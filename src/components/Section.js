@@ -7,9 +7,9 @@ export class Section {
     this._container = document.querySelector(containerSelector);
   }
 
-  addItem(node) {
-    //принимает DOM-элемент и добавляет его в контейнер.
-    this._container.append(node);
+  addItem(element) {
+    //принимает готовую карточку(DOM-элемент) и добавляет его в контейнер DOM.
+    this._container.append(element);
   }
 
   // 1-й Вариант. //отрисовка с помощью колл-бэка

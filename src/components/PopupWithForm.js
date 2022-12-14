@@ -16,6 +16,9 @@ export class PopupWithForm extends Popup {
   // setSubmitAction(action) {
   //   this._handleSubmit(вместо)submitHandler = action;
   // }
+  changeSubmitAction(newHandleFormSubmit) {
+    this._handleFormSubmit = newHandleFormSubmit;
+  }
 
   // собирает данные всех полей формы.
   _getInputValues() {

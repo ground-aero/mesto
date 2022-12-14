@@ -24,13 +24,6 @@
 //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
 //   },
 // ];
-export const apiConfig = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
-  headers: {
-    "content-type": "application/json",
-    "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
-  }
-}
 
 export const selectors = {
   card: '.card', // карточка
@@ -69,9 +62,9 @@ export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 
 // forms (430px)
-export const formProfile = document.forms.profile; // по св-ву name
+export const formProfile = document.forms.profile;// по св-ву name
 export const inputEditName = formProfile.elements.name; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
-export const inputEditJob = formProfile.elements.job; // // page.querySelector('#popup__input_type_job');
+export const inputEditJob = formProfile.elements.about; // // page.querySelector('#popup__input_type_job');
 
 export const profileNameNode = document.querySelector('.profile__name');
 export const profileJobNode = document.querySelector('.profile__job');

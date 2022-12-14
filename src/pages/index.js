@@ -1,8 +1,7 @@
 // index.js - Корневая точка проекта. Файл содержит только инициализацию необходимых главной странице модулей — функций и классов
 // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
 // import './index.css';
-import {Api} from '../components/Api.js'
-import {apiConfig} from '../utils/constants.js';
+import {Api, apiConfig} from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
@@ -25,16 +24,17 @@ const userSelectors = {
     jobSelector: '.profile__job',
     avatarSelector: '.profile__img'
 }
+
+let userId = null;// а уже внутри Promise.all
 const userInfo = new UserInfo(userSelectors)
 console.log(userInfo.getUserInfo())
 
 api.getUser()
     .then((userData) => {
-        console.log(userData)
-         console.log(userInfo)
-        userInfo.setUserInfo(userData)
-        //  console.log(userInfo)
-        userInfo.updateUserInfo()
+         // console.log(userData)
+        userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
+         // console.log(userInfo)
+        userInfo.updateUserInfo(userData.name, userData.about, userData.avatar)
         // const newUser = new UserInfo({
         //     userData,
         //     nameSelector: '.profile__name',
@@ -42,40 +42,65 @@ api.getUser()
         // }); // name: '.profile__name', // job: '.profile__job'
         // console.log(newUser)
         // newUser.setUserInfo(userData); //
+        userId = userData._id//возвращает мой Id с сервера
+        console.log(userData)
     })
     .catch((err) => {
-        console.log(err)
+        console.log('ошибка при получении данных юзера', err)
     })
+    .finally(()=>{}) // зд можно удалить прелоадер(загрузка-кружочек) (который долэен передаваться наверху)
+
 
 // Section ---------------------------------------- (cardsList = section)
-// Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет initialiseCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
+// Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет createCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
     {
         renderer: (cardItem, container) => {
             //описывает что сделать с данными при переборе в цикле. //cardItem, container - просто параметры
-            section.addItem(initialiseCard(cardItem, container));//##############################################
+
+            section.addItem(createCard(cardItem, container));//##############################################
         },
     },
     '.elements__list'
 );
 
 
-api.getAllInfo()
-    .then(([userData,getAllCards]) => {//деструктурируем массив, чтоб достать данные
-        // console.log(userData, getAllCards)
-        // section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
-        // newUser.setUserInfo(userData.name); // сохраняем в DOM данные вводимые <- из
-    })
-    .catch((err) => {console.log(err.status)})
+// api.getAllInfo()
+//     .then(([userData,getAllCards]) => {//деструктурируем массив, чтоб достать данные
+//         // console.log(userData, getAllCards)
+//         userId = userData._id;//переприсваиваем значение, ранее объявили ее в глобальной области
+//         // section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
+//         section.renderItems({ data: getAllCards, id: userData._id}) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
+//         userInfo.setUserInfo(userData.name, userData.about); // сохраняем в DOM данные вводимые <- из
+//     })
+//     .catch((err) => {console.log(err.status)})
 
 //с сервера запрос карточек в лист-секцию
 api.getAllCards()
-    .then((cards) => {
-        // console.log(cards, Array.isArray(cards))
-        section.renderItems(cards)//рендеринг карточек в лист-секцию
+    .then((cardList) => {
+        // console.log(cardList, Array.isArray(cardList))
+        cardList.forEach(dataCard => {
+            // console.log(dataCard)
+             const card = createCard({
+                 name: dataCard.name,
+                link: dataCard.link,
+                likes: dataCard.likes,
+                 id: dataCard._id,
+                 userId: userId,
+                 ownerId: dataCard.owner._id,
+             })
+            // console.log(userId)
+            // console.log(card)
+            section.addItem(card)//рендеринг карточек в лист-секцию
+        })
     })
     .catch((err) => {console.log(err.status)})
-
+// api.getAllCards() //2-й способ
+//     .then((cardList) => {
+//         // console.log(cardList, Array.isArray(cards))
+//         section.renderItems(cardList)//рендеринг карточек в лист-секцию
+//     })
+//     .catch((err) => {console.log(err.status)})
 
 //----------NEW UserInfo ------------------------------------------------
 // const newUser = new UserInfo({
@@ -94,24 +119,30 @@ api.getAllCards()
 
 //----- new POPUPs -------------------------------------------------------------
 //При создании экземпляра PopupWithForm под попап "редактирования" ты в него передаешь колбэк, который будет рулить сабмитом формы "редактирования".
-const newPopupProfile = new PopupWithForm(
+const popupEditProfile = new PopupWithForm(
     '#overlay_edit',
     '#form-add-profile',
     handleFormProfileSubmit
 );
 
-const newPopupAddPlace = new PopupWithForm(
+const popupAddPlace = new PopupWithForm(
     '#overlay_add-place',
     '#form-place',
-
-    handleFormPlaceSubmit
+    handleFormCardSubmit
 );
+
+const popupConfirmDelete = new PopupWithForm(
+    '#overlay_delete',
+    '#form-confirm',
+    // handleFormConfirmDelSubmit
+)
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
 
+
 // Card ----------- создает экз, и возвращает разметку =====================================================
-function initialiseCard(dataCard) {
+function createCard(dataCard) {
     const newCard = new Card({
             data: dataCard,
             handleCardClick, //handleCardClick: open, handleRemoveCard //...что должно произойти при клике на картинку
@@ -120,57 +151,94 @@ function initialiseCard(dataCard) {
                 api.likeCard(likes)
                     .then((likes) => {
                         console.log(likes)
-                        // section.addItem(initialiseCard(newCard));//2.отрисовываем результат (карточки)
+                        // section.addItem(createCard(newCard));//2.отрисовываем результат (карточки)
                     })
                     .catch((err) => {
                         console.log(`ошибка при лайке карточки' ${err}`)
                     })
             },
-            handleCardDelete: (id) => {
-              console.log('handleCardDelete, id=', id)
-            api.deleteCard(id)
-                .then(() => {
-                    // console.log(res)
-                    newCard.removeCard()
+            handleDeleteClick: (id) => {
+                   console.log('handleDeleteClick, id=', id)
+                popupConfirmDelete.open() //модалка "Вы уверены ?"
+                popupConfirmDelete.changeSubmitAction(() => {
+                    api.deleteCard(id)
+                        .then((res) => {
+                              // console.log(res)
+                            newCard.deleteCard()
+                            popupConfirmDelete.close()
+                        })
+                        .catch((err) => console.log(`ошибка при удалении: ${err}`))
                 })
-                .catch((err) => console.log(`ошибка при удалении: ${err}`))
-            }
+      }
         },
         '#card-template'
     );
 
-    return newCard.generateCard(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
+    return newCard.getView(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
 
 // обработчик формы Edit / "сохранить" данные из ...сервера
-function handleFormProfileSubmit(formDataObject) {
-    userInfo.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
-    newPopupProfile.close(); // закрываем попап
+function handleFormProfileSubmit(formDataObject) {//данные из инпутов
+     // console.log(formDataObject)
+    api.patchUser(formDataObject)
+        .then((userInfoFromApi) => {
+            // console.log(profileInfoFromApi)
+            userInfo.setUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+            userInfo.updateUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar)
+
+            popupEditProfile.close(); // закрываем попап
+        })
+        .catch((err) => {
+            console.log('ошибка при сабмите/патч юзер дата,', err)
+        })
+
 }
 // обработчик формы Edit / "сохранить" данные из инпутов формы профиля
 // function handleFormProfileSubmit(formDataObject) {
 //     newUser.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
-//     newPopupProfile.close(); // закрываем попап
+//  // ИЛИ userInfo.setUserInfo(formDataObject); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+//     popupEditProfile.close(); // закрываем попап
 // }
 
-// Обработчик Form Place
-function handleFormPlaceSubmit(formDataObject) {
-    // const newCard = initialiseCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
+// Обработчик FormPlace - добавить карточку через API
+function handleFormCardSubmit(formDataObject) {
+    // const newCard = createCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
     // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
     ///  вар.2
-    // console.log(handleFormPlaceSubmit)
-    console.log(formDataObject)
+    // console.log(handleFormCardSubmit)
+    //  console.log(formDataObject)
     api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
         .then((newCard) => {
-            console.log(newCard)
-            section.addItem(initialiseCard(newCard));//2.отрисовываем результат (карточки)
+              // console.log(newCard)
+            const card = createCard({
+                name: newCard.name,
+                link: newCard.link,
+                likes: newCard.likes,
+                id: newCard._id,
+                userId: userId,
+                ownerId: newCard.owner._id,
+            })
+              console.log(card)
+            section.addItem(card)//2.отрисовываем результат (карточки)
+
+            popupAddPlace.close()
         })
         .catch((error) => {
             console.log('ошибка при создании карточки', error)
         })
 }
+//////////////////////
+function handleFormConfirmDelSubmit(id) {
+    console.log('да, хочу удалить')
+    api.deleteCard('63985ee6c18fdc1d38473b38')//'63985ee6c18fdc1d38473b38'
+        .then(res => {
+            console.log(res)
+            // newCard.removeCard()
+        })
+        .catch(err => {console.log('ошибка при удалении', err)})
+}
 
-// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: ------------
+// -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: -------------------------
 // кнопка "edit"
 function handleButtonEditClick() {
     // вызв заполнение полей - РЕВЬЮ/ЗАМЕЧАНИЕ.
@@ -178,12 +246,12 @@ function handleButtonEditClick() {
     inputEditName.value = user.name; //Жак-Ив Кусто
     inputEditJob.value = user.about; //Исследователь
 
-    newPopupProfile.open();
+    popupEditProfile.open();
 }
 
 // кнопка "+" / add place
 function handleButtonAddPlaceClick() {
-    newPopupAddPlace.open();
+    popupAddPlace.open();
     // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
     formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
 }
@@ -198,9 +266,10 @@ function handleCardClick(data) {
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 
-newPopupProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
-newPopupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
+popupEditProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
+popupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 popupWithImage.setEventListeners();
+popupConfirmDelete.setEventListeners()
 
 // Включение валидации // --- Вар - 1 ---------------------------------------------
 
