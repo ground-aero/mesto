@@ -48,7 +48,6 @@ export class Api {
             .catch(console.log)
     }
 
-
     // - заменить аватар (PATCH)
     patchAvatar(formValue) {
         console.log(formValue)
@@ -69,6 +68,7 @@ export class Api {
             // })
             .catch(console.log)
     }
+
 
     getAllCards() {
         return fetch(`${this._apiConfig.baseUrl}/cards/`, {
@@ -174,6 +174,7 @@ export class Api {
             // })
             .catch(console.log)
     }
+
 }
 
 export const apiConfig = {

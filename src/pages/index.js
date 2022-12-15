@@ -22,7 +22,7 @@ const api = new Api(apiConfig)
 const userSelectors = {
     nameSelector: '.profile__name',
     jobSelector: '.profile__job',
-    avatarSelector: '.profile__img'
+    avatarSelector: '.profile__avatar'
 }
 
 let myId = null;// а уже внутри Promise.all
