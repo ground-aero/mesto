@@ -10,28 +10,32 @@ import { UserInfo } from '../components/UserInfo.js';
 import {
     btnEditProfile,
     btnAddPlace,
+    btnEditAvatar,
     // initialCards,
     inputEditName,
     inputEditJob,
-    config,
+    inputEditAvatar,
+    config, formAvatar,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
 const api = new Api(apiConfig)
 
-const userSelectors = {
-    nameSelector: '.profile__name',
-    jobSelector: '.profile__job',
-    avatarSelector: '.profile__avatar'
-}
+// const userSelectors = {
+//     nameSelector: '.profile__name',
+//     jobSelector: '.profile__job',
+//     avatarSelector: '.profile__avatar'
+// }
 
 let myId = null;// а уже внутри Promise.all
-const userInfo = new UserInfo(userSelectors)
+const userInfo = new UserInfo({nameSelector: '.profile__name',
+    jobSelector: '.profile__job',
+    avatarSelector: '.profile__avatar'})//userSelectors
 console.log(userInfo.getUserInfo())
 
 api.getUser()
     .then((userData) => {
-         // console.log(userData)
+         console.log(userData)
         userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
          // console.log(userInfo)
         userInfo.updateUserInfo(userData.name, userData.about, userData.avatar)
@@ -123,6 +127,12 @@ const popupEditProfile = new PopupWithForm(
     handleFormProfileSubmit
 );
 
+const popupEditAvatar = new PopupWithForm(
+    '#overlay_avatar',
+    '#form-edit-avatar',
+    handleFormAvatarSubmit //???????????????????
+);
+
 const popupAddPlace = new PopupWithForm(
     '#overlay_add-place',
     '#form-place',
@@ -132,11 +142,10 @@ const popupAddPlace = new PopupWithForm(
 const popupConfirmDelete = new PopupWithForm(
     '#overlay_delete',
     '#form-confirm',
-    // handleFormConfirmDelSubmit
+    // handleFormConfirmDelSubmit //??????????????????
 )
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
-
 
 
 // Card ----------- создает экз, и возвращает разметку =====================================================
@@ -191,7 +200,7 @@ function handleFormProfileSubmit(formDataObject) {//данные из инпут
      // console.log(formDataObject)
     api.patchUser(formDataObject)
         .then((userInfoFromApi) => {
-            // console.log(profileInfoFromApi)
+             console.log(userInfoFromApi)
             userInfo.setUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
             userInfo.updateUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar)
 
@@ -211,11 +220,6 @@ function handleFormProfileSubmit(formDataObject) {//данные из инпут
 
 // Обработчик FormPlace - добавить карточку через API
 function handleFormCardSubmit(formDataObject) {
-    // const newCard = createCard(formDataObject); //создает экз класса и возвращает разметку. Она требует данные (данные реализованы здесь выше)
-    // section.addItem(newCard); //добавляется своя карточка в момент нажатия сабмит формы
-    ///  вар.2
-    // console.log(handleFormCardSubmit)
-    //  console.log(formDataObject)
     api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
         .then((newCard) => {
               // console.log(newCard)
@@ -236,16 +240,35 @@ function handleFormCardSubmit(formDataObject) {
             console.log('ошибка при создании карточки', error)
         })
 }
-//////////////////////
-function handleFormConfirmDelSubmit(id) {
-    console.log('да, хочу удалить')
-    api.deleteCard('63985ee6c18fdc1d38473b38')//'63985ee6c18fdc1d38473b38'
-        .then(res => {
-            console.log(res)
-            // newCard.removeCard()
+
+function handleFormAvatarSubmit(formDataObject) {
+    console.log({avatar: formDataObject.linkavatar})
+    api.patchAvatar({avatar: formDataObject.linkavatar})//{avatar: formDataObject.link}
+        .then((res) => {
+
+            console.log('сабмит изменить аватар', res)
+
+            userInfo.setUserInfo(res.name, res.link, res.avatar)
+            userInfo.updateUserInfo(res.name, res.link, res.avatar)
+
+            //userInfo.updateAvatarLink(userData.avatar)
+    popupEditAvatar.close()
         })
-        .catch(err => {console.log('ошибка при удалении', err)})
+        .catch((error) => {
+            console.log('ошибка при сабмите изм аватара', error)
+        })
 }
+
+//////////////////////
+// function handleFormConfirmDelSubmit(id) {
+//     console.log('да, хочу удалить')
+//     api.deleteCard('63985ee6c18fdc1d38473b38')//'63985ee6c18fdc1d38473b38'
+//         .then(res => {
+//             console.log(res)
+//             // newCard.removeCard()
+//         })
+//         .catch(err => {console.log('ошибка при удалении', err)})
+// }
 
 // -- ОБРАБОТЧИКИ НА ОТКРЫТИЕ: -------------------------
 // кнопка "edit"
@@ -258,11 +281,18 @@ function handleButtonEditClick() {
     popupEditProfile.open();
 }
 
+// "кнопка" cover-avatar edit"
+function handleButtonEditAvatarClick() {
+    popupEditAvatar.open();
+
+    formValidators['avatar'].toggleButtonState(); //'profile' - атрибут name, формы
+}
+
 // кнопка "+" / add place
 function handleButtonAddPlaceClick() {
     popupAddPlace.open();
     // formPlaceValid.toggleButtonState(); // ИСПРАВЛЕНО. методы класса FormValidator активир / деактивир кнопку сабмита и очищают ошибки
-    formValidators['place'].toggleButtonState(); //'profile' - атрибут name, формы
+    formValidators['place'].toggleButtonState(); //'place' - атрибут name, формы
 }
 
 function handleCardClick(data) {
@@ -274,11 +304,13 @@ function handleCardClick(data) {
 //-------- СЛУШАТЕЛИ
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
+btnEditAvatar.addEventListener('click', handleButtonEditAvatarClick); // edit avatar
 
 popupEditProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
+popupEditAvatar.setEventListeners();
 popupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 popupWithImage.setEventListeners();
-popupConfirmDelete.setEventListeners()
+popupConfirmDelete.setEventListeners();
 
 // Включение валидации // --- Вар - 1 ---------------------------------------------
 

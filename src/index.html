@@ -55,14 +55,14 @@
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="text" class="popup__input" id="name-input" name="name" placeholder="Ваше имя"
                                 tabindex="1" minlength="2" maxlength="40" required>
-                            <span class="popup__input-span popup__input-span_error_disabled name-input-error"
-                                id="input-error-edit"></span> <!-- display: none -->
+                            <span class="popup__input-span name-input-error"
+                                id="input-edit-error"></span> <!-- display: none -->
                         </span>
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="text" class="popup__input" id="job-input" name="about" placeholder="О себе"
                                 tabindex="2" minlength="2" maxlength="200" required>
-                            <span class="popup__input-span popup__input-span_error_disabled job-input-error"
-                                id="input-error-edit_minimum"></span>
+                            <span class="popup__input-span job-input-error"
+                                id="input-edit_minimum-error"></span>
                         </span>
                         <button type="submit"
                             class="btn btn_submit btn_type_save-profile opacity-transition">Сохранить</button>
@@ -81,16 +81,16 @@
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="text" class="popup__input" id="place-input" name="name" placeholder="Название"
                                 tabindex="1" minlength="2" maxlength="30" required>
-                            <span class="popup__input-span popup__input-span_error_disabled place-input-error"
-                                id="input-error-addplace"></span>
+                            <span class="popup__input-span place-input-error"
+                                id="input-addplace-error"></span>
                         </span>
                         <!-- <span class="popup__form_item-error popup__form_item-field_name"></span> -->
                         <!--NEED class="popup__form-item_input-invalid"-->
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="url" class="popup__input" id="link-input" name="link"
                                 placeholder="Ссылка на картинку" tabindex="2" required>
-                            <span class="popup__input-span popup__input-span_error_disabled link-input-error"
-                                id="input-error-addplace_url"></span>
+                            <span class="popup__input-span link-input-error"
+                                id="input-addplace_url-error"></span>
                         </span>
                         <!-- <span class="popup__form_item-error popup__form_item-field_link"></span> -->
                         <button type="submit"
@@ -117,6 +117,24 @@
                     <form action="#" class="popup__form" id="form-confirm" name="confirm" tabindex="3" novalidate>
                         <button type="submit"
                                 class="btn btn_submit btn_type_submit-delete opacity-transition">Да</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- POPUP Edit Avatar -->
+            <div class="popup" id="overlay_avatar">
+                <div class="popup__container" id="popup__container_type_edit-avatar">
+                    <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
+                    <form action="#" class="popup__form" id="form-edit-avatar" name="avatar" tabindex="4" novalidate>
+                        <h2 class="popup__title">Обновить аватар</h2>
+                        <span class="popup__input-field popup__input-field_wrap">
+                            <input type="url" class="popup__input" id="avatar-input" name="linkavatar"
+                                   placeholder="Ссылка на картинку" tabindex="5" required>
+                            <span class="popup__input-span avatar-input-error"
+                                  id="input-edit-avatar-error"></span>
+                        </span>
+                        <button type="submit"
+                                class="btn btn_submit btn_type_submit-edit-avatar opacity-transition">Сохранить</button>
                     </form>
                 </div>
             </div>

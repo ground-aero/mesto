@@ -6,10 +6,11 @@ export class UserInfo {
   //   // console.log(this._name);
   //   this._job = document.querySelector(jobSelector);
   // }
-  constructor({ nameSelector, jobSelector, avatarSelector }) {
+  constructor( {nameSelector, jobSelector, avatarSelector} ) {
     this._nameEl = document.querySelector(nameSelector);
     this._aboutEl = document.querySelector(jobSelector);
     this._avatarEl = document.querySelector(avatarSelector);
+    // console.log(this._avatarEl)
     // this.name = '';
     // this.about = '';
     // this.avatar = '';
@@ -34,6 +35,7 @@ export class UserInfo {
     this.userInfo = {//присваиваем поля
       name: this._nameEl.textContent,
       about: this._aboutEl.textContent,
+      avatar: this._avatarEl.src,
     }
     return this.userInfo
   }

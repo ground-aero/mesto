@@ -60,11 +60,15 @@ export const cardsList = document.querySelector('.elements__list');
 // buttons
 export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
+export const btnEditAvatar = document.querySelector('.profile__avatar-edit-btn'); // "кнопка-cover" обновить автар
 
 // forms (430px)
 export const formProfile = document.forms.profile;// по св-ву name
 export const inputEditName = formProfile.elements.name; // по св-ву name // page.querySelector('#popup__input_type_edit-name');
 export const inputEditJob = formProfile.elements.about; // // page.querySelector('#popup__input_type_job');
+
+export const formAvatar = document.forms.avatar;// по св-ву name
+export const inputEditAvatar = formAvatar.elements.linkavatar;
 
 export const profileNameNode = document.querySelector('.profile__name');
 export const profileJobNode = document.querySelector('.profile__job');

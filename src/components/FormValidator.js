@@ -1,8 +1,8 @@
 //класс настраивает валидацию полей формы:
 export class FormValidator {
   constructor(form, config) {
-    this._config = config;
     this._form = form;
+    this._config = config;
     this._checkValidityInput = this._checkValidityInput.bind(this);
     this._hasInvalidInput = this._hasInvalidInput.bind(this);
     this._showInputError = this._showInputError.bind(this);
@@ -10,7 +10,7 @@ export class FormValidator {
     this._inputList = Array.from(
       this._form.querySelectorAll(this._config.inputClass)
     );
-    this._buttonElement = form.querySelector(this._config.submitButtonClass);
+    this._buttonElement = this._form.querySelector(this._config.submitButtonClass);
   }
 
   //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ.

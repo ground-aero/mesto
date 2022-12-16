@@ -49,14 +49,12 @@ export class Api {
     }
 
     // - заменить аватар (PATCH)
-    patchAvatar(formValue) {
-        console.log(formValue)
+    patchAvatar(formDataObject) {
+        console.log(formDataObject)
         return fetch(`${this._apiConfig.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._apiConfig.headers,
-            body: JSON.stringify({
-                avatar: formValue.avatar,
-            })
+            body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
         })
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
             // .then((res) => {
