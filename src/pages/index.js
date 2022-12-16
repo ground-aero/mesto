@@ -11,7 +11,6 @@ import {
     btnEditProfile,
     btnAddPlace,
     btnEditAvatar,
-    // initialCards,
     inputEditName,
     inputEditJob,
     inputEditAvatar,
@@ -31,28 +30,28 @@ let myId = null;// а уже внутри Promise.all
 const userInfo = new UserInfo({nameSelector: '.profile__name',
     jobSelector: '.profile__job',
     avatarSelector: '.profile__avatar'})//userSelectors
-console.log(userInfo.getUserInfo())
+ console.log(userInfo.getUserInfo())
 
-api.getUser()
-    .then((userData) => {
-         console.log(userData)
-        userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
-         // console.log(userInfo)
-        userInfo.updateUserInfo(userData.name, userData.about, userData.avatar)
-        // const newUser = new UserInfo({
-        //     userData,
-        //     nameSelector: '.profile__name',
-        //     jobSelector: '.profile__job',
-        // }); // name: '.profile__name', // job: '.profile__job'
-        // console.log(newUser)
-        // newUser.setUserInfo(userData); //
-        myId = userData._id//возвращает мой Id с сервера
-        console.log(userData)
-    })
-    .catch((err) => {
-        console.log('ошибка при получении данных юзера', err)
-    })
-    .finally(()=>{}) // зд можно удалить прелоадер(загрузка-кружочек) (который долэен передаваться наверху)
+// api.getUser()
+//     .then((userData) => {
+//          console.log(userData)
+//         userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
+//          // console.log(userInfo)
+//         userInfo.updateUserInfo(userData.name, userData.about, userData.avatar)
+//         // const newUser = new UserInfo({
+//         //     userData,
+//         //     nameSelector: '.profile__name',
+//         //     jobSelector: '.profile__job',
+//         // }); // name: '.profile__name', // job: '.profile__job'
+//         // console.log(newUser)
+//         // newUser.setUserInfo(userData); //
+//         myId = userData._id//возвращает мой Id с сервера
+//         console.log(userData)
+//     })
+//     .catch((err) => {
+//         console.log('ошибка при получении данных юзера', err)
+//     })
+//     .finally(()=>{}) // зд можно удалить прелоадер(загрузка-кружочек) (который долэен передаваться наверху)
 
 // Section ---------------------------------------- (cardsList = section)
 // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет createCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
@@ -68,35 +67,53 @@ const section = new Section(
 );
 
 
-// api.getAllInfo()
-//     .then(([userData,getAllCards]) => {//деструктурируем массив, чтоб достать данные
-//         // console.log(userData, getAllCards)
-//         myId = userData._id;//переприсваиваем значение, ранее объявили ее в глобальной области
-//         // section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
-//         section.renderItems({ data: getAllCards, id: userData._id}) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
-//         userInfo.setUserInfo(userData.name, userData.about); // сохраняем в DOM данные вводимые <- из
-//     })
-//     .catch((err) => {console.log(err.status)})
+api.getAllInfo()
+    .then(([getUser,getAllCards]) => {//деструктурируем массив, чтоб достать данные
+        // console.log(userData, getAllCards)
 
-//с сервера запрос карточек в лист-секцию
-api.getAllCards()
-    .then((cardList) => {
-        // console.log(cardList, Array.isArray(cardList))
-        cardList.forEach(dataCard => {
+        userInfo.setUserInfo(getUser.name, getUser.about, getUser.avatar); // сохраняем в DOM данные вводимые <- из
+        userInfo.updateUserInfo(getUser.name, getUser.about, getUser.avatar);
+        myId = getUser._id;//переприсваиваем значение, ранее объявили ее в глобальной области
+
+        //// section.renderItems(getAllCards) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
+        // section.renderItems({ id: getUser._id, data: getAllCards }) //МОЖНО ВКЛЮЧИТЬ ЭТОТ КОД !!!!!! вместо api.getAllCards() ...
+        getAllCards.forEach(dataCard => {
             // console.log(dataCard)
-             const card = createCard({
-                 name: dataCard.name,
-                 link: dataCard.link,
-                 likes: dataCard.likes,
-                 id: dataCard._id,
-                 myId: myId,
-                 ownerId: dataCard.owner._id,
-             })
+            const card = createCard({
+                name: dataCard.name,
+                link: dataCard.link,
+                likes: dataCard.likes,
+                id: dataCard._id,
+                myId: myId,
+                ownerId: dataCard.owner._id,
+            })
             // console.log(card)//разметка карточки
             section.addItem(card)//рендеринг карточек в лист-секцию
         })
+
     })
     .catch((err) => {console.log(err.status)})
+
+//с сервера запрос карточек в лист-секцию
+// api.getAllCards()
+//     .then((cardList) => {
+//         // console.log(cardList, Array.isArray(cardList))
+//         cardList.forEach(dataCard => {
+//             // console.log(dataCard)
+//              const card = createCard({
+//                  name: dataCard.name,
+//                  link: dataCard.link,
+//                  likes: dataCard.likes,
+//                  id: dataCard._id,
+//                  myId: myId,
+//                  ownerId: dataCard.owner._id,
+//              })
+//             // console.log(card)//разметка карточки
+//             section.addItem(card)//рендеринг карточек в лист-секцию
+//         })
+//     })
+//     .catch((err) => {console.log(err.status)})
+
 // api.getAllCards() //2-й способ
 //     .then((cardList) => {
 //         // console.log(cardList, Array.isArray(cards))
@@ -199,16 +216,17 @@ function createCard(dataCard) {
 function handleFormProfileSubmit(formDataObject) {//данные из инпутов
      // console.log(formDataObject)
     api.patchUser(formDataObject)
-        .then((userInfoFromApi) => {
-             console.log(userInfoFromApi)
-            userInfo.setUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
-            userInfo.updateUserInfo(userInfoFromApi.name, userInfoFromApi.about, userInfoFromApi.avatar)
+        .then((userDataApi) => {
+             // console.log(userDataFromApi)
+            userInfo.setUserInfo(userDataApi.name, userDataApi.about, userDataApi.avatar); // сохраняем в DOM данные вводимые <- из полей формы профиля // setEditNodeTextContent();
+            userInfo.updateUserInfo(userDataApi.name, userDataApi.about, userDataApi.avatar)
 
             popupEditProfile.close(); // закрываем попап
         })
         .catch((err) => {
             console.log('ошибка при сабмите/патч юзер дата,', err)
         })
+        .finally()///изменение состояния кнопки........
 
 }
 // обработчик формы Edit / "сохранить" данные из инпутов формы профиля
@@ -244,14 +262,11 @@ function handleFormCardSubmit(formDataObject) {
 function handleFormAvatarSubmit(formDataObject) {
     console.log({avatar: formDataObject.linkavatar})
     api.patchAvatar({avatar: formDataObject.linkavatar})//{avatar: formDataObject.link}
-        .then((res) => {
+        .then((userDataApi) => {
+            // console.log('сабмит изменить аватар', userInfoFromApi)
+            userInfo.setUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
+            userInfo.updateUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
 
-            console.log('сабмит изменить аватар', res)
-
-            userInfo.setUserInfo(res.name, res.link, res.avatar)
-            userInfo.updateUserInfo(res.name, res.link, res.avatar)
-
-            //userInfo.updateAvatarLink(userData.avatar)
     popupEditAvatar.close()
         })
         .catch((error) => {

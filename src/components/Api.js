@@ -57,16 +57,8 @@ export class Api {
             body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
         })
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
             .catch(console.log)
     }
-
 
     getAllCards() {
         return fetch(`${this._apiConfig.baseUrl}/cards/`, {
@@ -74,13 +66,6 @@ export class Api {
             headers: this._apiConfig.headers,
         }) //response - это ответ сервера
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
             .catch(console.log)
     }
 
@@ -91,13 +76,6 @@ export class Api {
             body: JSON.stringify({ name, link }),
         })
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
             .catch(console.log)
     }
 
@@ -108,20 +86,11 @@ export class Api {
             headers: this._apiConfig.headers
         })
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
             .catch(console.log)
     }
 
     // - “залайкать” карточку (PUT)
     putLike(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
-        //1. метод ставить лайк
-        //2. метод убирать лайк
         return fetch(`${this._apiConfig.baseUrl}/cards/likes/${id}`, {
             method: 'PUT',
             headers: this._apiConfig.headers,
@@ -137,24 +106,6 @@ export class Api {
             // })
             .catch(console.log)
     }
-    // putLike(likes) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
-    //     //1. метод ставить лайк
-    //     //2. метод убирать лайк
-    //     return fetch(`${this._apiConfig.baseUrl}/cards/${likes}`, {
-    //         method: 'PUT',
-    //         headers: this._apiConfig.headers,
-    //         body: JSON.stringify({ likes }),
-    //     })
-    //         .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-    //         // .then((res) => {
-    //         //     if (res.ok) {
-    //         //         return res.json();//Promise.resolve()
-    //         //     } else {
-    //         //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-    //         //     }
-    //         // })
-    //         .catch(console.log)
-    // }
 
     // - удалить лайк карточки (DELETE)
     deleteLike(id) {//нужно работать с id !!!!!!!!!!!!!!! По сути  тоже что и удаление !!! чуть иначе используется
