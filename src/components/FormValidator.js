@@ -11,6 +11,7 @@ export class FormValidator {
       this._form.querySelectorAll(this._config.inputClass)
     );
     this._buttonElement = this._form.querySelector(this._config.submitButtonClass);
+  // console.log(this._buttonElement)
   }
 
   //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ.

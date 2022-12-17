@@ -10,12 +10,14 @@ export class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(formSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._inputElements = this._form.querySelectorAll('.popup__input');
+  this._submitButtonClass = this._popup.querySelector('.btn_submit');
   }
 
-  // код для ПР-9
-  // setSubmitAction(action) {
-  //   this._handleSubmit(вместо)submitHandler = action;
-  // }
+  //МЕТОД: заменить текст кнопки каждой из форм
+  submitBtnTextChange(text) {
+    this._submitButtonClass.textContent = text;
+  }
+
   changeSubmitAction(newHandleFormSubmit) {
     this._handleFormSubmit = newHandleFormSubmit;
   }

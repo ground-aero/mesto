@@ -215,6 +215,8 @@ function createCard(dataCard) {
 // обработчик формы Edit / "сохранить" данные из ...сервера
 function handleFormProfileSubmit(formDataObject) {//данные из инпутов
      // console.log(formDataObject)
+    popupEditProfile.submitBtnTextChange('Сохранение...');
+
     api.patchUser(formDataObject)
         .then((userDataApi) => {
              // console.log(userDataFromApi)
@@ -226,7 +228,9 @@ function handleFormProfileSubmit(formDataObject) {//данные из инпут
         .catch((err) => {
             console.log('ошибка при сабмите/патч юзер дата,', err)
         })
-        .finally()///изменение состояния кнопки........
+        .finally(() => {
+            popupEditProfile.submitBtnTextChange('Сохранить');
+        })
 
 }
 // обработчик формы Edit / "сохранить" данные из инпутов формы профиля
@@ -238,6 +242,9 @@ function handleFormProfileSubmit(formDataObject) {//данные из инпут
 
 // Обработчик FormPlace - добавить карточку через API
 function handleFormCardSubmit(formDataObject) {
+
+    popupAddPlace.submitBtnTextChange('Сохранение...');
+
     api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
         .then((newCard) => {
               // console.log(newCard)
@@ -257,10 +264,15 @@ function handleFormCardSubmit(formDataObject) {
         .catch((error) => {
             console.log('ошибка при создании карточки', error)
         })
+        .finally(() => {
+            popupAddPlace.submitBtnTextChange('Создать');
+        })
 }
 
 function handleFormAvatarSubmit(formDataObject) {
-    console.log({avatar: formDataObject.linkavatar})
+      // console.log({avatar: formDataObject.linkavatar})
+    popupEditAvatar.submitBtnTextChange('Сохранение...'); //method: КНОПКА.TextContent = ''  ПОМЕНЯТЬ ТЕКСТ В КНОПКЕ
+
     api.patchAvatar({avatar: formDataObject.linkavatar})//{avatar: formDataObject.link}
         .then((userDataApi) => {
             // console.log('сабмит изменить аватар', userInfoFromApi)
@@ -271,6 +283,9 @@ function handleFormAvatarSubmit(formDataObject) {
         })
         .catch((error) => {
             console.log('ошибка при сабмите изм аватара', error)
+        })
+        .finally(() => {
+            popupEditAvatar.submitBtnTextChange('Сохранить')
         })
 }
 

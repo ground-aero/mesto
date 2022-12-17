@@ -53,7 +53,6 @@ export const popupSelectorsImage = {
   popupActiveClass: 'popup_opened',
 };
 
-// const page = document.querySelector('.page');
 export const cardsListSelector = '.elements__list';
 export const cardsList = document.querySelector('.elements__list');
 
@@ -76,29 +75,3 @@ export const profileJobNode = document.querySelector('.profile__job');
 export const formPlace = document.forms.place
 export const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
 export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place
-
-// POPUPS & inputs - ----------------------
-
-// edit Profile (open)
-// export const popupEdit = document.querySelector('#overlay_edit'); // оверлей popup Edit
-
-// export const btnSaveProfile = document.querySelector('.btn_type_save-profile');
-
-// // add place (open)
-// export const popupAddPlace = document.querySelector('#overlay_add-place'); // оверлей add place
-
-// export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
-// export const btnCreatePlaceCard = document.querySelector('.btn_type_create-place'); // btn "сохранить/создать" место
-
-// //in template
-// export const btnDel = document.querySelector('.card__btn-del');
-//   console.log(btnDel);
-// export const btnLike = document.querySelector('.card__btn-like');
-
-// // image popup -------------------
-// export const popupOfImage = document.querySelector('#overlay_img-zoom'); // оверлей img popup
-// export const popupImage = document.querySelector('.popup__img'); // img popup
-// export const popupText = document.querySelector('.popup__subtitle'); // текст/подзаголовок img
-
-// export const popupCloseButton = document.querySelectorAll('.popup__btn-close');
-
