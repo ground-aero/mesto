@@ -13,9 +13,9 @@
 - Размер картинок оптимизирован для быстроты загрузки
 - Для всех полей ввода в формах включена лайв-валидация;
 - модальное окно закрывается по клику в любом месте вне этого окна и по нажатию на Esc
-
 ##
-
+- Данное приложение подключено к серверу
+##
 - Код объектно-ориентирован:
     - Использованы ES6-классы и импортированы в точку сборки index.js
     - используется слабое связывание для описания взаимодействия между классами
@@ -35,7 +35,7 @@
 
 - [Ссылка-1 на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 - [Ссылка-2 на макет в Figma](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)
-- [Ссылка-2 на макет в Figma](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=109%3A75&t=utRAqLFJpQou2DiL-0)
+- [Ссылка-3 на макет в Figma](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=109%3A75&t=utRAqLFJpQou2DiL-0)
 
 **ТЗ / Описание**
 
