@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="./pages/index.css">
+<!--     <link rel="stylesheet" href="./pages/index.css">-->
     <title lang="ru">Mesto</title>
 </head>
 
@@ -14,17 +14,16 @@
     <div class="page__container">
 
         <header class="header">
-            <img src="./images/logo.svg" alt="лого Mesto">
-<!--            <img src="<%=require('./images/logo.svg')%>" alt="лого Mesto"> -->
-            <!-- img class="header__logo" -->
+<!--            <img src="./images/logo.svg" alt="лого Mesto">-->
+            <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="лого Mesto">
         </header>
 
         <main class="content">
             <!-- profile section -->
             <section id="profile" class="profile content__section">
                 <span class="profile__avatar-edit-btn">
-                <img class="profile__avatar" src="#" alt="бюст улыбающегося человека в красной шапке"><!--./images/avatar.png" -->
-<!--                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">-->
+<!--                <img class="profile__avatar" src="#" alt="бюст улыбающегося человека в красной шапке">&lt;!&ndash;./images/avatar.png" &ndash;&gt;-->
+                <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">
                 </span>
                 <div class="profile__elements-wrap">
                     <div class="profile__name-wrap">
@@ -154,10 +153,9 @@
             <p class="footer__autho">&copy; 2022 Mesto Russia</p>
         </footer>
         <!-- end of page__container -->
-
     </div>
 
-    <script type="module" src="./pages/index.js"></script>
+<!--    <script type="module" src="./pages/index.js"></script>-->
 
 </body>
 
