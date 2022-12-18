@@ -1,37 +1,10 @@
-// export const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-//   },
-// ];
-
 export const selectors = {
-  card: '.card', // карточка
-  image: '.card__img', // img/card
-  title: '.card__title', // title/card
-  btnLike: '.card__btn-like', // like/card
-  btnDel: '.card__btn-del', // del/card
-  like: '.card__btn-like_active', // like/card
+  card: '.card',
+  image: '.card__img',
+  title: '.card__title',
+  btnLike: '.card__btn-like',
+  btnDel: '.card__btn-del',
+  like: '.card__btn-like_active',
 };
 //КОНФИГИ ФОРМ
 export const config = {
@@ -43,18 +16,10 @@ export const config = {
   errorLineClass: 'popup__input_line_error',
 };
 
-export const userInfo = {
-  nameSelector: '.profile__name',
-  jobSelector: '.profile__job',
-};
-
 export const popupSelectorsImage = {
   popupClass: 'popup_img-bg',
   popupActiveClass: 'popup_opened',
 };
-
-export const cardsListSelector = '.elements__list';
-export const cardsList = document.querySelector('.elements__list');
 
 // buttons
 export const btnEditProfile = document.querySelector('.profile__btn-edit');

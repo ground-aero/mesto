@@ -2,8 +2,14 @@
 export class Api {
     constructor(apiConfig) {
         this._apiConfig = apiConfig;
-        // this._baseUrl = baseUrl;
-        // this._headers = headers;
+    }
+
+    _onResponse(res) {
+        if (res.ok) {
+            return res.json();//Promise.resolve()
+         } else {
+            return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
+         }
     }
 
     getAllInfo() {//метод ожидает массив промисов - Promise1, Promise2 ...
@@ -16,15 +22,7 @@ export class Api {
             method: 'GET',
             headers: this._apiConfig.headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
-                .catch(console.log)
+            .then(res => this._onResponse(res))
     }
     // изменить данные пользователя (PATCH)
     patchUser(formValue) {
@@ -37,27 +35,17 @@ export class Api {
                 about: formValue.about,
             })
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     // - заменить аватар (PATCH)
     patchAvatar(formDataObject) {
-        console.log(formDataObject)
         return fetch(`${this._apiConfig.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._apiConfig.headers,
             body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     getAllCards() {
@@ -65,8 +53,7 @@ export class Api {
             method: 'GET',
             headers: this._apiConfig.headers,
         }) //response - это ответ сервера
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     addNewCard({ name, link }) {
@@ -75,8 +62,7 @@ export class Api {
             headers: this._apiConfig.headers,
             body: JSON.stringify({ name, link }),
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     deleteCard(id) {
@@ -85,8 +71,7 @@ export class Api {
             method: 'DELETE',
             headers: this._apiConfig.headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     // - “залайкать” карточку (PUT)
@@ -96,15 +81,7 @@ export class Api {
             headers: this._apiConfig.headers,
             body: JSON.stringify({ id }),
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
     // - удалить лайк карточки (DELETE)
@@ -113,15 +90,7 @@ export class Api {
             method: 'DELETE',
             headers: this._apiConfig.headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`))
-            // .then((res) => {
-            //     if (res.ok) {
-            //         return res.json();//Promise.resolve()
-            //     } else {
-            //         return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-            //     }
-            // })
-            .catch(console.log)
+            .then(res => this._onResponse(res))
     }
 
 }

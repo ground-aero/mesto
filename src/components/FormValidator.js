@@ -11,7 +11,6 @@ export class FormValidator {
       this._form.querySelectorAll(this._config.inputClass)
     );
     this._buttonElement = this._form.querySelector(this._config.submitButtonClass);
-  // console.log(this._buttonElement)
   }
 
   //ПРОВЕРКА НА ВАЛИЛИДНОСТЬ.
@@ -66,8 +65,7 @@ export class FormValidator {
     });
   }
 
-  toggleButtonState() {
-    // Если есть хотя бы один невалидный инпут
+  toggleButtonState() {// Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput(this._inputList)) {
       // сделай кнопку неактивной
       this._buttonElement.classList.add(this._config.disabledButtonClass);

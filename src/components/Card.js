@@ -4,17 +4,14 @@ export class Card {
   constructor({ data, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
     this._id = data.id;
-     // console.log(this._data)
     this._myId = data.myId;
     this._ownerId = data.ownerId;
-    // console.log(this._ownerId)
     this._likes = data.likes;//массив лайков
-      // console.log(this._likes)
+
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteClick = handleDeleteClick;
-    // this.removeCard = handleCardDelete;
 
     this._clonedCard = this._getTemplateCard();
     this._cardBtnLike = this._clonedCard.querySelector('.card__btn-like');
@@ -22,7 +19,6 @@ export class Card {
     this._cardImage = this._clonedCard.querySelector('.card__img');
     this._cardBtnDel = this._clonedCard.querySelector('.card__btn-del');
     this._cardLikeCounter = this._clonedCard.querySelector('.card__btn-like-count');
-    // this._cardId = this._clonedCard.querySelector('.....????')
   }
 
   // 1. НАХОДИМ НОДУ (но ее еще нет в DOM ! )
@@ -58,8 +54,7 @@ export class Card {
   }
 
   // 2. ПОЛУЧАЕМ РАЗМЕТКУ ШАБЛОНА/ТЕМПЛЕЙТА (публичный)
-  getView() {
-    // Запишем разметку в приватное поле _cardElement (_clonedCard). Так у других элементов появится доступ к ней.
+  getView() {// Запишем разметку в приватное поле _cardElement (_clonedCard). Так у других элементов появится доступ к ней.
     this._setEventListeners(); // !!! запусим метод обработчиков внутри generateCard.Тогда метод создаст карточки уже с обработчиком.
 
     // (для карточки) присваиваем атрибуты с данными со входа

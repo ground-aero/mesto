@@ -11,18 +11,17 @@
 
 <body class="page">
 
-    <!-- page__container -->
     <div class="page__container">
-        <!-- header -->
+
         <header class="header">
             <img src="./images/logo.svg" alt="лого Mesto">
 <!--            <img src="<%=require('./images/logo.svg')%>" alt="лого Mesto"> -->
             <!-- img class="header__logo" -->
         </header>
+
         <main class="content">
             <!-- profile section -->
             <section id="profile" class="profile content__section">
-                <!--flex-->
                 <span class="profile__avatar-edit-btn">
                 <img class="profile__avatar" src="#" alt="бюст улыбающегося человека в красной шапке"><!--./images/avatar.png" -->
 <!--                <img src="<%=require('./images/avatar.png')%>" alt="бюст улыбающегося человека в красной шапке">-->
@@ -44,7 +43,6 @@
                 </ul>
             </section>
 
-            <!-- POPUPS -->
             <!-- POPUP Edit Profile -->
             <div class="popup" id="overlay_edit">
                 <div class="popup__container" id="popup__container_edit">
@@ -76,7 +74,6 @@
                 <div class="popup__container" id="window_add-place">
                     <button class="popup__btn-close opacity-transition" type="button" aria-label="close"></button>
                     <form action="#" class="popup__form" id="form-place" name="place" tabindex="1" novalidate>
-                        <!-- <h2 class="popup__title">Новое место</h2> -->
                         <h2 class="popup__title">Новое место</h2>
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="text" class="popup__input" id="place-input" name="name" placeholder="Название"
@@ -84,15 +81,12 @@
                             <span class="popup__input-span place-input-error"
                                 id="input-addplace-error"></span>
                         </span>
-                        <!-- <span class="popup__form_item-error popup__form_item-field_name"></span> -->
-                        <!--NEED class="popup__form-item_input-invalid"-->
                         <span class="popup__input-field popup__input-field_wrap">
                             <input type="url" class="popup__input" id="link-input" name="link"
                                 placeholder="Ссылка на картинку" tabindex="2" required>
                             <span class="popup__input-span link-input-error"
                                 id="input-addplace_url-error"></span>
                         </span>
-                        <!-- <span class="popup__form_item-error popup__form_item-field_link"></span> -->
                         <button type="submit"
                             class="btn btn_submit btn_type_create-place opacity-transition">Создать</button>
                     </form>
@@ -140,7 +134,6 @@
             </div>
         </main>
 
-        <!-- TEMPLATE карточки -->
         <template id="card-template">
             <!-- карточка -->
             <li class="card">
@@ -157,7 +150,6 @@
             </li>
         </template>
 
-        <!-- footer -->
         <footer class="footer">
             <p class="footer__autho">&copy; 2022 Mesto Russia</p>
         </footer>
