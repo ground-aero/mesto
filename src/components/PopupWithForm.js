@@ -9,7 +9,7 @@ export class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(formSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._inputElements = this._form.querySelectorAll('.popup__input');
-  this._submitButtonClass = this._popup.querySelector('.btn_submit');
+    this._submitButtonClass = this._popup.querySelector('.btn_submit');
   }
 
   //МЕТОД: заменить текст кнопки каждой из форм
@@ -24,7 +24,7 @@ export class PopupWithForm extends Popup {
   // собирает данные всех полей формы.
   _getInputValues() {
     const formDataObject = {};
-    [...this._inputElements].forEach((input) => {
+    this._inputElements.forEach((input) => {
       formDataObject[input.name] = input.value; //'name - знач атрибута name=""
     });
 

@@ -11,12 +11,11 @@ export default class PopupWithImage extends Popup {
   }
 
   open({ name, link }) {
-    //методе open нужно вставлять в попап картинку и атрибут src изображения.
-    super.open();
-
     this._image.src = link;
     this._image.alt = name;
     this._subTitle.textContent = `на изображении: ${name}`;
     // console.log('тут логика открытия  карточки', name);
+
+    super.open();//метод open нужно вставлять в попап картинку и атрибут src изображения.
   }
 }

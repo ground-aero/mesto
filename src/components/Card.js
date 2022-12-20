@@ -65,7 +65,8 @@ export class Card {
     this.setLikes(this._likes)
 
     if (this._ownerId !== this._myId) {
-      this._cardBtnDel.style.display = 'none'
+      this._cardBtnDel.remove()
+      // this._cardBtnDel.style.display = 'none'//ЗАМЕЧАНИЕ ИСПРАВЛЕНО.
     }
 
     return this._clonedCard;

@@ -1,6 +1,6 @@
 // index.js - Корневая точка проекта. Файл содержит только инициализацию необходимых главной странице модулей — функций и классов
 // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
-import './index.css';
+// import './index.css';
 import {Api, apiConfig} from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
