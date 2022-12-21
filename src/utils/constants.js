@@ -26,6 +26,8 @@ export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-addplace'); // кнопка "+" / секции profile
 export const btnEditAvatar = document.querySelector('.profile__avatar-edit-btn'); // "кнопка-cover" обновить автар
 
+export const btnDeleteConfirm = document.querySelector('.btn_type_submit-delete');
+
 // forms (430px)
 export const formProfile = document.forms.profile;// по св-ву name
 export const inputEditName = formProfile.elements.name; // по св-ву name // page.querySelector('#popup__input_type_edit-name');

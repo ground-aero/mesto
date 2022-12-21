@@ -3,13 +3,10 @@
 export class Card {
   constructor({ data, myId, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
-      // console.log(data)
     this._likes = data.likes;//массив лайков
 
-    // this._myId = data.currentUserId;
-    this._myId = myId;
-    // this._ownerId = data.ownerId;
-    this._ownerId = data.owner._id;
+    this._myId = myId;    // this._myId = data.currentUserId;
+    this._ownerId = data.owner._id;// this._ownerId = data.ownerId;
     this._cardId = data._id;
 
     this._templateSelector = templateSelector;

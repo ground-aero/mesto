@@ -1,10 +1,15 @@
 import {Popup} from './Popup.js'
-import {PopupWithForm} from "./PopupWithForm.js";
+// import {PopupWithForm} from "./PopupWithForm.js";
 
-export class PopupWithSubmit extends PopupWithForm {
+export class PopupWithSubmitConfirm extends Popup {
+    constructor (popupSelector) {
+        super(popupSelector);
+    // this._btnConfirmSubmitSelector = btnConfirmSubmitSelector;
+    }
 
-    changeSubmitAction(newHandleFormSubmit) {
-        this._handleFormSubmit = newHandleFormSubmit;
+    changeSubmitAction(action) {
+        // this._submitButtonClass = this._popup.querySelector('.btn_submit');
+        this._action = action;
     }
 
     //1.в попапе нужен метод, который динамически позволяет менять функцию, которая вызывается при нажатии на кнопку сабмита.
@@ -12,12 +17,13 @@ export class PopupWithSubmit extends PopupWithForm {
     //Поэтому должна быть возможность при открытии попапа переопределять через публичный метод то действие, которое нужно выполнить при нажатии на кнопку.
     //этот попап вы открываете только в одном случае - нажатие на кнопку удаления карточки.
     // соответственно и переопределять выполняемую функцию надо только после нажатия на кнопку удаления (перед непосредственным открытием попапа)
+    setEventListeners() {
+        this._popup.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-    setEventListeners() {//2.этот метод переопределяется
+            this._action();
+        });
 
-        //Теперь сюда ничего не надо передавать, а просто вызывать функцию при сабмите.
-
-        //никаких других методов у этого попапа не будет, так как нет формы которую надо валидировать.
-        super.setEventListeners()
+        super.setEventListeners();
     }
 }
