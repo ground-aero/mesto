@@ -16,6 +16,7 @@ import {
     config,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithSubmit } from "../components/PopupWithSubmit.js";
 
 const api = new Api(apiConfig)
 
@@ -39,29 +40,30 @@ const section = new Section(
 
 api.getAllInfo()
     .then(([userApi,allCardsApi]) => {//деструктурируем массив, чтоб достать данные
-          // console.log(userApi)
+          console.log(userApi)
           // console.log(allCardsApi)
-        myId = userApi._id;//переприсваиваем значение, ранее объявили ее в глобальной области
-
         userInfo.setUserInfo(userApi.name, userApi.about, userApi.avatar); // сохраняем в DOM данные вводимые <- из
         userInfo.updateUserInfo(userApi.name, userApi.about, userApi.avatar);
 
+        myId = userApi._id;//переприсваиваем уникальное id в переменную, как только получим данные профиля. Ранее объявили ее в глобальной области
+        console.log(myId)
+
       // // // (!) ЗАМЕЧАНИЕ // // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         section.renderItems(allCardsApi.reverse())// !!! ЗАМЕЧАНИЕ !!! В Section метод который примет массив  и отрендерит карточки
-        // allCardsApi.forEach(dataCard => {
-        //     // console.log(dataCard)
-        //     const card = createCard({
-        //         name: dataCard.name,
-        //         link: dataCard.link,
-        //         likes: dataCard.likes,
-        //
-        //         id: dataCard._id,
-        //         // myId: myId,
-        //         ownerId: dataCard.owner._id,
-        //     })
-        //     // console.log(card)//разметка карточки
-        //     section.addItem(card)//рендеринг карточек в лист-секцию
-        // })
+      //   allCardsApi.forEach(dataCard => {
+      //       // console.log(dataCard)
+      //       const card = createCard({
+      //           name: dataCard.name,
+      //           link: dataCard.link,
+      //           likes: dataCard.likes,
+      //
+      //           // id: dataCard._id,
+      //           // myId: myId,
+      //           // ownerId: dataCard.owner._id,
+      //       })
+      //       // console.log(card)//разметка карточки
+      //       section.addItem(card)//рендеринг карточек в лист-секцию
+      //   })
 
     })
     .catch((err) => {console.log(err.status)})
@@ -135,11 +137,17 @@ const popupConfirmDelete = new PopupWithForm(
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
+const popupWithSubmit = new PopupWithSubmit(
+    '#overlay_delete',
+    '#form-confirm',
+);
+
 
 // Card - созд. экз, и возвр. разметку
 function createCard(dataCard) {
     const newCard = new Card({
-            data: {...dataCard, currentUserId: myId},
+            data: dataCard,
+            myId,
             handleCardClick: () => {
                 popupWithImage.open(dataCard)
             }, //...что должно произойти при клике на картинку
@@ -228,17 +236,9 @@ function handleFormCardSubmit(formDataObject) {
 
     api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
         .then((newCard) => {
-              console.log(newCard)
-            const card = createCard({
-                name: newCard.name,
-                link: newCard.link,
-                likes: newCard.likes,
-                id: newCard._id,
-                myId: myId,
-                ownerId: newCard.owner._id,
-            })
-              console.log(card)
-            section.addItem(card)//2.отрисовываем результат (карточки)
+              // console.log(newCard)
+
+            section.addItem(createCard(newCard))//2.отрисовываем результат (карточки)
 
             popupAddPlace.close()
         })

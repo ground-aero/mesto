@@ -1,14 +1,16 @@
 // 1. Card создаёт карточку с текстом и ссылкой на изображение. должен поставлять готовую карточку со всей разметкой
 // 2. в конструкторе ф-ция handleCardClick. должна открывать попап с картинкой при клике на карточку.
 export class Card {
-  constructor({ data, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
+  constructor({ data, myId, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
       // console.log(data)
     this._likes = data.likes;//массив лайков
-    // this._myId = data.myId;
-    this._myId = data.currentUserId;
-    this._ownerId = data.ownerId;
-    this._id = data.id;
+
+    // this._myId = data.currentUserId;
+    this._myId = myId;
+    // this._ownerId = data.ownerId;
+    this._ownerId = data.owner._id;
+    this._cardId = data._id;
 
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
@@ -32,6 +34,10 @@ export class Card {
         .cloneNode(true);
 
     return clonedCard;
+  }
+
+  id() {
+    return this._cardId;
   }
 
   isLiked() {
@@ -85,11 +91,11 @@ export class Card {
   _setEventListeners() {
     //УДАЛИТЬ КАРТОЧКУ ---PW-8
     this._cardBtnDel.addEventListener('click', () => {
-      this._handleDeleteClick(this._id);//this._id //вместо _clonedCard
+      this._handleDeleteClick(this._cardId);//this._id //вместо _clonedCard
     });
 
     this._cardBtnLike.addEventListener('click', () => {
-      this._handleLikeClick(this._id);//this._likes?????????????????????
+      this._handleLikeClick(this._cardId);//this._likes?????????????????????
     });
 
     // img zoom/ open(data)

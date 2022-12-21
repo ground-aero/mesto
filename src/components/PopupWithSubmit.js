@@ -1,8 +1,10 @@
 import {Popup} from './Popup.js'
+import {PopupWithForm} from "./PopupWithForm.js";
 
-export class PopupWithSubmit extends Popup {
-    constructor(popupSelector) {
-        super(popupSelector);
+export class PopupWithSubmit extends PopupWithForm {
+
+    changeSubmitAction(newHandleFormSubmit) {
+        this._handleFormSubmit = newHandleFormSubmit;
     }
 
     //1.в попапе нужен метод, который динамически позволяет менять функцию, которая вызывается при нажатии на кнопку сабмита.
