@@ -39,24 +39,29 @@ const section = new Section(
 
 api.getAllInfo()
     .then(([userApi,allCardsApi]) => {//деструктурируем массив, чтоб достать данные
+          // console.log(userApi)
+          // console.log(allCardsApi)
+        myId = userApi._id;//переприсваиваем значение, ранее объявили ее в глобальной области
 
         userInfo.setUserInfo(userApi.name, userApi.about, userApi.avatar); // сохраняем в DOM данные вводимые <- из
         userInfo.updateUserInfo(userApi.name, userApi.about, userApi.avatar);
-        myId = userApi._id;//переприсваиваем значение, ранее объявили ее в глобальной области
 
-        allCardsApi.forEach(dataCard => {
-            // console.log(dataCard)
-            const card = createCard({
-                name: dataCard.name,
-                link: dataCard.link,
-                likes: dataCard.likes,
-                id: dataCard._id,
-                myId: myId,
-                ownerId: dataCard.owner._id,
-            })
-            // console.log(card)//разметка карточки
-            section.addItem(card)//рендеринг карточек в лист-секцию
-        })
+      // // // (!) ЗАМЕЧАНИЕ // // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        section.renderItems(allCardsApi.reverse())// !!! ЗАМЕЧАНИЕ !!! В Section метод который примет массив  и отрендерит карточки
+        // allCardsApi.forEach(dataCard => {
+        //     // console.log(dataCard)
+        //     const card = createCard({
+        //         name: dataCard.name,
+        //         link: dataCard.link,
+        //         likes: dataCard.likes,
+        //
+        //         id: dataCard._id,
+        //         // myId: myId,
+        //         ownerId: dataCard.owner._id,
+        //     })
+        //     // console.log(card)//разметка карточки
+        //     section.addItem(card)//рендеринг карточек в лист-секцию
+        // })
 
     })
     .catch((err) => {console.log(err.status)})
@@ -134,8 +139,10 @@ const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 // Card - созд. экз, и возвр. разметку
 function createCard(dataCard) {
     const newCard = new Card({
-            data: dataCard,
-            handleCardClick, //...что должно произойти при клике на картинку
+            data: {...dataCard, currentUserId: myId},
+            handleCardClick: () => {
+                popupWithImage.open(dataCard)
+            }, //...что должно произойти при клике на картинку
             handleLikeClick: (id) => {
             console.log('при клике на лайк', id)
                 if (newCard.isLiked()) {
@@ -159,9 +166,11 @@ function createCard(dataCard) {
                 }
             },
             handleDeleteClick: (id) => {
-                   console.log('handleDeleteClick, id=', id)
+                   // console.log('handleDeleteClick, id=', id)
                 popupConfirmDelete.open() //модалка "Вы уверены ?"
                 popupConfirmDelete.changeSubmitAction(() => {
+
+
                     api.deleteCard(id)
                         .then((res) => {
                               // console.log(res)
@@ -169,7 +178,10 @@ function createCard(dataCard) {
                             popupConfirmDelete.close()
                         })
                         .catch((err) => console.log(`ошибка при удалении: ${err}`))
-                })
+                        .finally(() => {
+                            popupConfirmDelete.submitBtnTextChange('Сохранить');
+                        })
+                    })
       }
         },
         '#card-template'
@@ -216,7 +228,7 @@ function handleFormCardSubmit(formDataObject) {
 
     api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
         .then((newCard) => {
-              // console.log(newCard)
+              console.log(newCard)
             const card = createCard({
                 name: newCard.name,
                 link: newCard.link,
@@ -245,10 +257,10 @@ function handleFormAvatarSubmit(formDataObject) {
     api.patchAvatar({avatar: formDataObject.linkavatar})//{avatar: formDataObject.link}
         .then((userDataApi) => {
             // console.log('сабмит изменить аватар', userInfoFromApi)
-            userInfo.setUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
-            userInfo.updateUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
+            userInfo.setUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar);
+            userInfo.updateUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar);
 
-    popupEditAvatar.close()
+    popupEditAvatar.close();
         })
         .catch((error) => {
             console.log('ошибка при сабмите изм аватара', error)
@@ -278,9 +290,9 @@ function handleButtonAddPlaceClick() {// кнопка "+" / add place
     formValidators['place'].toggleButtonState(); //'place' - атрибут name, формы
 }
 
-function handleCardClick(data) {
-    popupWithImage.open(data);
-}
+// function handleCardClick(data) {
+//     popupWithImage.open(data);
+// }
 
 // section.renderItems(initialCards); ////////////////////////////////////////////////////////////////
 

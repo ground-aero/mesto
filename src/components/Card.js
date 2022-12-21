@@ -3,10 +3,12 @@
 export class Card {
   constructor({ data, handleCardClick, handleLikeClick, handleDeleteClick }, templateSelector) {
     this._data = data; // this._link = data.link; data.name,, data.link, data._id
-    this._id = data.id;
-    this._myId = data.myId;
-    this._ownerId = data.ownerId;
+      // console.log(data)
     this._likes = data.likes;//массив лайков
+    // this._myId = data.myId;
+    this._myId = data.currentUserId;
+    this._ownerId = data.ownerId;
+    this._id = data.id;
 
     this._templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
@@ -64,7 +66,7 @@ export class Card {
 
     this.setLikes(this._likes)
 
-    if (this._ownerId !== this._myId) {
+    if (this._myId !== this._ownerId) {
       this._cardBtnDel.remove()
       // this._cardBtnDel.style.display = 'none'//ЗАМЕЧАНИЕ ИСПРАВЛЕНО.
     }

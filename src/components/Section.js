@@ -6,7 +6,7 @@ export class Section {
   }
 
   addItem(element) {//принимает готовую карточку(DOM-элемент) и добавляет его в контейнер DOM.
-    this._container.append(element);
+    this._container.prepend(element);
   }
 
   // 1-й Вариант. //отрисовка с помощью колл-бэка
@@ -19,9 +19,10 @@ export class Section {
   //   });
   // }
   // 2-й Вариант (сокращенный).
-  renderItems(dataArr) {
-    //ОТВЕЧАЕТ ЗА: отрисовку (рендеринг) в цикле изнач массива карточек
-    dataArr.forEach(this._renderer); //вызывается рендеринг по ссылке
+  renderItems(dataArr) {//ОТВЕЧАЕТ ЗА: отрисовку (рендеринг) в цикле изнач массива карточек
+    dataArr.forEach(item => {
+      this._renderer(item)
+    }); //вызывается рендеринг по ссылке
   }
 
 }

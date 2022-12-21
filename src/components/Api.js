@@ -52,7 +52,7 @@ export class Api {
         return fetch(`${this._apiConfig.baseUrl}/cards/`, {
             method: 'GET',
             headers: this._apiConfig.headers,
-        }) //response - это ответ сервера
+        })
             .then(res => this._onResponse(res))
     }
 
