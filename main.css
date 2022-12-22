@@ -19,7 +19,7 @@
 .elements__list{-moz-column-gap:17px;column-gap:17px;display:grid;grid-auto-rows:auto;grid-template-columns:repeat(auto-fit,minmax(282px,1fr));justify-items:center;list-style:none;margin:0 auto;max-width:880px;padding:0;row-gap:20px}
 .card{background-color:#fff;border-radius:10px;list-style:none;margin:0;max-width:282px;min-width:282px;overflow:hidden;padding:0;position:relative}
 .card__btn-del{background-color:transparent;background-image:url(823b0cf1b0b7e9cb7cad.svg);background-position:50%;background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:19px;position:absolute;right:20px;top:20px;transition:opacity .4s linear;width:18px}.card__btn-del:hover{opacity:.6}.card__btn-del:active{opacity:1}
-.card__img{height:282px;-o-object-fit:cover;object-fit:cover;width:100%}.card__img:hover{cursor:pointer}
+.card__img{display:block;height:282px;-o-object-fit:cover;object-fit:cover;width:100%}.card__img:hover{cursor:pointer}
 .card__info-wrap{align-items:center;display:flex;justify-content:space-between;padding:24px 20px 25px 21px}
 .card__title{font-size:24px;font-weight:900;line-height:29px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media (max-width:767px){.card__title{line-height:28.5px}}
 .card__btn-like-wrap{align-content:center;display:flex;flex-direction:column}
