@@ -1,5 +1,4 @@
-// index.js - Корневая точка проекта. Файл содержит только инициализацию необходимых главной странице модулей — функций и классов
-// В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
+// Файл содержит только инициализацию необходимых главной странице модулей — функций и классов. // В файле index.js должно остаться только создание классов и добавление некоторых обработчиков.
 import './index.css';
 import {Api, apiConfig} from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js';
@@ -11,11 +10,13 @@ import {
     btnEditProfile,
     btnAddPlace,
     btnEditAvatar,
+    btnDeleteConfirm,
     inputEditName,
     inputEditJob,
     config,
 } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithSubmitConfirm } from "../components/PopupWithSubmitConfirm.js";
 
 const api = new Api(apiConfig)
 
@@ -25,13 +26,12 @@ const userInfo = new UserInfo({
     jobSelector: '.profile__job',
     avatarSelector: '.profile__avatar'})//userSelectors
 
-// Section - (cardsList = section)
-// Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет createCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
+// Section - (cardsList = section). // Ф-ция говорит что нужно сделать для одной карточки когда получим данные, то что вернет createCard() -готовую разметку. // Выгружаю начальные карточки. Инициализирую класс Section, передаю: {initialCards, renderer}, containerSelect
 const section = new Section(
     {
         renderer: (cardItem, container) => {//описывает что сделать с данными при переборе в цикле. //cardItem, container - просто параметры
 
-            section.addItem(createCard(cardItem, container));//##############################################
+            section.addItem(createCard(cardItem, container));
         },
     },
     '.elements__list'
@@ -42,67 +42,14 @@ api.getAllInfo()
 
         userInfo.setUserInfo(userApi.name, userApi.about, userApi.avatar); // сохраняем в DOM данные вводимые <- из
         userInfo.updateUserInfo(userApi.name, userApi.about, userApi.avatar);
-        myId = userApi._id;//переприсваиваем значение, ранее объявили ее в глобальной области
 
-        allCardsApi.forEach(dataCard => {
-            // console.log(dataCard)
-            const card = createCard({
-                name: dataCard.name,
-                link: dataCard.link,
-                likes: dataCard.likes,
-                id: dataCard._id,
-                myId: myId,
-                ownerId: dataCard.owner._id,
-            })
-            // console.log(card)//разметка карточки
-            section.addItem(card)//рендеринг карточек в лист-секцию
-        })
+        myId = userApi._id;//переприсваиваем уникальное id в переменную, как только получим данные профиля. Ранее объявлена глобально
 
+        section.renderItems(allCardsApi.reverse())// !!! ЗАМЕЧАНИЕ !!! В Section метод который примет массив  и отрендерит карточки
     })
     .catch((err) => {console.log(err.status)})
 
-// api.getUser()
-//     .then((userData) => {
-//          console.log(userData)
-//         userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
-//          // console.log(userInfo)
-//         userInfo.updateUserInfo(userData.name, userData.about, userData.avatar)
-//         // const newUser = new UserInfo({
-//         //     userData,
-//         //     nameSelector: '.profile__name',
-//         //     jobSelector: '.profile__job',
-//         // }); // name: '.profile__name', // job: '.profile__job'
-//         // console.log(newUser)
-//         // newUser.setUserInfo(userData); //
-//         myId = userData._id//возвращает мой Id с сервера
-//         console.log(userData)
-//     })
-//     .catch((err) => {
-//         console.log('ошибка при получении данных юзера', err)
-//     })
-//     .finally(()=>{}) // зд можно удалить прелоадер(загрузка-кружочек) (который долэен передаваться наверху)
-
-//с сервера запрос карточек в лист-секцию
-// api.getAllCards()
-//     .then((cardList) => {
-//         // console.log(cardList, Array.isArray(cardList))
-//         cardList.forEach(dataCard => {
-//             // console.log(dataCard)
-//              const card = createCard({
-//                  name: dataCard.name,
-//                  link: dataCard.link,
-//                  likes: dataCard.likes,
-//                  id: dataCard._id,
-//                  myId: myId,
-//                  ownerId: dataCard.owner._id,
-//              })
-//             // console.log(card)//разметка карточки
-//             section.addItem(card)//рендеринг карточек в лист-секцию
-//         })
-//     })
-//     .catch((err) => {console.log(err.status)})
-
-//----- new POPUPs
+//--- new POPUPs ---
 //При создании экземпляра PopupWithForm под попап "редактирования" ты в него передаешь колбэк, который будет рулить сабмитом формы "редактирования".
 const popupEditProfile = new PopupWithForm(
     '#overlay_edit',
@@ -122,26 +69,31 @@ const popupAddPlace = new PopupWithForm(
     handleFormCardSubmit
 );
 
-const popupConfirmDelete = new PopupWithForm(
-    '#overlay_delete',
-    '#form-confirm',
-    // handleFormConfirmDelSubmit //??
-)
-
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
+const popupSubmitConfirm = new PopupWithSubmitConfirm (//оверлей без формы, только с кнопкой "Вы уверены?"
+    '#overlay_delete'
+);
+// const popupConfirmDelete = new PopupWithForm(//РЕВЬЮ. ЗАМЕНЕНО НА КЛАСС PopupWithSubmitConfirm
+//     '#overlay_delete',
+//     '#form-confirm',
+//     // handleFormConfirmDelSubmit //??
+// )
 
 // Card - созд. экз, и возвр. разметку
 function createCard(dataCard) {
     const newCard = new Card({
             data: dataCard,
-            handleCardClick, //...что должно произойти при клике на картинку
+            myId,
+            handleCardClick: () => {
+                popupWithImage.open(dataCard)
+            }, //...что должно произойти при клике на картинку
             handleLikeClick: (id) => {
-            console.log('при клике на лайк', id)
+            // console.log('при клике на лайк', id)
                 if (newCard.isLiked()) {
                     api.deleteLike(id)
                         .then(res => {
-                            console.log(res)
+                            // console.log(res)
                             newCard.setLikes(res.likes)
                         })
                         .catch((err) => {
@@ -150,7 +102,7 @@ function createCard(dataCard) {
                 } else {
                     api.putLike(id)
                         .then((res) => {
-                            console.log(res)
+                            // console.log(res)
                             newCard.setLikes(res.likes)
                         })
                         .catch((err) => {
@@ -159,33 +111,28 @@ function createCard(dataCard) {
                 }
             },
             handleDeleteClick: (id) => {
-                   console.log('handleDeleteClick, id=', id)
-                popupConfirmDelete.open() //модалка "Вы уверены ?"
-                popupConfirmDelete.changeSubmitAction(() => {
+                   // console.log('handleDeleteClick, id=', id)
+                popupSubmitConfirm.open() //модалка "Вы уверены ?"
+                popupSubmitConfirm.changeSubmitAction(() => {
+
                     api.deleteCard(id)
                         .then((res) => {
                               // console.log(res)
                             newCard.deleteCard()
-                            popupConfirmDelete.close()
+                            popupSubmitConfirm.close()
                         })
                         .catch((err) => console.log(`ошибка при удалении: ${err}`))
-                })
+                        .finally(() => {
+                            // popupSubmitConfirm.submitBtnTextChange('Сохранить');
+                        })
+                    })
       }
         },
         '#card-template'
     );
-
+    // console.log(newCard);
     return newCard.getView(); //возвращает разметку карточки, методом на экземпляре класса. вызываем генерацию карточки на том что нам вернул экземпляр класса
 }
-// function handleFormConfirmDelSubmit(id) {
-//     console.log('да, хочу удалить')
-//     api.deleteCard('63985ee6c18fdc1d38473b38')//'63985ee6c18fdc1d38473b38'
-//         .then(res => {
-//             console.log(res)
-//             // newCard.removeCard()
-//         })
-//         .catch(err => {console.log('ошибка при удалении', err)})
-// }
 
 // обработчик формы Edit Profile / "сохранить" данные из ...сервера
 function handleFormProfileSubmit(formDataObject) {//данные из инпутов
@@ -214,19 +161,10 @@ function handleFormCardSubmit(formDataObject) {
 
     popupAddPlace.submitBtnTextChange('Сохранение...');
 
-    api.addNewCard(formDataObject)  //1.делаем запрос в АПИ
-        .then((newCard) => {
-              // console.log(newCard)
-            const card = createCard({
-                name: newCard.name,
-                link: newCard.link,
-                likes: newCard.likes,
-                id: newCard._id,
-                myId: myId,
-                ownerId: newCard.owner._id,
-            })
-              console.log(card)
-            section.addItem(card)//2.отрисовываем результат (карточки)
+    api.addNewCard(formDataObject)  //1.запрос в АПИ
+        .then((newCard) => {// console.log(newCard)
+
+            section.addItem(createCard(newCard))//2.отрисовываем результат (карточки)
 
             popupAddPlace.close()
         })
@@ -245,10 +183,10 @@ function handleFormAvatarSubmit(formDataObject) {
     api.patchAvatar({avatar: formDataObject.linkavatar})//{avatar: formDataObject.link}
         .then((userDataApi) => {
             // console.log('сабмит изменить аватар', userInfoFromApi)
-            userInfo.setUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
-            userInfo.updateUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar)
+            userInfo.setUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar);
+            userInfo.updateUserInfo(userDataApi.name, userDataApi.link, userDataApi.avatar);
 
-    popupEditAvatar.close()
+    popupEditAvatar.close();
         })
         .catch((error) => {
             console.log('ошибка при сабмите изм аватара', error)
@@ -278,22 +216,23 @@ function handleButtonAddPlaceClick() {// кнопка "+" / add place
     formValidators['place'].toggleButtonState(); //'place' - атрибут name, формы
 }
 
-function handleCardClick(data) {
-    popupWithImage.open(data);
+function handleBtnDeleteConfirm() {
+    popupSubmitConfirm.open();
 }
 
-// section.renderItems(initialCards); ////////////////////////////////////////////////////////////////
+// section.renderItems(initialCards);
 
 //-------- СЛУШАТЕЛИ
 btnEditProfile.addEventListener('click', handleButtonEditClick); // "edit profile"
 btnAddPlace.addEventListener('click', handleButtonAddPlaceClick); // "+" ("add")
 btnEditAvatar.addEventListener('click', handleButtonEditAvatarClick); // edit avatar
+btnDeleteConfirm.addEventListener('click', handleBtnDeleteConfirm);
 
 popupEditProfile.setEventListeners(); // слушатель вызываем в прямом потоке кода, после создания экземпляра класса
 popupEditAvatar.setEventListeners();
 popupAddPlace.setEventListeners(); //вызываем на экземпляре в прямом потоке кода
 popupWithImage.setEventListeners();
-popupConfirmDelete.setEventListeners();
+popupSubmitConfirm.setEventListeners();
 
 // Включение валидации
 const formValidators = {};
