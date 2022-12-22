@@ -8,7 +8,6 @@ export class PopupWithSubmitConfirm extends Popup {
     }
 
     changeSubmitAction(action) {
-        // this._submitButtonClass = this._popup.querySelector('.btn_submit');
         this._action = action;
     }
 

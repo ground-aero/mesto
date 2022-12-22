@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup {
     this._submitButtonClass.textContent = text;
   }
 
-  // changeSubmitAction(newHandleFormSubmit) {
+  // changeSubmitAction(newHandleFormSubmit) {//перенесено в PopupWithSubmitConfirm
   //   this._handleFormSubmit = newHandleFormSubmit;
   // }
 

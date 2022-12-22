@@ -36,9 +36,4 @@ export const inputEditJob = formProfile.elements.about; // // page.querySelector
 export const formAvatar = document.forms.avatar;// по св-ву name
 export const inputEditAvatar = formAvatar.elements.linkavatar;
 
-export const profileNameNode = document.querySelector('.profile__name');
-export const profileJobNode = document.querySelector('.profile__job');
-
 export const formPlace = document.forms.place
-export const inputAddPlaceName = formPlace.elements.name; // ('#input-name'); // input/field/name/ add place
-export const inputAddPlaceLink = formPlace.elements.link; // page.querySelector('#input-link'); // input/field/link/ add place

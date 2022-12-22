@@ -4,7 +4,6 @@ import {Api, apiConfig} from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
-import { Popup } from '../components/Popup.js'
 import PopupWithImage from '../components/PopupWithImage.js';
 import { UserInfo } from '../components/UserInfo.js';
 import {
@@ -44,7 +43,7 @@ api.getAllInfo()
         userInfo.setUserInfo(userApi.name, userApi.about, userApi.avatar); // сохраняем в DOM данные вводимые <- из
         userInfo.updateUserInfo(userApi.name, userApi.about, userApi.avatar);
 
-        myId = userApi._id;//переприсваиваем уникальное id в переменную, как только получим данные профиля. Ранее объявили ее в глобальной области
+        myId = userApi._id;//переприсваиваем уникальное id в переменную, как только получим данные профиля. Ранее объявлена глобально
 
         section.renderItems(allCardsApi.reverse())// !!! ЗАМЕЧАНИЕ !!! В Section метод который примет массив  и отрендерит карточки
     })
@@ -72,16 +71,14 @@ const popupAddPlace = new PopupWithForm(
 
 const popupWithImage = new PopupWithImage('#overlay_img-zoom');
 
-// const popupConfirmDelete = new PopupWithForm(
+const popupSubmitConfirm = new PopupWithSubmitConfirm (//оверлей без формы, только с кнопкой "Вы уверены?"
+    '#overlay_delete'
+);
+// const popupConfirmDelete = new PopupWithForm(//РЕВЬЮ. ЗАМЕНЕНО НА КЛАСС PopupWithSubmitConfirm
 //     '#overlay_delete',
 //     '#form-confirm',
 //     // handleFormConfirmDelSubmit //??
 // )
-
-const popupSubmitConfirm = new PopupWithSubmitConfirm (
-    '#overlay_delete'
-);
-
 
 // Card - созд. экз, и возвр. разметку
 function createCard(dataCard) {
@@ -92,11 +89,11 @@ function createCard(dataCard) {
                 popupWithImage.open(dataCard)
             }, //...что должно произойти при клике на картинку
             handleLikeClick: (id) => {
-            console.log('при клике на лайк', id)
+            // console.log('при клике на лайк', id)
                 if (newCard.isLiked()) {
                     api.deleteLike(id)
                         .then(res => {
-                            console.log(res)
+                            // console.log(res)
                             newCard.setLikes(res.likes)
                         })
                         .catch((err) => {
@@ -105,7 +102,7 @@ function createCard(dataCard) {
                 } else {
                     api.putLike(id)
                         .then((res) => {
-                            console.log(res)
+                            // console.log(res)
                             newCard.setLikes(res.likes)
                         })
                         .catch((err) => {
@@ -120,7 +117,7 @@ function createCard(dataCard) {
 
                     api.deleteCard(id)
                         .then((res) => {
-                              console.log(res)
+                              // console.log(res)
                             newCard.deleteCard()
                             popupSubmitConfirm.close()
                         })
