@@ -1,5 +1,9 @@
 # Проект: Место
 
+**Ссылка на сайт**
+
+- [weblink: https://ground-aero.github.io/mesto](https://ground-aero.github.io/mesto/)
+
 ### Обзор
 
 - Использованые языки и технологии:
@@ -47,6 +51,3 @@
 
 - [Чек-лист к ПР9](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-9.pdf)
 
-**Проект "Место"**
-
-- [Ссылка на сайт](https://ground-aero.github.io/mesto/)

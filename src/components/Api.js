@@ -57,6 +57,7 @@ export class Api {
     }
 
     addNewCard({ name, link }) {
+          console.log(`${this._apiConfig.baseUrl}/cards/`)
         return fetch(`${this._apiConfig.baseUrl}/cards/`, {
             method: 'POST',
             headers: this._apiConfig.headers,
@@ -66,7 +67,7 @@ export class Api {
     }
 
     deleteCard(id) {
-        // console.log(`${this._apiConfig.baseUrl}/cards/${id}`)
+          console.log(`${this._apiConfig.baseUrl}/cards/${id}`)
         return fetch(`${this._apiConfig.baseUrl}/cards/${id}`, {
             method: 'DELETE',
             headers: this._apiConfig.headers
